@@ -1,0 +1,737 @@
+{% comment %}
+  Hero section
+{% endcomment %}
+
+<section
+  class="hero-section"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="hero-background">
+    <video autoplay muted loop playsinline>
+      <source src="{{ 'demo-comp.mp4' | asset_url }}" type="video/mp4">
+      {% if section.settings.background_image %}
+        <img
+          src="{{ section.settings.background_image | img_url: 'master' }}"
+          alt="{{ section.settings.background_image.alt | default: 'Hero background image' }}"
+          loading="lazy"
+          width="1920"
+          height="1080"
+        >
+      {% endif %}
+    </video>
+    {% unless section.settings.background_image %}
+      {% comment %} Fallback image if no background image is set {% endcomment %}
+    {% endunless %}
+  </div>
+  <div
+    class="hero-content-overlay"
+    style="background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});"
+  ></div>
+  <div class="hero-content">
+    <h1
+      class="hero__headline"
+      data-split="heading"
+      style="font-family: {{ section.settings.heading_font }}, serif; font-size: {{ section.settings.heading_size }}rem; color: {{ section.settings.heading_color }}; text-transform: {{ section.settings.heading_transform }}; font-style: {{ section.settings.heading_style }};"
+    >
+      <span>The <em>Royal</em> Ritual Begins Here.</span>
+      <br>
+      <span><em>Ayurveda</em>, Reimagined for Super Sensitive Skin.</span>
+    </h1>
+    <p
+      class="hero__subheadline"
+      data-split="subheading"
+      style="font-family: {{ section.settings.subheading_font }}, serif; font-size: {{ section.settings.subheading_size }}rem; color: {{ section.settings.subheading_color }}; text-transform: {{ section.settings.subheading_transform }}; font-style: {{ section.settings.subheading_style }};"
+    >
+      Sacred Secret - Our bestselling face serum is now even more potent, pure, and comforting. Infused with rare
+      botanicals like Kashmiri Saffron, Gold Bhasma, and Centella, it's crafted for skin that reacts to everything -
+      except this.
+    </p>
+    <a
+      href="{{ section.settings.button_link }}"
+      class="hero__button"
+      style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }}; font-family: {{ section.settings.button_font }}, sans-serif; text-transform: {{ section.settings.button_transform }}; font-style: {{ section.settings.button_style }};"
+    >
+      <span style="color: {{ section.settings.button_text_color }};">Experience the Secret</span>
+      <div class="intro_cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
+        <svg
+          class="iconArrow"
+          width="13"
+          height="8"
+          viewBox="0 0 13 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="fill: {{ section.settings.button_arrow_color }};"
+        >
+          <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+        </svg>
+        <svg
+          class="iconArrow"
+          width="13"
+          height="8"
+          viewBox="0 0 13 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="fill: {{ section.settings.button_arrow_color }};"
+        >
+          <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+        </svg>
+      </div>
+    </a>
+  </div>
+</section>
+
+{% stylesheet %}
+  .hero-section {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden; /* Hide overflowing background image */
+    padding: 4rem 2rem;
+    position: relative;
+    will-change: transform;
+  }
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .hero-background video,
+  .hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-background video {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .hero-content-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .hero-content {
+    z-index: 3;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .hero__headline {
+    font-weight: 200;
+    text-transform: capitalize;
+    margin-bottom: 1.2rem;
+    position: absolute;
+    top: 8rem;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 100%;
+    line-height: 1.1;
+  }
+
+  .hero__headline em {
+    font-family: 'Instrument Serif', serif !important;
+    font-style: italic !important;
+    text-transform: none !important;
+  }
+
+  /* SplitText masking styles */
+  .hero__headline .line,
+  .hero__subheadline .line {
+    display: block;
+    will-change: transform;
+    overflow: hidden;
+  }
+
+  .hero__headline .word,
+  .hero__subheadline .word {
+    display: inline-block;
+  }
+
+  .hero__headline .letter,
+  .hero__subheadline .letter {
+    display: inline-block;
+  }
+
+  .hero__subheadline {
+    text-transform: uppercase;
+    margin: auto;
+    margin-bottom: 2rem;
+    max-width: 40rem;
+    position: absolute;
+    top: 18rem;
+    transform: translateX(-50%);
+    left: 50%;
+  }
+
+  .hero__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-radius: 999px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    border: none;
+    position: absolute;
+    bottom: 5rem;
+    transform: translateX(-50%);
+    left: 50%;
+    gap: 4rem;
+    overflow: hidden;
+  }
+
+  .hero__button span {
+    margin-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .intro_cta-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    border-radius: 100%;
+    height: 2.4rem;
+    width: 2.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .iconArrow {
+    width: 15px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+  }
+
+  .intro_cta-arrow .iconArrow:last-child {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
+
+  .hero__button:hover .intro_cta-arrow .iconArrow:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
+
+  .hero__button:hover .intro_cta-arrow .iconArrow:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero__headline {
+      font-size: 1.6rem;
+      top: 10rem;
+    }
+    .hero__subheadline {
+      font-size: 0.5rem;
+      position: absolute;
+      top: 14rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 70%;
+      text-align: center;
+    }
+    .hero__button {
+      font-size: 0.6rem;
+      padding: 0.5rem 0.75rem;
+    }
+    .hero__button span {
+      padding-left: 0;
+    }
+    .intro_cta-arrow {
+      width: 3.5rem;
+      height: 2.2rem;
+    }
+    .iconArrow {
+      width: 10px;
+    }
+  }
+{% endstylesheet %}
+
+<style>
+  .hero__button:hover {
+    background-color: {{ section.settings.button_text_color }} !important;
+    color: {{ section.settings.button_bg_color }} !important;
+    border: none !important;
+  }
+  .hero__button:hover span {
+    color: {{ section.settings.button_bg_color }} !important;
+  }
+  .hero__button:hover .intro_cta-arrow {
+    background: {{ section.settings.button_bg_color }} !important;
+  }
+  .hero__button:hover .iconArrow {
+    fill: {{ section.settings.button_text_color }} !important;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Section",
+  "tag": "section",
+  "class": "section-hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ead1c1"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay Opacity",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Text Content"
+    },
+    {
+      "type": "textarea",
+      "id": "subheadline",
+      "label": "Sub-headline",
+      "default": "An opulent, antioxidant powerhouse, inspired by ancient wisdom and perfected by science, for skin that tells a story of eternal youth."
+    },
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "select",
+      "id": "heading_font",
+      "label": "Heading Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "heading_style",
+      "label": "Heading Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "subheading_font",
+      "label": "Subheading Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "subheading_style",
+      "label": "Subheading Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "button_font",
+      "label": "Button Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 2,
+      "max": 6,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Heading Size",
+      "default": 3.5
+    },
+    {
+      "type": "range",
+      "id": "subheading_size",
+      "min": 0.6,
+      "max": 1.2,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Subheading Size",
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "heading_transform",
+      "label": "Heading Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "select",
+      "id": "subheading_transform",
+      "label": "Subheading Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "button_transform",
+      "label": "Button Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Experience the Secret"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_bg",
+      "label": "Button Arrow Background",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_color",
+      "label": "Button Arrow Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Hero Section"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Ensure GSAP, SplitText and CustomEase are loaded
+    if (typeof gsap !== 'undefined' && typeof SplitText !== 'undefined' && typeof CustomEase !== 'undefined') {
+      // Register plugins
+      gsap.registerPlugin(SplitText, CustomEase);
+
+      // Create custom ease
+      CustomEase.create('osmo-ease', '0.625, 0.05, 0, 1');
+
+      // Initialize masked text reveal
+      function initMaskedTextReveal() {
+        const heading = document.querySelector('[data-split="heading"]');
+        const subheading = document.querySelector('[data-split="subheading"]');
+        const buttonElement = document.querySelector('.hero__button');
+
+        if (!heading) return;
+
+        // Create SplitText with masking for headline
+        const headingSplitText = new SplitText(heading, {
+          type: 'lines',
+          linesClass: 'line',
+        });
+
+        // Create mask wrapper for each headline line
+        headingSplitText.lines.forEach((line) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflow = 'hidden';
+          wrapper.style.lineHeight = '0.9';
+          line.parentNode.insertBefore(wrapper, line);
+          wrapper.appendChild(line);
+        });
+
+        // Set initial state for headline lines (hidden)
+        gsap.set(headingSplitText.lines, { yPercent: 110 });
+
+        // Handle subheading if it exists
+        let subheadingSplitText = null;
+        if (subheading) {
+          // Create SplitText with masking for subheading
+          subheadingSplitText = new SplitText(subheading, {
+            type: 'lines',
+            linesClass: 'line',
+          });
+
+          // Create mask wrapper for each subheading line
+          subheadingSplitText.lines.forEach((line) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.overflow = 'hidden';
+            wrapper.style.lineHeight = '1.2';
+            line.parentNode.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+          });
+
+          // Set initial state for subheading lines (hidden)
+          gsap.set(subheadingSplitText.lines, { yPercent: 110 });
+        }
+
+        // Set initial state for button
+        if (buttonElement) {
+          gsap.set(buttonElement, { opacity: 0, y: 20 });
+        }
+
+        // Create timeline for staggered animation
+        const tl = gsap.timeline({ delay: 0 });
+
+        // Animate headline lines with masked reveal
+        tl.to(headingSplitText.lines, {
+          yPercent: 0,
+          duration: 1.8,
+          stagger: 0.15,
+          ease: 'osmo-ease',
+        });
+
+        // Animate subheading lines with masked reveal
+        if (subheadingSplitText) {
+          tl.to(
+            subheadingSplitText.lines,
+            {
+              yPercent: 0,
+              duration: 1.3,
+              stagger: 0.12,
+              ease: 'osmo-ease',
+            },
+            '-=1'
+          );
+        }
+
+        // Animate button
+        if (buttonElement) {
+          tl.to(
+            buttonElement,
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1.6,
+              ease: 'power4.out',
+            },
+            '-=0.5'
+          );
+        }
+      }
+
+      // Initialize after fonts are ready
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+          initMaskedTextReveal();
+        });
+      } else {
+        // Fallback if fonts API is not supported
+        setTimeout(initMaskedTextReveal, 100);
+      }
+    } else {
+      console.error('GSAP, SplitText, or CustomEase not loaded.');
+    }
+  });
+</script>

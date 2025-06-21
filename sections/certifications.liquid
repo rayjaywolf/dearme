@@ -1,0 +1,277 @@
+<section
+  class="certifications-section"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="certifications-container">
+    <div class="certifications-grid js-certifications-grid">
+      <div class="certification-item js-certification-item">
+        <img
+          src="{{ 'skin.png' | asset_url }}"
+          alt="Sensitive Skin Approved"
+          class="certification-icon js-certification-icon"
+          loading="lazy"
+          width="120"
+          height="120"
+          style="max-width: {{ section.settings.icon_size }}px;"
+        >
+      </div>
+      <div
+        class="certification-separator js-certification-separator"
+        style="background: linear-gradient(to bottom, transparent, {{ section.settings.separator_color }} 20%, {{ section.settings.separator_color }} 80%, transparent);"
+      ></div>
+      <div class="certification-item js-certification-item">
+        <img
+          src="{{ 'frag.png' | asset_url }}"
+          alt="Fragrance Free"
+          class="certification-icon js-certification-icon"
+          loading="lazy"
+          width="120"
+          height="120"
+          style="max-width: {{ section.settings.icon_size }}px;"
+        >
+      </div>
+      <div
+        class="certification-separator js-certification-separator"
+        style="background: linear-gradient(to bottom, transparent, {{ section.settings.separator_color }} 20%, {{ section.settings.separator_color }} 80%, transparent);"
+      ></div>
+      <div class="certification-item js-certification-item">
+        <img
+          src="{{ 'tested.png' | asset_url }}"
+          alt="Dermatologically Tested"
+          class="certification-icon js-certification-icon"
+          loading="lazy"
+          width="120"
+          height="120"
+          style="max-width: {{ section.settings.icon_size }}px;"
+        >
+      </div>
+      <div
+        class="certification-separator js-certification-separator"
+        style="background: linear-gradient(to bottom, transparent, {{ section.settings.separator_color }} 20%, {{ section.settings.separator_color }} 80%, transparent);"
+      ></div>
+      <div class="certification-item js-certification-item">
+        {%- assign peta_max_width = section.settings.icon_size | times: 2 -%}
+        <img
+          src="{{ 'peta.png' | asset_img_url: '240x' }}"
+          alt="PETA Approved"
+          class="certification-icon js-certification-icon certification-icon--peta"
+          loading="lazy"
+          width="{{ peta_max_width }}"
+          height="{{ peta_max_width }}"
+          style="max-width: {{ peta_max_width }}px;"
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .certifications-section {
+    width: 100%;
+    padding: 4rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .certifications-container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 2rem;
+  }
+
+  .certifications-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+  }
+
+  .certification-item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .certification-icon {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.75;
+    will-change: transform, opacity;
+  }
+
+  .certification-icon:hover {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+
+  .certification-separator {
+    width: 1px;
+    height: 120px;
+    flex-shrink: 0;
+  }
+
+  .certification-icon--peta {
+    max-width: calc(2 * var(--icon-size, 80px)) !important;
+  }
+
+  @media (max-width: 768px) {
+    .certifications-section {
+      padding: 3rem 0;
+    }
+
+    .certifications-container {
+      padding: 0 1rem;
+    }
+
+    .certifications-grid {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .certification-separator {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        {{section.settings.separator_color}} 20%,
+        {{section.settings.separator_color}} 80%,
+        transparent
+      ) !important;
+    }
+
+    .certification-item {
+      padding: 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    function initCertificationsAnimation() {
+      const grid = document.querySelector('.js-certifications-grid');
+      if (!grid) return;
+
+      const items = grid.querySelectorAll('.js-certification-item');
+      const icons = grid.querySelectorAll('.js-certification-icon');
+      const separators = grid.querySelectorAll('.js-certification-separator');
+
+      gsap.set(items, {
+        y: 60,
+        opacity: 0,
+        scale: 0.9,
+      });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: grid,
+          start: 'top 80%',
+          end: 'bottom 20%',
+          toggleActions: 'play none none none',
+        },
+      });
+
+      tl.to(items, {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        rotation: 0,
+        duration: 1.2,
+        stagger: 0.15,
+        ease: 'back.out(1.7)',
+      }).to(
+        separators,
+        {
+          scaleY: 1,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power3.out',
+        },
+        '-=0.6'
+      );
+
+      icons.forEach((icon) => {
+        icon.addEventListener('mouseenter', () => {
+          gsap.to(icon, {
+            scale: 1.1,
+            duration: 0.3,
+            ease: 'power2.out',
+          });
+        });
+
+        icon.addEventListener('mouseleave', () => {
+          gsap.to(icon, {
+            scale: 1,
+            rotation: 0,
+            duration: 0.3,
+            ease: 'power2.out',
+          });
+        });
+      });
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(initCertificationsAnimation);
+    } else {
+      setTimeout(initCertificationsAnimation, 100);
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Certifications",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ead1c1"
+    },
+    {
+      "type": "header",
+      "content": "Icon Settings"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 60,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Icon Size",
+      "default": 80
+    },
+    {
+      "type": "header",
+      "content": "Separator Settings"
+    },
+    {
+      "type": "color",
+      "id": "separator_color",
+      "label": "Separator Color",
+      "default": "#63001f"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Certifications"
+    }
+  ]
+}
+{% endschema %}

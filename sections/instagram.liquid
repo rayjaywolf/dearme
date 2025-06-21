@@ -1,0 +1,446 @@
+{% schema %}
+{
+  "name": "Instagram Feed",
+  "class": "instagram-feed-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "select",
+      "id": "main_title_font",
+      "label": "Main Title Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font",
+      "label": "Subtitle Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fef9f2"
+    },
+    {
+      "type": "color",
+      "id": "main_title_color",
+      "label": "Main Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#63001f"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram Feed"
+    }
+  ]
+}
+{% endschema %}
+
+<div
+  class="instagram-section"
+  data-section-id="{{ section.id }}"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="content">
+    <div class="scene">
+      <div class="container">
+        <div class="group">
+          <div class="card">
+            <div class="card__img" style="background-image: url({{ '17.jpg' | asset_url }})"></div>
+          </div>
+          <div class="card">
+            <div class="card__img" style="background-image: url({{ '18.jpg' | asset_url }})"></div>
+          </div>
+          <div class="card">
+            <div class="card__img" style="background-image: url({{ '19.jpg' | asset_url }})"></div>
+          </div>
+          <div class="card">
+            <div class="card__img" style="background-image: url({{ '20.jpg' | asset_url }})"></div>
+          </div>
+          <div class="card">
+            <div class="card__img" style="background-image: url({{ '21.jpg' | asset_url }})"></div>
+          </div>
+          <div class="card">
+            <div class="card__img" style="background-image: url({{ '22.jpg' | asset_url }})"></div>
+          </div>
+          <div class="card">
+            <div class="card__img" style="background-image: url({{ '23.jpg' | asset_url }})"></div>
+          </div>
+          <div class="card">
+            <div class="card__img" style="background-image: url({{ '24.jpg' | asset_url }})"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="headings">
+      <h1
+        class="headings__main js-animated-title"
+        style="font-family: {{ section.settings.main_title_font }}, serif; color: {{ section.settings.main_title_color }};"
+      >
+        Our
+      </h1>
+      <h1
+        class="headings__main js-animated-title"
+        style="font-family: {{ section.settings.main_title_font }}, serif; color: {{ section.settings.main_title_color }};"
+      >
+        Instagram
+      </h1>
+      <h5
+        class="headings_subtitle js-animated-title"
+        style="font-family: {{ section.settings.subtitle_font }}, serif; color: {{ section.settings.subtitle_color }};"
+      >
+        @dearme.in
+      </h5>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Custom Scrollbar Styles */
+  :root {
+    --scrollbar-width: 8px;
+    --scrollbar-track-color: transparent;
+    --scrollbar-thumb-color: rgba(99, 0, 31, 0.3);
+    --scrollbar-thumb-hover-color: rgba(99, 0, 31, 0.5);
+  }
+
+  /* Hide default scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-color);
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover-color);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  /* Hide default scrollbar for Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color);
+  }
+
+  /* Hide default scrollbar for IE and Edge */
+  body {
+    -ms-overflow-style: none;
+  }
+
+  /* Make scrollbar overlay content */
+  html {
+    overflow-y: overlay;
+    scrollbar-gutter: auto;
+  }
+
+  .instagram-section {
+    height: 120vh;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    color: #191818;
+    background: #fff;
+    z-index: 1;
+  }
+
+  /* Ensure the section extends to cover footer during scroll */
+  .instagram-section::after {
+    content: '';
+    position: absolute;
+    bottom: -100vh;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    background: #fff;
+    z-index: -1;
+  }
+  .instagram-section .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .instagram-section .scene {
+    perspective: 1000px;
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120vh;
+    width: 100vw;
+    left: 0;
+    top: 0;
+  }
+  .instagram-section .container,
+  .instagram-section .group {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+  }
+  .instagram-section .card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    aspect-ratio: 2 / 3;
+    border-radius: 5px;
+  }
+  .instagram-section .card__img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    background-position: center;
+    background-size: cover;
+  }
+  .instagram-section .headings {
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    text-transform: capitalize;
+  }
+  .instagram-section .headings__main {
+    line-height: 1;
+    font-family: 'Gumani';
+    font-size: 6rem;
+    font-weight: 400;
+  }
+  .instagram-section .headings_subtitle {
+    line-height: 1;
+    font-family: 'Instrument Serif';
+    font-style: italic;
+    font-size: 2rem;
+    font-weight: 200;
+    margin-top: 1rem;
+    text-transform: lowercase;
+  }
+  @media screen and (min-width: 53em) {
+    .instagram-section .card {
+      width: 6em;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sectionElement = document.querySelector('[data-section-id="{{ section.id }}"]');
+    if (!sectionElement) return;
+
+    const initInstagramAnimation = (container) => {
+      if (typeof gsap === 'undefined' || typeof imagesLoaded === 'undefined' || typeof SplitText === 'undefined') {
+        console.error('GSAP, imagesLoaded, or SplitText not available.');
+        return;
+      }
+
+      gsap.registerPlugin(SplitText);
+
+      const preloadImages = (selector) => {
+        return new Promise((resolve) => {
+          imagesLoaded(container.querySelectorAll(selector), { background: true }, resolve);
+        });
+      };
+
+      function initHeadingsAnimation() {
+        const headings = container.querySelectorAll('.js-animated-title');
+
+        headings.forEach((heading) => {
+          const splitText = new SplitText(heading, { type: 'lines', linesClass: 'line' });
+
+          splitText.lines.forEach((line) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.overflow = 'hidden';
+            wrapper.style.lineHeight = line.parentElement.classList.contains('headings__main') ? '1' : '1.4';
+            line.parentNode.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+          });
+
+          gsap.set(splitText.lines, { yPercent: 110 });
+
+          const headingObserver = new IntersectionObserver(
+            function (entries) {
+              if (entries[0].isIntersecting) {
+                const tl = gsap.timeline();
+                tl.to(splitText.lines, {
+                  yPercent: 0,
+                  duration: 1.8,
+                  stagger: 0.1,
+                  ease: 'power4.out',
+                });
+                headingObserver.disconnect();
+              }
+            },
+            {
+              threshold: 0.2,
+              rootMargin: '0px 0px -100px 0px',
+            }
+          );
+
+          headingObserver.observe(heading);
+        });
+      }
+
+      const init = () => {
+        const breakPoint = '53em';
+        const mm = gsap.matchMedia();
+
+        mm.add(
+          {
+            isDesktop: `(min-width: ${breakPoint})`,
+            isMobile: `(max-width: ${breakPoint})`,
+          },
+          (context) => {
+            let { isDesktop } = context.conditions;
+
+            const cardList = gsap.utils.toArray(container.querySelectorAll('.card'));
+            const group = container.querySelector('.group');
+            const cont = container.querySelector('.container');
+
+            if (cardList.length === 0) return;
+
+            const count = cardList.length;
+            const radius = isDesktop ? 290 : 180;
+            const sliceAngle = (2 * Math.PI) / count;
+
+            const observer = new IntersectionObserver(
+              (entries) => {
+                if (entries[0].isIntersecting) {
+                  // Set initial state only if cards haven't been animated yet
+                  if (!container.classList.contains('cards-animated')) {
+                    gsap.set(cardList, {
+                      rotation: (index) => (index + 1) * (360 / count),
+                    });
+
+                    const tl = gsap
+                      .timeline()
+                      .fromTo(
+                        cardList,
+                        {
+                          opacity: 0,
+                          scale: 0,
+                          x: 0,
+                          y: 0,
+                          xPercent: -50,
+                          yPercent: -50,
+                        },
+                        {
+                          stagger: 0.15,
+                          opacity: 1,
+                          scale: 1,
+                          duration: 1,
+                          x: (index) => Math.round(radius * Math.cos(sliceAngle * index - Math.PI / 4)),
+                          y: (index) => Math.round(radius * Math.sin(sliceAngle * index - Math.PI / 4)),
+                        }
+                      )
+                      .to(group, { rotation: -360 - 90, duration: 3, ease: 'power4.out' }, 0);
+
+                    // Mark section as animated
+                    container.classList.add('cards-animated');
+                  }
+
+                  // Start continuous rotation
+                  gsap.to(cont, { rotation: '-=360', duration: 20, ease: 'none', repeat: -1 });
+
+                  const intervalId = setInterval(() => {
+                    gsap.to(cardList[Math.floor(Math.random() * count)], { rotateY: '+=180', duration: 1 });
+                  }, 2000);
+
+                  return () => {
+                    clearInterval(intervalId);
+                    gsap.killTweensOf([cont, cardList, group]);
+                  };
+
+                  observer.disconnect();
+                }
+              },
+              { threshold: 0.2 }
+            );
+
+            observer.observe(container);
+          }
+        );
+      };
+
+      preloadImages('.card__img').then(() => {
+        setTimeout(() => {
+          init();
+          initHeadingsAnimation();
+        }, 50);
+      });
+    };
+
+    initInstagramAnimation(sectionElement);
+
+    document.addEventListener('shopify:section:load', function (event) {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        const newSectionElement = document.querySelector('[data-section-id="{{ section.id }}"]');
+        initInstagramAnimation(newSectionElement);
+      }
+    });
+  });
+</script>

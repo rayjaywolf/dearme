@@ -1,5 +1,55 @@
 /** Critical CSS for the theme. This file is included on every page. */
 
+/* Custom Fonts */
+@font-face {
+  font-family: 'Gumani';
+  src: url('{{ 'Gumani.otf' | asset_url }}') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPEditorial New';
+  src: url('{{ 'PPEditorialNew-Regular-BF644b214ff145f.otf' | asset_url }}') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPEditorial New';
+  src: url('{{ 'PPEditorialNew-Italic-BF644b214fb0c0a.otf' | asset_url }}') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPEditorial New';
+  src: url('{{ 'PPEditorialNew-Ultralight-BF644b21500d0c0.otf' | asset_url }}') format('opentype');
+  font-weight: 200; /* Ultralight weight */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPEditorial New';
+  src: url('{{ 'PPEditorialNew-UltralightItalic-BF644b214ff1e9b.otf' | asset_url }}') format('opentype');
+  font-weight: 200; /* Ultralight weight */
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'PPEditorial New';
+  src: url('{{ 'PPEditorialNew-Ultrabold-BF644b21500840c.otf' | asset_url }}') format('opentype');
+  font-weight: 800; /* Ultrabold weight */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PPEditorial New';
+  src: url('{{ 'PPEditorialNew-UltraboldItalic-BF644b214faef01.otf' | asset_url }}') format('opentype');
+  font-weight: 800; /* Ultrabold weight */
+  font-style: italic;
+}
+
 /* Reset styles inspired by https://www.joshwcomeau.com/css/custom-css-reset/ */
 * {
   box-sizing: border-box;
@@ -11,6 +61,10 @@ body {
   flex-direction: column;
   margin: 0;
   min-height: 100svh;
+}
+
+html {
+  overflow-y: scroll;
 }
 
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
@@ -92,18 +146,6 @@ body {
  * the entire viewport.
  */
 .shopify-section {
-  --content-width: min(
-    calc(var(--page-width) - var(--page-margin) * 2),
-    calc(100% - var(--page-margin) * 2)
-  );
-  --content-margin: minmax(var(--page-margin), 1fr);
-  --content-grid: var(--content-margin) var(--content-width) var(--content-margin);
-
-  /* This is required to make <img> elements work as background images */
-  position: relative;
-  grid-template-columns: var(--content-grid);
-  display: grid;
-  width: 100%;
 }
 
 /* Child elements, by default, are constrained to the central column of the grid. */

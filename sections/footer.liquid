@@ -1,57 +1,235 @@
-<footer>
-  <div class="footer__copyright">
-    &copy;
-    {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url }}, {{ powered_by_link }}
-  </div>
+<footer class="custom-footer">
+  <div class="footer-content">
+    <div class="footer-links-row">
+      <div class="footer-links-col">
+        <div class="footer-links-title">Search</div>
+        {% assign footer_menu = linklists['footer'].links %}
+        {% for link in footer_menu %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </div>
+      <div class="footer-links-col">
+        <div class="footer-links-title">Quick Links</div>
+        {% assign quick_links_menu = linklists['quick-links'].links %}
+        {% for link in quick_links_menu %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </div>
+    </div>
 
-  <div class="footer__links">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
+    <div class="footer-logo-col">
+      <img
+        src="{{ 'footer-logo.png' | asset_url }}"
+        alt="Footer Logo"
+        class="footer-logo"
+        width="80"
+        height="80" />
+    </div>
+    <div class="footer-newsletter-col">
+      <div class="footer-newsletter-title">Dear Me News + 15% off</div>
+      <form class="footer-newsletter-form" autocomplete="off">
+        <input
+          type="email"
+          placeholder="Email address"
+          name="email"
+          required />
+        <button type="submit">→</button>
+      </form>
+      <div class="footer-social-row">
+        <a
+          href="#"
+          aria-label="Instagram"
+          class="footer-social-link">
+          <img
+            src="{{ 'instagram.svg' | asset_url }}"
+            alt="Instagram"
+            class="footer-social-img"
+            width="28"
+            height="28" />
+        </a>
+        <a
+          href="#"
+          aria-label="YouTube"
+          class="footer-social-link">
+          <img
+            src="{{ 'youtube.svg' | asset_url }}"
+            alt="YouTube"
+            class="footer-social-img"
+            width="28"
+            height="28" />
+        </a>
+      </div>
+    </div>
   </div>
-
-  <div class="footer__payment">
-    {% if section.settings.show_payment_icons %}
-      {% for type in shop.enabled_payment_types %}
-        {{ type | payment_type_svg_tag }}
-      {% endfor %}
-    {% endif %}
+  <div class="footer-copyright">
+    © 2025 Dear Me. All rights reserved.
   </div>
 </footer>
 
-{% stylesheet %}
-  footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 2rem;
+<style>
+  .custom-footer {
+    background: #63001f;
+    color: #fff;
+    padding: 0 4rem 3rem;
+    position: sticky;
+    bottom: 0;
+    z-index: 0;
   }
-  footer a {
+  .footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: start;
+    max-width: 1400px;
+    margin: 0 auto;
+    /* gap: 2.5rem; */
+    padding-top: 4rem;
+    padding-bottom: 0;
+  }
+  .footer-links-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    font-size: 1.05rem;
+  }
+  .footer-links-row {
+    display: flex;
+    gap: 8rem;
+  }
+  .footer-links-title {
+    font-family: "Gumani"
+    , serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #fff;
+    opacity: 0.7;
+    margin-bottom: 0.7rem;
+    font-weight: 500;
+  }
+  .footer-links-col a {
+    color: #fff;
     text-decoration: none;
-    color: var(--color-foreground);
+    opacity: 0.92;
+    transition: opacity 0.2s;
   }
-  footer .footer__links,
-  footer .footer__payment {
+  .footer-links-col a:hover {
+    opacity: 1;
+    text-decoration: underline;
+  }
+  .footer-logo-col {
     display: flex;
-    gap: 1rem;
+    justify-content: center;
+    align-items: flex-start;
   }
-{% endstylesheet %}
+  .footer-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
 
-{% schema %}
-{
-  "name": "t:general.footer",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_payment_icons",
-      "label": "t:labels.show_payment_icons",
-      "default": true
+  }
+  .footer-newsletter-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    justify-content: flex-start;
+  }
+  .footer-newsletter-title {
+    font-size: 1.75rem;
+    font-family: 'Gumani'
+    , serif;
+    margin-bottom: 0.5rem;
+  }
+  .footer-newsletter-form {
+    display: flex;
+    width: 100%;
+    /* max-width: 350px; */
+    border: 1px solid #fff;
+    border-radius: 2px;
+    overflow: hidden;
+    background: transparent;
+  }
+  .footer-newsletter-form input[type="email"] {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+  }
+  .footer-newsletter-form button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 0 1rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .footer-newsletter-form button:hover {
+    color: #e95d8d;
+  }
+  .footer-copyright {
+    text-align: center;
+    color: #fff;
+    opacity: 0.7;
+    font-size: 0.95rem;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 900px) {
+    .custom-footer {
+      padding: 0 1rem 2rem;
     }
-  ]
-}
-{% endschema %}
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      text-align: center;
+      padding-top: 3rem;
+    }
+    .footer-links-col,
+    .footer-logo-col,
+    .footer-newsletter-col {
+      align-items: center;
+      justify-content: center;
+    }
+    .footer-logo {
+      margin: 0 auto;
+    }
+    .footer-newsletter-form {
+      max-width: 100%;
+    }
+  }
+  .footer-social-row {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 1.2rem;
+  }
+  .footer-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s
+    , transform 0.2s;
+    opacity: 0.85;
+  }
+  .footer-social-link:hover {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  .footer-social-img {
+    width: 28px;
+    height: 28px;
+    display: block;
+  }
+</style>
+
+<!-- SVG ICONS SPRITE (add to theme.liquid or inline here for demo) -->
+<svg style="display:none;">
+  <symbol id="icon-facebook" viewBox="0 0 24 24"><path d="M22 12c0-5.522-4.477-10-10-10S2 6.478 2 12c0 5 3.657 9.127 8.438 9.877v-6.987h-2.54v-2.89h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.261c-1.243 0-1.632.771-1.632 1.562v1.875h2.773l-.443 2.89h-2.33v6.987C18.343 21.127 22 17 22 12z" /></symbol>
+  <symbol id="icon-instagram" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.242 1.308 3.608.058 1.266.069 1.646.069 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.242 1.246-3.608 1.308-1.266.058-1.646.069-4.85.069s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.242-1.308-3.608C2.175 15.647 2.163 15.267 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.242-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.332.013 7.052.072 5.775.131 4.602.425 3.635 1.392 2.668 2.359 2.374 3.532 2.315 4.809 2.256 6.089 2.243 6.498 2.243 12c0 5.502.013 5.911.072 7.191.059 1.277.353 2.45 1.32 3.417.967.967 2.14 1.261 3.417 1.32C8.332 23.987 8.741 24 12 24s3.668-.013 4.948-.072c1.277-.059 2.45-.353 3.417-1.32.967-.967 1.261-2.14 1.32-3.417.059-1.28.072-1.689.072-7.191 0-5.502-.013-5.911-.072-7.191-.059-1.277-.353-2.45-.353-3.417C19.398.425 18.225.131 16.948.072 15.668.013 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" /></symbol>
+  <symbol id="icon-pinterest" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.396 7.617 11.093-.105-.944-.2-2.395.042-3.428.219-.963 1.41-6.137 1.41-6.137s-.36-.719-.36-1.781c0-1.668.968-2.915 2.172-2.915 1.025 0 1.521.77 1.521 1.693 0 1.032-.657 2.574-.995 4.01-.283 1.2.601 2.178 1.782 2.178 2.138 0 3.782-2.254 3.782-5.506 0-2.877-2.07-4.892-5.03-4.892-3.432 0-5.444 2.573-5.444 5.232 0 1.033.398 2.143.895 2.744.099.12.113.225.083.346-.09.354-.292 1.127-.332 1.285-.05.2-.162.242-.375.146-1.398-.573-2.27-2.37-2.27-3.819 0-3.108 2.262-6.684 6.755-6.684 3.548 0 6.308 2.527 6.308 5.902 0 3.522-2.217 6.36-5.293 6.36-1.034 0-2.006-.537-2.338-1.153l-.636 2.423c-.192.734-.568 1.652-.847 2.213.637.197 1.308.304 2.012.304 6.627 0 12-5.373 12-12S18.627 0 12 0z" /></symbol>
+  <symbol id="icon-youtube" viewBox="0 0 24 24"><path d="M23.498 6.186a2.994 2.994 0 0 0-2.112-2.112C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.386.574A2.994 2.994 0 0 0 .502 6.186C0 8.072 0 12 0 12s0 3.928.502 5.814a2.994 2.994 0 0 0 2.112 2.112C4.5 20.5 12 20.5 12 20.5s7.5 0 9.386-.574a2.994 2.994 0 0 0 2.112-2.112C24 15.928 24 12 24 12s0-3.928-.502-5.814zM9.75 15.5v-7l6.5 3.5-6.5 3.5z" /></symbol>
+  <symbol id="icon-tiktok" viewBox="0 0 24 24"><path d="M12.004 2.003c0-.553.447-1 1-1h2.001c.553 0 1 .447 1 1v2.001c0 .553.447 1 1 1h2.001c.553 0 1 .447 1 1v2.001c0 .553-.447 1-1 1h-2.001c-.553 0-1 .447-1 1v2.001c0 .553-.447 1-1 1h-2.001c-.553 0-1-.447-1-1v-2.001c0-.553-.447-1-1-1h-2.001c-.553 0-1-.447-1-1v-2.001c0-.553.447-1 1-1h2.001c.553 0 1-.447 1-1v-2.001zm0 2.001h-2.001v2.001h2.001v-2.001zm2.001 2.001v2.001h2.001v-2.001h-2.001zm-2.001 2.001h-2.001v2.001h2.001v-2.001zm2.001 2.001v2.001h2.001v-2.001h-2.001zm-2.001 2.001h-2.001v2.001h2.001v-2.001zm2.001 2.001v2.001h2.001v-2.001h-2.001zm-2.001 2.001h-2.001v2.001h2.001v-2.001z" /></symbol>
+  <symbol id="icon-linkedin" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.268c-.966 0-1.75-.784-1.75-1.75s.784-1.75 1.75-1.75 1.75.784 1.75 1.75-.784 1.75-1.75 1.75zm15.5 11.268h-3v-5.604c0-1.337-.025-3.063-1.868-3.063-1.868 0-2.154 1.459-2.154 2.967v5.7h-3v-10h2.881v1.367h.041c.401-.761 1.379-1.563 2.841-1.563 3.039 0 3.6 2.001 3.6 4.601v5.595z" /></symbol>
+</svg>

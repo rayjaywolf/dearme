@@ -1,0 +1,53 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Theme Development Best Practices
+
+## Code Organization
+
+1. **Sections**
+   - Create sections for major page components
+   - Keep sections modular and reusable
+   - Use schema settings for customization
+   - Follow naming convention: `section-name.liquid`
+
+2. **Snippets**
+   - Use for reusable UI components
+   - Keep snippets small and focused
+   - Follow naming convention: `snippet-name.liquid`
+
+3. **Assets**
+   - Organize by type (images, fonts, etc.)
+   - Use descriptive filenames
+   - Optimize images before adding
+   - Keep JavaScript modular
+
+## Liquid Best Practices
+
+1. **Performance**
+   - Minimize nested loops
+   - Use `{%- -%}` for whitespace control
+   - Cache expensive operations
+   - Use `{% comment %}` for documentation
+
+2. **Security**
+   - Always escape output with `{{ variable | escape }}`
+   - Use `{% raw %}` sparingly
+   - Validate user input
+   - Follow Shopify's security guidelines
+
+3. **Maintainability**
+   - Use consistent indentation
+   - Add comments for complex logic
+   - Keep templates DRY (Don't Repeat Yourself)
+   - Use meaningful variable names
+
+## Testing
+
+1. Use Theme Check for linting
+2. Test across different devices and browsers
+3. Verify all interactive elements
+4. Check performance metrics
+5. Validate accessibility

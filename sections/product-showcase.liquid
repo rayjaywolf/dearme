@@ -1,0 +1,780 @@
+{% schema %}
+{
+  "name": "Product Showcase",
+  "settings": [
+    {
+      "type": "url",
+      "id": "buy_button_link",
+      "label": "Buy Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ead1c1"
+    },
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Title Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "title_style",
+      "label": "Title Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font",
+      "label": "Subtitle Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_style",
+      "label": "Subtitle Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "description_font",
+      "label": "Description Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "description_style",
+      "label": "Description Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "button_font",
+      "label": "Button Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "title_transform",
+      "label": "Title Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_transform",
+      "label": "Subtitle Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "description_transform",
+      "label": "Description Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "button_transform",
+      "label": "Button Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#63001fd1"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_bg",
+      "label": "Button Arrow Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_color",
+      "label": "Button Arrow Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button Hover Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text",
+      "label": "Button Hover Text Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border",
+      "label": "Button Hover Border Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_arrow_bg",
+      "label": "Button Hover Arrow Background",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_arrow_color",
+      "label": "Button Hover Arrow Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Showcase",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}
+
+<div
+  class="product-showcase"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="product-showcase__container">
+    <div class="product-showcase__image-container">
+      <img
+        src="{{ 'A7409894.jpg' | asset_url }}"
+        alt="Sacred Secret Serum"
+        class="product-showcase__image"
+        loading="lazy"
+        width="800"
+        height="1000"
+      >
+    </div>
+
+    <div class="product-showcase__content">
+      <h2
+        class="product-showcase__title"
+        data-split="title"
+        style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
+      >
+        Sacred Secret
+      </h2>
+      <h3
+        class="product-showcase__subtitle"
+        data-split="subtitle"
+        style="font-family: {{ section.settings.subtitle_font }}, serif; font-style: {{ section.settings.subtitle_style }}; text-transform: {{ section.settings.subtitle_transform }}; color: {{ section.settings.subtitle_color }};"
+      >
+        Age Defying Illuminating Saffron Weightless Face Serum
+      </h3>
+      <p
+        class="product-showcase__description"
+        data-split="description"
+        style="font-family: {{ section.settings.description_font }}, serif; font-style: {{ section.settings.description_style }}; text-transform: {{ section.settings.description_transform }}; color: {{ section.settings.description_color }};"
+      >
+        Your Pathway to Timeless Beauty. Immerse in the Elixir of Kashmiri Saffron, Crafted for Royalty. Embrace
+        Radiance.
+      </p>
+      <div class="product-showcase__buttons">
+        <a
+          href="{{ section.settings.buy_button_link }}"
+          class="product-showcase__button"
+          style="font-family: {{ section.settings.button_font }}, sans-serif; font-style: {{ section.settings.button_style }}; text-transform: {{ section.settings.button_transform }}; background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }};"
+        >
+          <span style="color: {{ section.settings.button_text_color }};">Buy Now</span>
+          <div class="intro__cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
+            <svg
+              class="icon-arrow"
+              width="13"
+              height="8"
+              viewBox="0 0 13 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="fill: {{ section.settings.button_arrow_color }};"
+            >
+              <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+            </svg>
+            <svg
+              class="icon-arrow"
+              width="13"
+              height="8"
+              viewBox="0 0 13 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="fill: {{ section.settings.button_arrow_color }};"
+            >
+              <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+    .product-showcase {
+      height: 100vh;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #fef9f2;
+    }
+
+    .product-showcase__container {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+
+    .product-showcase__image-container {
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .product-showcase__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform-origin: center center;
+    }
+
+    .product-showcase__content {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0 6rem;
+      color: #63001f;
+    }
+
+    .product-showcase__title {
+      font-family: 'Gumani', serif;
+      font-weight: 200;
+      font-size: 4rem;
+      margin: 0 0 1.5rem 0;
+      line-height: 0.9;
+      color: #63001f;
+  }
+
+    .product-showcase__subtitle {
+      font-weight: 400;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      margin: 0 0 2rem 0;
+      line-height: 1.4;
+      width: 100%;
+      color: #63001f;
+    }
+
+    .product-showcase__description {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.4;
+      margin: 0 0 3rem 0;
+      max-width: 100%;
+      color: #63001fd1;
+    }
+
+    /* SplitText masking styles */
+    .product-showcase__title .line,
+    .product-showcase__subtitle .line,
+    .product-showcase__description .line {
+      display: block;
+      will-change: transform;
+      overflow: hidden;
+    }
+
+    .product-showcase__buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .product-showcase__button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.5rem;
+      font-size: 0.8rem;
+      text-decoration: none;
+      border-radius: 999px;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease;
+      background-color: #63001f;
+      color: #fff;
+      border: 2px solid #63001f;
+      gap: 1rem;
+      overflow: hidden;
+      max-width: 180px;
+    }
+
+    .product-showcase__button span {
+      margin-right: 1rem;
+      padding-left: 1rem;
+      color: #fff;
+    }
+
+    .intro__cta-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      background: #fff;
+      border-radius: 100%;
+      height: 2.4rem;
+      width: 2.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon-arrow {
+      width: 15px;
+      height: 10px;
+      fill: #63001f;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scaleX(1);
+      transform-origin: center;
+      transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+    }
+
+    .intro__cta-arrow .icon-arrow:last-child {
+      left: 50%;
+      opacity: 0;
+      transform: translate(-300%, -50%) scaleX(2);
+    }
+
+    .product-showcase__button:hover .intro__cta-arrow .icon-arrow:first-child {
+      opacity: 0;
+      transform: translate(200%, -50%) scaleX(2);
+    }
+
+    .product-showcase__button:hover .intro__cta-arrow .icon-arrow:last-child {
+      opacity: 1;
+      transform: translate(-50%, -50%) scaleX(1);
+    }
+
+    .product-showcase__button:hover {
+      background-color: {{ section.settings.button_hover_bg }} !important;
+      color: {{ section.settings.button_hover_text }} !important;
+      border-color: {{ section.settings.button_hover_border }} !important;
+    }
+
+    .product-showcase__button:hover span {
+      color: {{ section.settings.button_hover_text }} !important;
+    }
+
+    .product-showcase__button:hover .intro__cta-arrow {
+      background: {{ section.settings.button_hover_arrow_bg }} !important;
+    }
+
+    .product-showcase__button:hover .icon-arrow {
+      fill: {{ section.settings.button_hover_arrow_color }} !important;
+    }
+
+    @media screen and (max-width: 768px) {
+      .product-showcase__container {
+        flex-direction: column;
+      }
+
+      .product-showcase__image-container,
+      .product-showcase__content {
+        width: 100%;
+        height: 50vh;
+      }
+
+      .product-showcase__content {
+        padding: 2rem;
+      }
+
+      .product-showcase__title {
+        font-size: 2.5rem;
+      }
+
+      .product-showcase__subtitle {
+        font-size: 1rem;
+      }
+
+      .product-showcase__description {
+        font-size: 1.2rem;
+        max-width: 100%;
+      }
+    }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Ensure GSAP and SplitText are loaded
+    if (typeof gsap !== 'undefined' && typeof SplitText !== 'undefined') {
+      // Register plugins
+      gsap.registerPlugin(SplitText);
+
+      var section = document.querySelector('.product-showcase');
+      if (!section) return;
+
+      // Set initial state for image immediately
+      gsap.set('.product-showcase__image', {
+        scale: 1.5,
+        objectPosition: 'center center',
+      });
+
+      // Initialize masked text reveal
+      function initMaskedTextReveal() {
+        const title = document.querySelector('[data-split="title"]');
+        const subtitle = document.querySelector('[data-split="subtitle"]');
+        const description = document.querySelector('[data-split="description"]');
+
+        if (!title || !subtitle || !description) return;
+
+        // Create SplitText with masking for all text elements
+        const titleSplitText = new SplitText(title, {
+          type: 'lines',
+          linesClass: 'line',
+        });
+
+        const subtitleSplitText = new SplitText(subtitle, {
+          type: 'lines',
+          linesClass: 'line',
+        });
+
+        const descriptionSplitText = new SplitText(description, {
+          type: 'lines',
+          linesClass: 'line',
+        });
+
+        // Create mask wrapper for each line
+        [titleSplitText, subtitleSplitText, descriptionSplitText].forEach((splitText) => {
+          splitText.lines.forEach((line) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.overflow = 'hidden';
+            wrapper.style.lineHeight = line.parentElement.classList.contains('product-showcase__title') ? '0.9' : '1.4';
+            line.parentNode.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+          });
+        });
+
+        // Set initial state for lines (hidden)
+        gsap.set([...titleSplitText.lines, ...subtitleSplitText.lines, ...descriptionSplitText.lines], {
+          yPercent: 110,
+        });
+
+        return { titleSplitText, subtitleSplitText, descriptionSplitText };
+      }
+
+      // Initialize SplitText after fonts are ready
+      let splitTexts;
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+          splitTexts = initMaskedTextReveal();
+        });
+      } else {
+        // Fallback if fonts API is not supported
+        setTimeout(() => {
+          splitTexts = initMaskedTextReveal();
+        }, 100);
+      }
+
+      var observer = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting && splitTexts) {
+            // Create timeline for text and button animations
+            const tl = gsap.timeline();
+
+            // Animate text lines
+            tl.to(
+              [
+                ...splitTexts.titleSplitText.lines,
+                ...splitTexts.subtitleSplitText.lines,
+                ...splitTexts.descriptionSplitText.lines,
+              ],
+              {
+                yPercent: 0,
+                duration: 1.8,
+                stagger: 0.15,
+                ease: 'power4.out',
+              }
+            )
+              // Add button animation
+              .to(
+                '.product-showcase__buttons',
+                {
+                  opacity: 1,
+                  y: 0,
+                  duration: 1,
+                  ease: 'power3.out',
+                },
+                '-=1.6'
+              );
+
+            // Disconnect observer after triggering
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.5 } // Original threshold for text animation
+      );
+
+      // Create a separate observer for the image animation
+      var imageObserver = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting) {
+            // Start image zoom out animation
+            gsap.to('.product-showcase__image', {
+              scale: 1,
+              duration: 2,
+              ease: 'power2.out',
+            });
+            imageObserver.disconnect();
+          }
+        },
+        { threshold: 0.1 } // Lower threshold for earlier image animation
+      );
+
+      observer.observe(section);
+      imageObserver.observe(section);
+    } else {
+      console.error('GSAP or SplitText not loaded.');
+    }
+  });
+</script>

@@ -1,0 +1,342 @@
+{% comment %}
+  Info Section
+{% endcomment %}
+
+<section
+  class="sacred-info-section"
+  style="background: #fef9f2 url('{{ 'noise.png' | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="sacred-info-container">
+    <div class="sacred-info-text-container">
+      <h2 class="sacred-info-title">The <em>Secret</em> behind the Glow</h2>
+      <div class="sacred-info-subtitle-wrapper">
+        <p class="sacred-info-subtitle">This isn't just a glow serum — it's your skin's healing companion.</p>
+        <p class="sacred-info-description">
+          Sacred Secret is designed to brighten, fade pigmentation, soften fine lines, calm dark spots, and strengthen
+          your barrier — all while staying gentle on the most sensitive skin.
+        </p>
+      </div>
+    </div>
+    <div class="sacred-info-ingredients">
+      <div class="sacred-info-ingredient">
+        <img src="{{ 'saffron.png' | asset_url }}" alt="Kashmiri Saffron" loading="lazy" width="150" height="150">
+        <span class="sacred-info-ingredient-name">Kashmiri Saffron</span>
+        <p class="sacred-info-ingredient-desc">Brightens dull skin, reduces pigmentation, adds a natural radiance</p>
+      </div>
+      <div class="sacred-info-ingredient">
+        <img src="{{ 'gold.png' | asset_url }}" alt="Gold Bhasma" loading="lazy" width="150" height="150">
+        <span class="sacred-info-ingredient-name">Gold Bhasma</span>
+        <p class="sacred-info-ingredient-desc">Improves elasticity, softens fine lines, energizes tired skin</p>
+      </div>
+      <div class="sacred-info-ingredient">
+        <img src="{{ 'lotus.png' | asset_url }}" alt="Lotus" loading="lazy" width="150" height="150">
+        <span class="sacred-info-ingredient-name">Lotus Extract</span>
+        <p class="sacred-info-ingredient-desc">Hydrates, balances oil, refines texture</p>
+      </div>
+      <div class="sacred-info-ingredient">
+        <img
+          src="{{ 'Centella-Asiatica.png' | asset_url }}"
+          alt="Centella Asiatica"
+          loading="lazy"
+          width="150"
+          height="150"
+        >
+        <span class="sacred-info-ingredient-name">Centella Asiatica</span>
+        <p class="sacred-info-ingredient-desc">Repairs skin barrier, fades scars, soothes inflammation</p>
+      </div>
+      <div class="sacred-info-ingredient">
+        <img src="{{ 'Kakadu-Plum.png' | asset_url }}" alt="Kakadu Plum" loading="lazy" width="150" height="150">
+        <span class="sacred-info-ingredient-name">Kakadu Plum</span>
+        <p class="sacred-info-ingredient-desc">
+          Richest source of Vitamin C — targets dark spots, supports collagen production
+        </p>
+      </div>
+      <div class="sacred-info-ingredient">
+        <img src="{{ 'turmeric.png' | asset_url }}" alt="Turmeric" loading="lazy" width="150" height="150">
+        <span class="sacred-info-ingredient-name">Turmeric</span>
+        <p class="sacred-info-ingredient-desc">Anti-inflammatory, evens skin tone, calms flare-ups</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sacred-info-section {
+    width: 100%;
+    position: relative;
+    padding: 4rem 0;
+  }
+
+  .sacred-info-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    /* max-width: 1200px; */
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .sacred-info-text-container {
+    flex: 1;
+    max-width: 800px;
+    margin-bottom: 4rem;
+  }
+
+  .sacred-info-title {
+    font-family: 'Instrument Serif', serif;
+    text-transform: capitalize;
+    font-weight: 200;
+    font-size: 3rem;
+    color: #63001f;
+    line-height: 1.2;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .sacred-info-title em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    text-transform: none;
+    display: inline;
+  }
+
+  .sacred-info-subtitle-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .sacred-info-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    color: #63001f;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+  }
+
+  .sacred-info-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: rgba(99, 0, 31, 0.82);
+    line-height: 1.8;
+  }
+
+  .sacred-info-ingredients {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
+    width: 95%;
+    margin-top: 1rem;
+  }
+
+  .sacred-info-ingredient {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    transition: transform 0.3s ease;
+    margin-bottom: 2rem;
+  }
+
+  .sacred-info-ingredient img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+  }
+
+  .sacred-info-ingredient-name {
+    font-family: 'Inter', serif;
+    color: #63001f;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .sacred-info-ingredient-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgba(99, 0, 31, 0.82);
+    line-height: 1.5;
+    text-align: center;
+    max-width: 180px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .sacred-info-section {
+      padding: 4rem 0;
+    }
+
+    .sacred-info-container {
+      padding: 0 1.5rem;
+    }
+
+    .sacred-info-title {
+      font-size: 2.5rem;
+    }
+
+    .sacred-info-subtitle {
+      font-size: 1.1rem;
+    }
+
+    .sacred-info-description {
+      font-size: 0.9rem;
+    }
+
+    .sacred-info-ingredients {
+      gap: 1.5rem;
+    }
+
+    .sacred-info-ingredient {
+      width: 100%;
+      min-width: unset;
+      margin-bottom: 2.5rem;
+    }
+
+    .sacred-info-ingredient img {
+      width: 120px;
+    }
+
+    .sacred-info-ingredient-name {
+      font-size: 1rem;
+    }
+
+    .sacred-info-ingredient-desc {
+      font-size: 0.85rem;
+      max-width: 250px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap === 'undefined' || typeof SplitText === 'undefined') return;
+
+    // Register plugins
+    gsap.registerPlugin(SplitText);
+
+    const section = document.querySelector('.sacred-info-section');
+
+    // Initialize masked text reveal
+    function initMaskedTextReveal() {
+      const title = document.querySelector('.sacred-info-title');
+      const subtitle = document.querySelector('.sacred-info-subtitle');
+      const description = document.querySelector('.sacred-info-description');
+
+      if (!title || !subtitle || !description) return;
+
+      // Create SplitText with masking for all text elements
+      const titleSplitText = new SplitText(title, {
+        type: 'lines',
+        linesClass: 'sacred-info-line',
+      });
+
+      const subtitleSplitText = new SplitText(subtitle, {
+        type: 'lines',
+        linesClass: 'sacred-info-line',
+      });
+
+      const descriptionSplitText = new SplitText(description, {
+        type: 'lines',
+        linesClass: 'sacred-info-line',
+      });
+
+      // Create mask wrapper for each line
+      [titleSplitText, subtitleSplitText, descriptionSplitText].forEach((splitText) => {
+        splitText.lines.forEach((line) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflow = 'hidden';
+          wrapper.style.lineHeight = line.parentElement.classList.contains('sacred-info-title') ? '1.2' : '1.6';
+          line.parentNode.insertBefore(wrapper, line);
+          wrapper.appendChild(line);
+        });
+      });
+
+      // Set initial state for lines (hidden)
+      gsap.set([...titleSplitText.lines, ...subtitleSplitText.lines, ...descriptionSplitText.lines], {
+        yPercent: 110,
+      });
+
+      // Set initial state for ingredients (hidden)
+      gsap.set('.sacred-info-ingredient', {
+        y: 50,
+        opacity: 0,
+      });
+
+      return { titleSplitText, subtitleSplitText, descriptionSplitText };
+    }
+
+    // Initialize SplitText after fonts are ready
+    let splitTexts;
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        splitTexts = initMaskedTextReveal();
+      });
+    } else {
+      setTimeout(() => {
+        splitTexts = initMaskedTextReveal();
+      }, 100);
+    }
+
+    // Create observer for text animations
+    const sectionObserver = new IntersectionObserver(
+      function (entries) {
+        if (entries[0].isIntersecting && splitTexts) {
+          // Create timeline for text animations
+          const tl = gsap.timeline();
+
+          // Animate all text elements
+          tl.to(
+            [
+              ...splitTexts.titleSplitText.lines,
+              ...splitTexts.subtitleSplitText.lines,
+              ...splitTexts.descriptionSplitText.lines,
+            ],
+            {
+              yPercent: 0,
+              duration: 1.8,
+              stagger: 0.15,
+              ease: 'power4.out',
+            }
+          );
+
+          // Animate ingredients
+          tl.to(
+            '.sacred-info-ingredient',
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1.2,
+              stagger: 0.1,
+              ease: 'power3.out',
+            },
+            '-=1'
+          );
+
+          sectionObserver.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    sectionObserver.observe(section);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Info Section",
+  "presets": [
+    {
+      "name": "Info Section"
+    }
+  ]
+}
+{% endschema %}

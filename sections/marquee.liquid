@@ -1,0 +1,100 @@
+{% comment %}
+  Marquee Section with Text
+{% endcomment %}
+
+<section class="marquee-section">
+  <div class="marquee-wrapper">
+    <ul class="marquee-content">
+      <li>·</li>
+      <li>Born from Ayurveda</li>
+      <li>·</li>
+      <li>Designed for your sensitivity</li>
+      <li>·</li>
+      <li>Born from Ayurveda</li>
+      <li>·</li>
+      <li>Designed for your sensitivity</li>
+    </ul>
+    <!-- Duplicate list for continuous scroll -->
+    <ul class="marquee-content" aria-hidden="true">
+      <li>·</li>
+      <li>Born from Ayurveda</li>
+      <li>·</li>
+      <li>Designed for your sensitivity</li>
+      <li>·</li>
+      <li>Born from Ayurveda</li>
+      <li>·</li>
+      <li>Designed for your sensitivity</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .marquee-section {
+    width: 100%;
+    padding: 2rem 0;
+    overflow: hidden;
+    position: relative;
+    background: #fef9f2;
+  }
+
+  .marquee-wrapper {
+    display: flex;
+    width: 130%;
+    overflow: hidden;
+    gap: 4rem;
+  }
+
+  .marquee-content {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4rem;
+    width: 100%;
+    animation: scroll 25s linear infinite;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .marquee-content li {
+    font-family: 'Inter', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #63001f;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0;
+  }
+
+  @keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .marquee-section {
+      padding: 1rem 0;
+    }
+
+    .marquee-content li {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Marquee",
+  "presets": [
+    {
+      "name": "Marquee"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,1020 @@
+{% comment %}
+  1. Assigning articles from the blog with the correct handle: 'blog-posts'.
+  2. We use bracket notation ['blog-posts'] because the handle contains a hyphen.
+{% endcomment %}
+{% assign articles_list = blogs['blog-posts'].articles %}
+
+<section
+  class="blogs-section"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="blogs-container">
+    <p
+      class="blogs-subtitle"
+      style="font-family: {{ section.settings.subtitle_font }}, serif; font-style: {{ section.settings.subtitle_style }}; text-transform: {{ section.settings.subtitle_transform }}; color: {{ section.settings.subtitle_color }};"
+    >
+      Our Blog
+    </p>
+    <h2
+      class="blogs-title"
+      style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
+    >
+      News & Stories
+    </h2>
+    <p
+      class="blogs-text"
+      style="font-family: {{ section.settings.text_font }}, serif; font-style: {{ section.settings.text_style }}; text-transform: {{ section.settings.text_transform }}; color: {{ section.settings.text_color }};"
+    >
+      Explore our stories of change, recent news, the work we do, and ways to make an even greater impact together.
+    </p>
+
+    <div class="blogs-grid">
+      {% comment %} --- Featured Article (Latest) --- {% endcomment %}
+      {% if articles_list[0] %}
+        {% assign article_one = articles_list[0] %}
+        <div class="blog-featured-row">
+          <div
+            class="blog-featured-image"
+            style="background-image: url('{{ article_one.image | image_url: width: 1200 }}');"
+          ></div>
+          <div class="blog-featured-text" style="background: {{ section.settings.featured_card_bg }};">
+            <div class="blog-tags">
+              {% for tag in article_one.tags limit: 2 %}
+                <span
+                  class="blog-tag"
+                  style="color: {{ section.settings.tag_text_color }}; border-color: {{ section.settings.tag_border_color }};"
+                >
+                  {{- tag -}}
+                </span>
+              {% endfor %}
+            </div>
+            <h3
+              class="blog-featured-title js-animated-title"
+              style="font-family: {{ section.settings.article_title_font }}, serif; font-style: {{ section.settings.article_title_style }}; color: {{ section.settings.article_title_color }};"
+            >
+              <a href="{{ article_one.url }}">{{ article_one.title }}</a>
+            </h3>
+            <div class="blog-meta" style="color: {{ section.settings.meta_text_color }};">
+              Published on {{ article_one.published_at | time_tag: format: 'date' }} |
+              {{ article_one.content | strip_html | split: ' ' | size | divided_by: 200 | round }} min read
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="blog-row">
+        {% comment %} --- Second Latest Article --- {% endcomment %}
+        {% if articles_list[1] %}
+          {% assign article_two = articles_list[1] %}
+          <div class="blog-horizontal-card large">
+            <div
+              class="blog-horizontal-image"
+              style="background-image: url('{{ article_two.image | image_url: width: 800 }}');"
+            ></div>
+            <div class="blog-horizontal-text" style="background: {{ section.settings.second_card_bg }};">
+              <div class="blog-tags">
+                {% for tag in article_two.tags limit: 2 %}
+                  <span
+                    class="blog-tag"
+                    style="color: {{ section.settings.tag_text_color }}; border-color: {{ section.settings.tag_border_color }};"
+                  >
+                    {{- tag -}}
+                  </span>
+                {% endfor %}
+              </div>
+              <h3
+                class="blog-featured-title column-2-large js-animated-title"
+                style="font-family: {{ section.settings.article_title_font }}, serif; font-style: {{ section.settings.article_title_style }}; color: {{ section.settings.article_title_color }};"
+              >
+                <a href="{{ article_two.url }}">{{ article_two.title }}</a>
+              </h3>
+              <div class="blog-meta column-2-meta" style="color: {{ section.settings.meta_text_color }};">
+                Published on {{ article_two.published_at | time_tag: format: 'date' }} |
+                {{ article_two.content | strip_html | split: ' ' | size | divided_by: 200 | round }} min read
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% comment %} --- Third Latest Article --- {% endcomment %}
+        {% if articles_list[2] %}
+          {% assign article_three = articles_list[2] %}
+          <div class="blog-horizontal-card small">
+            <div
+              class="blog-small-image"
+              style="background-image: url('{{ article_three.image | image_url: width: 600 }}');"
+            ></div>
+            <div class="blog-small-content" style="background: {{ section.settings.third_card_bg }};">
+              <h3
+                class="blog-small-title js-animated-title"
+                style="font-family: {{ section.settings.article_title_font }}, serif; font-style: {{ section.settings.article_title_style }}; color: {{ section.settings.article_title_color }};"
+              >
+                <a href="{{ article_three.url }}">{{ article_three.title }}</a>
+              </h3>
+              <div class="blog-small-meta" style="color: {{ section.settings.meta_text_color }};">
+                Published on {{ article_three.published_at | time_tag: format: 'date' }} |
+                {{ article_three.content | strip_html | split: ' ' | size | divided_by: 200 | round }} min read
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      <div class="blogs-button-container">
+        <a
+          href="{{ blogs['blog-posts'].url }}"
+          class="blogs-cta-button"
+          style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }};"
+        >
+          <span style="color: {{ section.settings.button_text_color }};">Read all articles</span>
+          <div class="blogs-cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
+            <svg
+              class="blogs-icon-arrow"
+              width="13"
+              height="8"
+              viewBox="0 0 13 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="fill: {{ section.settings.button_arrow_color }};"
+            >
+              <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+            </svg>
+            <svg
+              class="blogs-icon-arrow"
+              width="13"
+              height="8"
+              viewBox="0 0 13 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="fill: {{ section.settings.button_arrow_color }};"
+            >
+              <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Your existing CSS styles remain unchanged */
+  .blogs-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background-color: #fef9f2;
+  }
+  .blogs-container {
+    text-align: center;
+    padding: 4rem 2rem;
+    width: 100%;
+  }
+  .blogs-subtitle {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+  .blogs-title {
+    font-family: 'Instrument Serif', sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .blogs-text {
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    width: 35%;
+    margin: 0 auto;
+    margin-top: 1.2rem;
+  }
+  .blogs-grid {
+    width: 100%;
+    max-width: 1200px;
+    margin: 4rem auto 0;
+    padding: 0 2rem;
+  }
+  .blog-featured-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 450px;
+    border-radius: 0;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+  .blog-featured-text {
+    background: #f9eccc;
+    height: 100%;
+    flex: 1 1 0;
+    padding: 3rem 3rem 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .blog-featured-image {
+    flex: 1 1 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    height: 100%;
+    min-width: 50%;
+    background-color: #f5f5f5;
+    overflow: hidden;
+    position: relative;
+    --scale: 1.2;
+  }
+
+  .blog-featured-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: inherit;
+    transform-origin: center center;
+    transform: scale(var(--scale));
+    transition: transform 1.3s ease-out;
+  }
+
+  .blog-tags {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  .blog-tag {
+    display: inline-block;
+    background: transparent;
+    color: #333;
+    border-radius: 2em;
+    padding: 0.3em 1.2em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border: 0.9px solid #333;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .blog-featured-title {
+    font-family: 'Gumani', serif;
+    text-align: left;
+    font-size: 2.2rem;
+    font-weight: 400;
+    margin-bottom: 2rem;
+    line-height: 1.1;
+  }
+  .blog-featured-title a,
+  .blog-small-title a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .blog-meta {
+    font-size: 0.75rem;
+    color: #333;
+    text-align: left;
+  }
+  .blog-row {
+    display: flex;
+    gap: 1rem;
+  }
+  .blog-horizontal-card {
+    display: flex;
+    flex-direction: row;
+    height: 450px;
+    border-radius: 0;
+    overflow: hidden;
+    background: none;
+    background-color: transparent;
+  }
+  .blog-horizontal-card.large {
+    width: 66.66%;
+  }
+  .blog-horizontal-card.small {
+    width: 33.33%;
+    flex-direction: column;
+    height: 450px;
+    border-radius: 0;
+    overflow: hidden;
+  }
+  .blog-horizontal-text {
+    background: #ffdad8;
+    flex: 1 1 0;
+    padding: 2rem 2rem 1.7rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .column-2-large {
+    font-size: 1.6rem;
+  }
+  .blog-horizontal-image {
+    flex: 1 1 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    height: 100%;
+    min-width: 50%;
+    background-color: #f5f5f5;
+    overflow: hidden;
+    position: relative;
+    --scale: 1.2;
+  }
+
+  .blog-horizontal-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: inherit;
+    transform-origin: center center;
+    transform: scale(var(--scale));
+    transition: transform 1.3s ease-out;
+  }
+
+  .blog-small-image {
+    height: 75%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 0 0 0 0;
+    background-color: #f5f5f5;
+    overflow: hidden;
+    position: relative;
+    --scale: 1.2;
+  }
+
+  .blog-small-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: inherit;
+    transform-origin: center center;
+    transform: scale(var(--scale));
+    transition: transform 1.3s ease-out;
+  }
+
+  .blog-small-content {
+    height: 25%;
+    background: #e7a579;
+    padding: 2rem 2rem 1.7rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    border-radius: 0 0 0 0;
+  }
+  .blog-small-title {
+    font-family: 'Gumani', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 1rem 0;
+    text-align: left;
+  }
+  .blog-small-meta {
+    font-size: 0.75rem;
+    color: #333;
+    text-align: left;
+  }
+
+  .blogs-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .blogs-cta-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-radius: 999px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    background-color: #fff;
+    color: #63001f;
+    border: 1px solid #63001f;
+    gap: 1rem;
+    overflow: hidden;
+    max-width: 250px;
+  }
+
+  .blogs-cta-button span {
+    margin-right: 1rem;
+    padding-left: 1rem;
+    color: #63001f;
+  }
+
+  .blogs-cta-button:hover {
+    background-color: #63001f;
+    color: #fff;
+    border-color: #63001f;
+  }
+
+  .blogs-cta-button:hover span {
+    color: #fff;
+  }
+
+  .blogs-cta-button:hover .blogs-cta-arrow {
+    background: #fff;
+  }
+
+  .blogs-cta-button:hover .blogs-icon-arrow {
+    fill: #63001f;
+  }
+
+  .blogs-cta-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    background: #63001f;
+    border-radius: 100%;
+    height: 2.4rem;
+    width: 2.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blogs-icon-arrow {
+    width: 15px;
+    height: 10px;
+    fill: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+  }
+
+  .blogs-cta-arrow .blogs-icon-arrow:last-child {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
+
+  .blogs-cta-button:hover .blogs-cta-arrow .blogs-icon-arrow:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
+
+  .blogs-cta-button:hover .blogs-cta-arrow .blogs-icon-arrow:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+
+  @media screen and (max-width: 900px) {
+    .blog-row {
+      flex-direction: column;
+    }
+    .blog-horizontal-card.large,
+    .blog-horizontal-card.small {
+      width: 100%;
+    }
+    .blog-horizontal-card {
+      flex-direction: column;
+      height: auto;
+    }
+    .blog-horizontal-image {
+      height: 200px;
+      border-radius: 0 0 0 0;
+    }
+    .blog-horizontal-text {
+      border-radius: 0 0 0 0;
+      padding: 1.5rem 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap === 'undefined' || typeof SplitText === 'undefined') return;
+
+    // Register plugins
+    gsap.registerPlugin(SplitText);
+
+    const section = document.querySelector('.blogs-section');
+    if (!section) return;
+
+    // Initialize masked text reveal for static content
+    function initStaticTextReveal() {
+      const title = document.querySelector('.blogs-title');
+      const subtitle = document.querySelector('.blogs-subtitle');
+      const text = document.querySelector('.blogs-text');
+
+      if (!title || !subtitle || !text) return;
+
+      // Create SplitText with masking for all text elements
+      const titleSplitText = new SplitText(title, { type: 'lines', linesClass: 'line' });
+      const subtitleSplitText = new SplitText(subtitle, { type: 'lines', linesClass: 'line' });
+      const textSplitText = new SplitText(text, { type: 'lines', linesClass: 'line' });
+
+      // Create mask wrapper for each line
+      [titleSplitText, subtitleSplitText, textSplitText].forEach((splitText) => {
+        splitText.lines.forEach((line) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflow = 'hidden';
+          wrapper.style.lineHeight = line.parentElement.classList.contains('blogs-title') ? '0.9' : '1.4';
+          line.parentNode.insertBefore(wrapper, line);
+          wrapper.appendChild(line);
+        });
+      });
+
+      // Set initial state for lines (hidden)
+      const allStaticLines = [...titleSplitText.lines, ...subtitleSplitText.lines, ...textSplitText.lines];
+      gsap.set(allStaticLines, { yPercent: 110 });
+
+      return allStaticLines;
+    }
+
+    // Initialize SplitText for a single blog title
+    function initBlogTitleAnimation(blogTitle) {
+      const splitText = new SplitText(blogTitle, { type: 'lines,words', linesClass: 'line' });
+
+      // Create mask wrapper for each line
+      splitText.lines.forEach((line) => {
+        const wrapper = document.createElement('div');
+        wrapper.style.overflow = 'hidden';
+        line.parentNode.insertBefore(wrapper, line);
+        wrapper.appendChild(line);
+      });
+
+      // Set initial state
+      gsap.set(splitText.lines, { yPercent: 110 });
+
+      return splitText.lines;
+    }
+
+    // Initialize static text after fonts are ready
+    let staticLines;
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        staticLines = initStaticTextReveal();
+      });
+    } else {
+      setTimeout(() => {
+        staticLines = initStaticTextReveal();
+      }, 100);
+    }
+
+    // Create observer for static text animations
+    const staticObserver = new IntersectionObserver(
+      function (entries) {
+        if (entries[0].isIntersecting && staticLines) {
+          const tl = gsap.timeline();
+
+          // Animate static text lines
+          tl.to(staticLines, {
+            yPercent: 0,
+            duration: 1.8,
+            stagger: 0.15,
+            ease: 'power4.out',
+          });
+
+          staticObserver.disconnect();
+        }
+      },
+      { threshold: 0.25 }
+    );
+
+    staticObserver.observe(section);
+
+    // Initialize and observe each blog title
+    const blogTitles = document.querySelectorAll('.js-animated-title');
+    blogTitles.forEach((blogTitle) => {
+      // Initialize animation for this title
+      const titleLines = initBlogTitleAnimation(blogTitle);
+
+      // Create observer for this specific title
+      const titleObserver = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting) {
+            const tl = gsap.timeline();
+
+            // Animate this title's lines
+            tl.to(titleLines, {
+              yPercent: 0,
+              duration: 1.8,
+              stagger: 0.1,
+              ease: 'power4.out',
+            });
+
+            titleObserver.disconnect();
+          }
+        },
+        {
+          threshold: 0.2,
+        }
+      );
+
+      titleObserver.observe(blogTitle);
+    });
+
+    // Create observers for images
+    const blogImages = document.querySelectorAll('.blog-featured-image, .blog-horizontal-image, .blog-small-image');
+    blogImages.forEach((image) => {
+      const imageObserver = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting) {
+            image.style.setProperty('--scale', '1');
+            imageObserver.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      imageObserver.observe(image);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Blog Posts",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ead1c1"
+    },
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font",
+      "label": "Subtitle Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Work Sans"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_style",
+      "label": "Subtitle Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_transform",
+      "label": "Subtitle Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Title Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "title_style",
+      "label": "Title Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "italic"
+    },
+    {
+      "type": "select",
+      "id": "title_transform",
+      "label": "Title Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "text_font",
+      "label": "Text Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Work Sans"
+    },
+    {
+      "type": "select",
+      "id": "text_style",
+      "label": "Text Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "article_title_font",
+      "label": "Article Title Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "article_title_style",
+      "label": "Article Title Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#63001fd1"
+    },
+    {
+      "type": "color",
+      "id": "article_title_color",
+      "label": "Article Title Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "meta_text_color",
+      "label": "Meta Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "tag_text_color",
+      "label": "Tag Text Color",
+      "default": "#333333"
+    },
+    {
+      "type": "color",
+      "id": "tag_border_color",
+      "label": "Tag Border Color",
+      "default": "#333333"
+    },
+    {
+      "type": "header",
+      "content": "Card Background Colors"
+    },
+    {
+      "type": "color",
+      "id": "featured_card_bg",
+      "label": "Featured Card Background",
+      "default": "#F9ECCC"
+    },
+    {
+      "type": "color",
+      "id": "second_card_bg",
+      "label": "Second Card Background",
+      "default": "#ffdad8"
+    },
+    {
+      "type": "color",
+      "id": "third_card_bg",
+      "label": "Third Card Background",
+      "default": "#e7a579"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_bg",
+      "label": "Button Arrow Background",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_color",
+      "label": "Button Arrow Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Posts"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,111 @@
+{% comment %}
+  Formulations Carousel section
+{% endcomment %}
+
+<section class="formulations-carousel">
+  <div class="carousel-container">
+    <div class="carousel-track">
+      {% for i in (1..4) %}
+        <div class="carousel-slide">
+          <div class="slide-image"></div>
+          <div class="slide-content">
+            <p class="slide-subheading">unique formulations</p>
+            <h2 class="slide-heading">Ayurveda + Science</h2>
+            <p class="slide-body">
+              A journey that fuses ancient Ayurvedic wisdom, cherished by Indian royalty for centuries, with
+              cutting-edge scientific innovations. The result! Formulas that capture the essence of Ayurveda's healing
+              powers while embracing the rigor of modern science.
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .formulations-carousel {
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    position: relative;
+    background-color: #fff;
+  }
+
+  .carousel-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    display: flex;
+    height: 100%;
+    width: fit-content;
+  }
+
+  .carousel-slide {
+    width: 75vw;
+    height: 100%;
+    flex-shrink: 0;
+    display: flex;
+    gap: 4rem;
+    padding: 0 2rem;
+  }
+
+  .slide-image {
+    flex: 1;
+    background-color: #f5f5f5;
+  }
+
+  .slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  .slide-subheading {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #3b3b3b;
+    margin-bottom: 1rem;
+  }
+
+  .slide-heading {
+    font-family: 'Gumani', serif;
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size: 3rem;
+    color: #3b3b3b;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+  }
+
+  .slide-body {
+    font-size: 1rem;
+    color: #3b3b3b;
+    line-height: 1.6;
+    max-width: 500px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .carousel-slide {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .slide-image {
+      height: 40vh;
+    }
+
+    .slide-content {
+      padding: 1rem 0;
+    }
+
+    .slide-heading {
+      font-size: 2.5rem;
+    }
+  }
+</style>

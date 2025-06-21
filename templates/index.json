@@ -9,12 +9,57 @@
  */
 {
   "sections": {
-    "main": {
-      "type": "hello-world",
+    "hero": {
+      "type": "hero",
       "settings": {}
+    },
+    "product_showcase": {
+      "type": "product-showcase",
+      "settings": {
+        "buy_button_link": ""
+      }
+    },
+    "ingredients": {
+      "type": "ingredients"
+    },
+    "marquee": {
+      "type": "marquee"
+    },
+    "info": {
+      "type": "info",
+    },
+    "art_of_sacred": {
+      "type": "art-of-sacred"
+    },
+    "certifications": {
+      "type": "certifications",
+      "settings": {}
+    },
+    "animal_for_animal": {
+      "type": "animal-for-animal"
+    },
+    "blogs": {
+      "type": "blogs"
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "instagram": {
+      "type": "instagram"
     }
   },
   "order": [
-    "main"
+    "hero",
+    "product_showcase",
+    "ingredients",
+    "marquee",
+    "info",
+    "art_of_sacred",
+    "certifications",
+    "animal_for_animal",
+    "blogs",
+    "testimonials",
+    "instagram"
   ]
 }

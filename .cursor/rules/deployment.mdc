@@ -1,0 +1,50 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Deployment and Version Control Guidelines
+
+## Git Workflow
+
+1. **Branching Strategy**
+   - `main`: Production-ready code
+   - `develop`: Development branch
+   - Feature branches: `feature/feature-name`
+   - Bug fix branches: `fix/bug-name`
+
+2. **Commit Guidelines**
+   - Use descriptive commit messages
+   - Follow conventional commits format
+   - Reference issue numbers when applicable
+   - Keep commits focused and atomic
+
+## Deployment Process
+
+1. **Pre-deployment Checklist**
+   - Run Theme Check
+   - Test on development store
+   - Verify all features work
+   - Check responsive design
+   - Validate performance
+
+2. **Deployment Steps**
+   - Create a new theme version
+   - Deploy to staging first
+   - Test thoroughly on staging
+   - Deploy to production
+   - Monitor for issues
+
+## Version Control Files
+
+- [.gitignore](mdc:.gitignore): Specifies files to ignore
+- [.shopifyignore](mdc:.shopifyignore): Specifies files to exclude from theme
+- [.theme-check.yml](mdc:.theme-check.yml): Theme linting configuration
+
+## Best Practices
+
+1. Never commit sensitive data
+2. Keep node_modules in .gitignore
+3. Document major changes
+4. Use meaningful version numbers
+5. Maintain a changelog

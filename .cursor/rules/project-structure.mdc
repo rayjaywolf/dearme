@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Structure Guide
+
+This is a Shopify theme project with the following key directories:
+
+- `assets/`: Contains all static assets like images, fonts, and compiled CSS/JS
+- `templates/`: Contains the main template files for different page types
+- `sections/`: Contains reusable section components
+- `snippets/`: Contains smaller, reusable code snippets
+- `config/`: Contains theme configuration files
+- `layout/`: Contains the main layout templates
+- `locales/`: Contains translation files
+- `blocks/`: Contains block components that can be used within sections
+
+## Key Files
+
+- [README.md](mdc:README.md): Project documentation and setup instructions
+- [.theme-check.yml](mdc:.theme-check.yml): Theme linting configuration
+- [.shopifyignore](mdc:.shopifyignore): Files to exclude from theme deployment
+
+## Development Guidelines
+
+1. Always follow Shopify's theme development best practices
+2. Use sections for major page components
+3. Use snippets for reusable UI elements
+4. Keep assets organized by type in the assets directory
+5. Follow the existing naming conventions for files and directories

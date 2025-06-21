@@ -1,0 +1,832 @@
+{% comment %}
+  Art of Sacred Beauty section
+{% endcomment %}
+
+<section
+  class="art-of-sacred-section"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="art-of-sacred-container">
+    <div class="text-container">
+      <h2
+        class="art-of-sacred-title"
+        style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
+      >
+        The Art of
+        <em style="font-family: {{ section.settings.title_emphasized_font }}, serif; font-style: {{ section.settings.title_emphasized_style }}; color: {{ section.settings.title_emphasized_color }};"
+          >Sacred</em
+        >
+        Beauty
+      </h2>
+      <p
+        class="art-of-sacred-subtitle"
+        style="font-family: {{ section.settings.subtitle_font }}, serif; font-style: {{ section.settings.subtitle_style }}; text-transform: {{ section.settings.subtitle_transform }}; color: {{ section.settings.subtitle_color }};"
+      >
+        The masterful blend of ancient wisdom and gentle innovation, dedicated to nurturing your skin and celebrating
+        your authentic self.
+      </p>
+    </div>
+    {% comment %}
+      <div class="arrows-container">
+        <button class="arrow-button arrow-prev" aria-label="Previous slide">
+          <img
+            src="{{ 'fancy-arrow.svg' | asset_url }}"
+            alt="Decorative Arrow"
+            class="arrow arrow-flipped arrow-prev"
+            loading="lazy"
+            width="200"
+            height="200">
+        </button>
+        <button class="arrow-button arrow-next" aria-label="Next slide">
+          <img
+            src="{{ 'fancy-arrow.svg' | asset_url }}"
+            alt="Decorative Arrow"
+            class="arrow arrow-next"
+            loading="lazy"
+            width="200"
+            height="200">
+        </button>
+      </div>
+    {% endcomment %}
+  </div>
+
+  <div class="carousel-container">
+    <button class="arrow-button arrow-prev" aria-label="Previous slide">
+      <img
+        src="{{ 'fancy-arrow.svg' | asset_url }}"
+        alt="Decorative Arrow"
+        class="arrow arrow-flipped"
+        loading="lazy"
+        width="200"
+        height="200"
+      >
+    </button>
+    <button class="arrow-button arrow-next" aria-label="Next slide">
+      <img
+        src="{{ 'fancy-arrow.svg' | asset_url }}"
+        alt="Decorative Arrow"
+        class="arrow"
+        loading="lazy"
+        width="200"
+        height="200"
+      >
+    </button>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+    <div class="carousel-track">
+      <div class="carousel-slide">
+        <div class="slide-image"></div>
+        <div class="slide-content">
+          <p class="slide-subheading" style="color: {{ section.settings.slide_subheading_color }};">
+            unique formulations
+          </p>
+          <h2 class="slide-heading" style="color: {{ section.settings.slide_heading_color }};">Ayurveda + Science</h2>
+          <p class="slide-body" style="color: {{ section.settings.slide_body_color }};">
+            A journey that fuses ancient Ayurvedic wisdom, cherished by Indian royalty for centuries, with cutting-edge
+            scientific innovations. The result! Formulas that capture the essence of Ayurveda's healing powers while
+            embracing the rigor of modern science.
+          </p>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="slide-image"></div>
+        <div class="slide-content">
+          <p class="slide-subheading" style="color: {{ section.settings.slide_subheading_color }};">
+            SENSITIVITY-FIRST FORMULATIONS
+          </p>
+          <h2 class="slide-heading" style="color: {{ section.settings.slide_heading_color }};">
+            redesigned for Sensitive skins
+          </h2>
+          <p class="slide-body" style="color: {{ section.settings.slide_body_color }};">
+            Discover the epitome of skincare luxury with our uniquely formulated Ayurvedic products tailored
+            specifically for sensitive skin. Our formulations are delicately crafted to provide gentle care for your
+            delicate skin, offering a harmonious blend of tradition and sophistication.
+          </p>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="slide-image"></div>
+        <div class="slide-content">
+          <p class="slide-subheading" style="color: {{ section.settings.slide_subheading_color }};">
+            A Holistic Approach
+          </p>
+          <h2 class="slide-heading" style="color: {{ section.settings.slide_heading_color }};">
+            Balancing Mind, Body, and Soul
+          </h2>
+          <p class="slide-body" style="color: {{ section.settings.slide_body_color }};">
+            Discover how the right skincare rituals, combined with self-love practices, can bring balance to your life,
+            empowering you to be the best version of yourself.
+          </p>
+        </div>
+      </div>
+      <div class="carousel-slide">
+        <div class="slide-image"></div>
+        <div class="slide-content">
+          <p class="slide-subheading" style="color: {{ section.settings.slide_subheading_color }};">
+            Embrace Your Uniqueness
+          </p>
+          <h2 class="slide-heading" style="color: {{ section.settings.slide_heading_color }};">
+            You Are Beautiful, Inside and Out
+          </h2>
+          <p class="slide-body" style="color: {{ section.settings.slide_body_color }};">
+            We understand that insecurities can weigh you down, but here's the truth: Your uniqueness is your strength.
+            Those quirks you may have considered flaws are what make you beautifully authentic.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .art-of-sacred-section {
+    width: 100%;
+    background-color: #fef9f2;
+    position: relative;
+  }
+
+  .art-of-sacred-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 4rem;
+    padding: 4rem 2rem;
+  }
+
+  .text-container {
+    flex: 1;
+  }
+
+  .art-of-sacred-title {
+    font-family: 'Instrument Serif', serif;
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size: 3rem;
+    color: #3b3b3b;
+    line-height: 1.2;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .art-of-sacred-subtitle {
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #3b3b3b;
+    line-height: 1.6;
+    max-width: 600px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .art-of-sacred-title em {
+    font-family: 'Instrument Serif', serif;
+    font-style: italic;
+    text-transform: none;
+  }
+
+  .arrows-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .arrow {
+    width: 90px;
+    height: auto;
+    border: 1px solid #3b3b3b;
+    border-radius: 50%;
+    padding: 2rem;
+    opacity: 0.6;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .arrow-flipped {
+    transform: scaleX(-1);
+  }
+
+  .carousel-container {
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .arrow-prev {
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    z-index: 10;
+    transform: translateY(-50%);
+  }
+
+  .arrow-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 2rem;
+    z-index: 10;
+  }
+
+  .carousel-track {
+    display: flex;
+    height: 100%;
+    width: fit-content;
+    transition: transform 0.5s ease;
+  }
+
+  .carousel-slide {
+    width: 95vw;
+    height: 100%;
+    flex-shrink: 0;
+    display: flex;
+    gap: 4rem;
+    padding: 0;
+  }
+
+  .carousel-slide:last-child {
+    border-right: none !important;
+  }
+
+  .slide-image {
+    flex: 1;
+    background-color: #f5f5f5;
+  }
+
+  .slide-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  .slide-subheading {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #63001f;
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .slide-heading {
+    font-family: 'Instrument Serif', serif;
+    text-transform: capitalize;
+    font-weight: 200;
+    font-size: 3rem;
+    width: 80%;
+    color: #63001f;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+  }
+
+  .slide-body {
+    font-family: 'Inter', serif;
+    font-size: 0.9rem;
+    color: rgba(99, 0, 31, 0.82);
+    line-height: 1.6;
+    max-width: 500px;
+  }
+
+  .arrow-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .arrow-button:hover {
+    opacity: 0.7;
+  }
+
+  .progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 10;
+  }
+
+  .progress-fill {
+    width: 100%;
+    height: 100%;
+    background-color: #63001f;
+    transform-origin: left;
+    transform: scaleX(0.25);
+  }
+
+  @media screen and (max-width: 768px) {
+    .art-of-sacred-container {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .art-of-sacred-title {
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    .art-of-sacred-subtitle {
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .arrow {
+      width: 150px;
+    }
+
+    .carousel-slide {
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .slide-image {
+      height: 40vh;
+    }
+
+    .slide-content {
+      padding: 1rem 0;
+    }
+
+    .slide-heading {
+      font-size: 2.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap === 'undefined' || typeof SplitText === 'undefined') return;
+
+    // Register plugins
+    gsap.registerPlugin(SplitText);
+
+    const section = document.querySelector('.art-of-sacred-section');
+    const track = document.querySelector('.carousel-track');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevButton = document.querySelector('.arrow-prev');
+    const nextButton = document.querySelector('.arrow-next');
+    const progressFill = document.querySelector('.progress-fill');
+    const carouselContainer = document.querySelector('.carousel-container');
+
+    if (!section || !track || !slides.length) return;
+
+    let currentIndex = 0;
+    const slideWidth = slides[0].offsetWidth;
+    const totalSlides = slides.length;
+    let isAnimating = false;
+
+    // Set initial position
+    gsap.set(track, {
+      x: 0,
+    });
+
+    // Initialize masked text reveal
+    function initMaskedTextReveal() {
+      const title = document.querySelector('.art-of-sacred-title');
+      const subtitle = document.querySelector('.art-of-sacred-subtitle');
+
+      if (!title || !subtitle) return;
+
+      // Create SplitText with masking for title and subtitle
+      const titleSplitText = new SplitText(title, {
+        type: 'lines',
+        linesClass: 'line',
+      });
+
+      const subtitleSplitText = new SplitText(subtitle, {
+        type: 'lines',
+        linesClass: 'line',
+      });
+
+      // Create mask wrapper for each line
+      [titleSplitText, subtitleSplitText].forEach((splitText) => {
+        splitText.lines.forEach((line) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflow = 'hidden';
+          wrapper.style.lineHeight = line.parentElement.classList.contains('art-of-sacred-title') ? '1.2' : '1.6';
+          line.parentNode.insertBefore(wrapper, line);
+          wrapper.appendChild(line);
+        });
+      });
+
+      // Set initial state for lines (hidden)
+      gsap.set([...titleSplitText.lines, ...subtitleSplitText.lines], { yPercent: 110 });
+
+      return { titleSplitText, subtitleSplitText };
+    }
+
+    // Initialize SplitText after fonts are ready
+    let splitTexts;
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        splitTexts = initMaskedTextReveal();
+      });
+    } else {
+      setTimeout(() => {
+        splitTexts = initMaskedTextReveal();
+      }, 100);
+    }
+
+    // Create observer for main section text animations
+    const sectionObserver = new IntersectionObserver(
+      function (entries) {
+        if (entries[0].isIntersecting && splitTexts) {
+          // Create timeline for text animations
+          const tl = gsap.timeline();
+
+          // Animate title and subtitle
+          tl.to([...splitTexts.titleSplitText.lines, ...splitTexts.subtitleSplitText.lines], {
+            yPercent: 0,
+            duration: 1.8,
+            stagger: 0.15,
+            ease: 'power4.out',
+          });
+
+          sectionObserver.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    // Create observer for carousel animations
+    const carouselObserver = new IntersectionObserver(
+      function (entries) {
+        if (entries[0].isIntersecting) {
+          // Animate initial slide content
+          animateSlideContent(slides[currentIndex]);
+          carouselObserver.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    sectionObserver.observe(section);
+    carouselObserver.observe(carouselContainer);
+
+    function animateSlideContent(slide) {
+      if (!slide) return;
+
+      const heading = slide.querySelector('.slide-heading');
+      const subheading = slide.querySelector('.slide-subheading');
+      const body = slide.querySelector('.slide-body');
+
+      // Reset all text to hidden state
+      if (heading) {
+        const headingSplit = new SplitText(heading, { type: 'lines', linesClass: 'line' });
+        headingSplit.lines.forEach((line) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflow = 'hidden';
+          wrapper.style.lineHeight = '1.2';
+          line.parentNode.insertBefore(wrapper, line);
+          wrapper.appendChild(line);
+        });
+        gsap.set(headingSplit.lines, { yPercent: 110 });
+        gsap.to(headingSplit.lines, {
+          yPercent: 0,
+          duration: 1.8,
+          stagger: 0.15,
+          ease: 'power4.out',
+          delay: 0.3,
+        });
+      }
+
+      if (subheading) {
+        const subheadingSplit = new SplitText(subheading, { type: 'lines', linesClass: 'line' });
+        subheadingSplit.lines.forEach((line) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflow = 'hidden';
+          wrapper.style.lineHeight = '1.6';
+          line.parentNode.insertBefore(wrapper, line);
+          wrapper.appendChild(line);
+        });
+        gsap.set(subheadingSplit.lines, { yPercent: 130 });
+        gsap.to(subheadingSplit.lines, {
+          yPercent: 0,
+          duration: 1.8,
+          stagger: 0.15,
+          ease: 'power4.out',
+          delay: 0.3,
+        });
+      }
+
+      if (body) {
+        const bodySplit = new SplitText(body, { type: 'lines', linesClass: 'line' });
+        bodySplit.lines.forEach((line) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflow = 'hidden';
+          wrapper.style.lineHeight = '1.6';
+          line.parentNode.insertBefore(wrapper, line);
+          wrapper.appendChild(line);
+        });
+        gsap.set(bodySplit.lines, { yPercent: 130 });
+        gsap.to(bodySplit.lines, {
+          yPercent: 0,
+          duration: 1.5,
+          stagger: 0.15,
+          ease: 'power4.out',
+          delay: 0.3,
+        });
+      }
+    }
+
+    function updateCarousel() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      const offset = -currentIndex * slideWidth;
+
+      gsap.to(track, {
+        x: offset,
+        duration: 0.2,
+        ease: 'circ.inOut',
+        onComplete: () => {
+          isAnimating = false;
+        },
+      });
+
+      gsap.to(progressFill, {
+        scaleX: (currentIndex + 1) * 0.25,
+        duration: 0.75,
+        ease: 'circ.inOut',
+      });
+
+      // Animate new slide content
+      animateSlideContent(slides[currentIndex]);
+    }
+
+    function goToSlide(index) {
+      if (isAnimating) return;
+
+      currentIndex = index;
+      if (currentIndex < 0) currentIndex = totalSlides - 1;
+      if (currentIndex >= totalSlides) currentIndex = 0;
+      updateCarousel();
+    }
+
+    prevButton.addEventListener('click', () => {
+      goToSlide(currentIndex - 1);
+    });
+
+    nextButton.addEventListener('click', () => {
+      goToSlide(currentIndex + 1);
+    });
+
+    // Update on window resize
+    window.addEventListener('resize', () => {
+      const newSlideWidth = slides[0].offsetWidth;
+      if (newSlideWidth !== slideWidth) {
+        updateCarousel();
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Art of Sacred",
+  "tag": "section",
+  "class": "section-art-of-sacred",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ead1c1"
+    },
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Title Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "title_style",
+      "label": "Title Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "title_transform",
+      "label": "Title Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "select",
+      "id": "title_emphasized_font",
+      "label": "Title Emphasized Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "title_emphasized_style",
+      "label": "Title Emphasized Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "italic"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font",
+      "label": "Subtitle Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_style",
+      "label": "Subtitle Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_transform",
+      "label": "Subtitle Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "title_emphasized_color",
+      "label": "Title Emphasized Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#63001fd1"
+    },
+    {
+      "type": "header",
+      "content": "Carousel Text Colors"
+    },
+    {
+      "type": "color",
+      "id": "slide_subheading_color",
+      "label": "Slide Subheading Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "slide_heading_color",
+      "label": "Slide Heading Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "slide_body_color",
+      "label": "Slide Body Color",
+      "default": "#63001fd1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Art of Sacred"
+    }
+  ]
+}
+{% endschema %}

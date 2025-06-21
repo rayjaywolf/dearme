@@ -1,0 +1,260 @@
+{% comment %}
+  Sacred Statement section
+{% endcomment %}
+
+<section class="sacred-statement-section" style="background: #fef9f2 url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;">
+  <div class="container">
+    <div class="statement-line" data-split="line1">
+      <span class="text-part">From ancient</span>
+      <video
+        loop
+        muted
+        playsinline
+        class="inline-media saffron-video"
+        width="120"
+        height="100"
+        preload="metadata">
+        <source src="{{ 'saffron.mp4' | asset_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <span class="text-part">wisdom,</span>
+    </div>
+    <div class="statement-line" data-split="line2">
+      <span class="text-part">our</span>
+      <img
+        src="{{ 'product.png' | asset_url }}"
+        alt="Serum Droplet"
+        class="inline-image product-rotate"
+        width="60"
+        height="60">
+      <span class="text-part">
+        <em>sacred</em>
+        glow</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+  if (typeof gsap !== 'undefined' && typeof SplitText !== 'undefined') {
+    gsap.registerPlugin(SplitText);
+
+    const section = document.querySelector('.sacred-statement-section');
+    if (!section) return;
+
+    const saffronVideo = section.querySelector('.saffron-video');
+
+    function initMaskedTextReveal() {
+      const line1 = section.querySelector('[data-split="line1"]');
+      const line2 = section.querySelector('[data-split="line2"]');
+      if (!line1 || !line2) return null;
+
+      const videoElement = line1.querySelector('.saffron-video');
+      const imageElement = line2.querySelector('.product-rotate');
+      if (videoElement) videoElement.remove();
+      if (imageElement) imageElement.remove();
+
+      const line1SplitText = new SplitText(line1, { type: "lines", linesClass: "line" });
+      const line2SplitText = new SplitText(line2, { type: "lines", linesClass: "line" });
+
+      [line1SplitText, line2SplitText].forEach(splitText => {
+        splitText.lines.forEach(line => {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflow = 'hidden';
+          wrapper.style.lineHeight = '1.4';
+          line.parentNode.insertBefore(wrapper, line);
+          wrapper.appendChild(line);
+        });
+      });
+      
+      gsap.set([line1SplitText.lines, line2SplitText.lines], {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '1rem'
+      });
+
+      if (videoElement && line1.querySelector('.text-part')) {
+        line1.querySelector('.text-part').after(videoElement);
+      }
+      if (imageElement && line2.querySelector('.text-part')) {
+        line2.querySelector('.text-part').after(imageElement);
+      }
+
+      gsap.set([line1SplitText.lines, line2SplitText.lines], { yPercent: 130 });
+      gsap.set(['.saffron-video', '.product-rotate'], { scale: 0.1, opacity: 0 });
+      
+      return { line1SplitText, line2SplitText };
+    }
+
+    let splitTexts;
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        splitTexts = initMaskedTextReveal();
+      });
+    } else {
+      setTimeout(() => {
+        splitTexts = initMaskedTextReveal();
+      }, 100);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (splitTexts && !section.classList.contains('is-animated')) {
+              section.classList.add('is-animated');
+              
+              const tl = gsap.timeline();
+              
+              tl.to([...splitTexts.line1SplitText.lines, ...splitTexts.line2SplitText.lines], {
+                yPercent: 0,
+                duration: 1.8,
+                stagger: 0.15,
+                ease: "power4.out"
+              }).to(['.saffron-video', '.product-rotate'], {
+                scale: 1,
+                opacity: 1,
+                duration: 1.2,
+                ease: 'power2.out',
+                stagger: 0.1
+              }, "-=1.8");
+
+              if (saffronVideo) {
+                saffronVideo.playbackRate = 2.0;
+                saffronVideo.play();
+              }
+            } else if (saffronVideo) {
+              saffronVideo.play();
+            }
+          } else {
+            if (saffronVideo) {
+              saffronVideo.pause();
+            }
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(section);
+
+  } else {
+    console.error('GSAP or SplitText not loaded.');
+  }
+  });
+</script>
+
+{% stylesheet %}
+  .sacred-statement-section {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #63001f;
+    padding: 2rem;
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .statement-line {
+    font-family: 'Gumani'
+    , serif;
+    font-size: 4rem;
+    line-height: 1.4;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .text-part {
+    display: inline-block;
+  }
+
+  .statement-line em {
+    font-family: 'Instrument Serif'
+    , serif !important;
+  }
+
+  .inline-image,
+  .inline-media {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.5rem;
+    height: auto;
+    will-change: transform
+    , opacity;
+  }
+
+  .inline-media {
+    width: 120px;
+    height: 70px;
+    object-fit: cover;
+    object-position: center;
+    overflow: hidden;
+  }
+
+  .product-rotate {
+    animation: jump-rotate 1s infinite steps(1, end);
+  }
+
+  @keyframes jump-rotate {
+    0% {
+      transform: rotate(1deg);
+    }
+    50% {
+      transform: rotate(-1deg);
+    }
+    100% {
+      transform: rotate(1deg);
+    }
+  }
+
+  .statement-line .line {
+    display: block;
+    will-change: transform;
+  }
+{% endstylesheet %}
+
+{% schema %}
+  {
+    "name": "Sacred Statement",
+    "tag": "section",
+    "class": "section-sacred-statement",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "saffron_image",
+        "label": "Saffron Crocus Flower Image (Fallback)"
+      }, {
+        "type": "image_picker",
+        "id": "serum_image",
+        "label": "Serum Droplet Image"
+      }, {
+        "type": "richtext",
+        "id": "statement_text_line_1",
+        "label": "Statement Text Line 1",
+        "default": "<p>Reveal your skin's ancient [Image A] radiance</p>"
+      }, {
+        "type": "richtext",
+        "id": "statement_text_line_2",
+        "label": "Statement Text Line 2",
+        "default": "<p>with Dear Me's Sacred [Image B] Secret.</p>"
+      }
+    ],
+    "blocks": [],
+    "presets": [
+      {
+        "name": "Sacred Statement"
+      }
+    ]
+  }
+{% endschema %}

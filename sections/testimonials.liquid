@@ -1,0 +1,1006 @@
+{% comment %}
+  Testimonials Section
+{% endcomment %}
+<section
+  class="testimonials-section"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="testimonials-container">
+    <div class="testimonials-header">
+      <p
+        class="testimonials-subtitle"
+        style="font-family: {{ section.settings.subtitle_font }}, serif; font-style: {{ section.settings.subtitle_style }}; text-transform: {{ section.settings.subtitle_transform }}; color: {{ section.settings.subtitle_color }};"
+      >
+        Testimonials
+      </p>
+      <h2
+        class="testimonials-title js-testimonials-title"
+        style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
+      >
+        What Our Customers Say
+      </h2>
+      <p
+        class="testimonials-text js-testimonials-text"
+        style="font-family: {{ section.settings.testimonials_text_font }}, serif; font-style: {{ section.settings.testimonials_text_style }}; text-transform: {{ section.settings.testimonials_text_transform }}; color: {{ section.settings.testimonials_text_color }};"
+      >
+        Real stories from real people who love their skin
+      </p>
+    </div>
+
+    <div class="testimonials-carousel swiper">
+      <div class="testimonials-track swiper-wrapper">
+        <div
+          class="testimonial-card swiper-slide js-testimonial-card"
+          style="background: {{ section.settings.card_bg_color }}; border-color: {{ section.settings.card_border_color }};"
+        >
+          <div class="testimonial-stars">
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+          </div>
+          <h3
+            class="testimonial-title"
+            style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
+          >
+            Life-changing night serum
+          </h3>
+          <p
+            class="testimonial-text"
+            style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
+          >
+            "My go to night regime serum. This serum changed the texture of my face in just a few uses and it smells
+            amazing."
+          </p>
+          <div
+            class="testimonial-author"
+            style="font-family: {{ section.settings.author_font }}, serif; font-style: {{ section.settings.author_style }}; color: {{ section.settings.author_color }};"
+          >
+            Kriti K.
+          </div>
+        </div>
+
+        <div
+          class="testimonial-card swiper-slide js-testimonial-card"
+          style="background: {{ section.settings.card_bg_color }}; border-color: {{ section.settings.card_border_color }};"
+        >
+          <div class="testimonial-stars">
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+          </div>
+          <h3
+            class="testimonial-title"
+            style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
+          >
+            Perfect for sensitive skin
+          </h3>
+          <p
+            class="testimonial-text"
+            style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
+          >
+            "I have sensitive skin and am always a bit nervous to try new products. Immediately after the first use my
+            skin looked great and I had no reactions. Highly recommend!"
+          </p>
+          <div
+            class="testimonial-author"
+            style="font-family: {{ section.settings.author_font }}, serif; font-style: {{ section.settings.author_style }}; color: {{ section.settings.author_color }};"
+          >
+            Tarini
+          </div>
+        </div>
+
+        <div
+          class="testimonial-card swiper-slide js-testimonial-card"
+          style="background: {{ section.settings.card_bg_color }}; border-color: {{ section.settings.card_border_color }};"
+        >
+          <div class="testimonial-stars">
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+          </div>
+          <h3
+            class="testimonial-title"
+            style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
+          >
+            Instant glow results
+          </h3>
+          <p
+            class="testimonial-text"
+            style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
+          >
+            "Within a week of regular usage everyone around me started complimenting about the glow, freshness on my
+            skin. Awesome product!!!"
+          </p>
+          <div
+            class="testimonial-author"
+            style="font-family: {{ section.settings.author_font }}, serif; font-style: {{ section.settings.author_style }}; color: {{ section.settings.author_color }};"
+          >
+            Sandeep R.
+          </div>
+        </div>
+
+        <div
+          class="testimonial-card swiper-slide js-testimonial-card"
+          style="background: {{ section.settings.card_bg_color }}; border-color: {{ section.settings.card_border_color }};"
+        >
+          <div class="testimonial-stars">
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+          </div>
+          <h3
+            class="testimonial-title"
+            style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
+          >
+            Heals acne marks fast
+          </h3>
+          <p
+            class="testimonial-text"
+            style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
+          >
+            "As a person who struggles with sparse acne that leaves dark spots behind, this helped to quickly get rid of
+            those marks. I was shocked at how quickly my skin healed and brightened."
+          </p>
+          <div
+            class="testimonial-author"
+            style="font-family: {{ section.settings.author_font }}, serif; font-style: {{ section.settings.author_style }}; color: {{ section.settings.author_color }};"
+          >
+            Gautami
+          </div>
+        </div>
+
+        <div
+          class="testimonial-card swiper-slide js-testimonial-card"
+          style="background: {{ section.settings.card_bg_color }}; border-color: {{ section.settings.card_border_color }};"
+        >
+          <div class="testimonial-stars">
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+          </div>
+          <h3
+            class="testimonial-title"
+            style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
+          >
+            Reduced pigmentation amazingly
+          </h3>
+          <p
+            class="testimonial-text"
+            style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
+          >
+            "I love Sacred Secret. It has reduced the pigmentation to a very great extent. Also my skin feels so soft
+            and plump. My skin barrier is getting better with each passing day."
+          </p>
+          <div
+            class="testimonial-author"
+            style="font-family: {{ section.settings.author_font }}, serif; font-style: {{ section.settings.author_style }}; color: {{ section.settings.author_color }};"
+          >
+            Twinkle
+          </div>
+        </div>
+
+        <div
+          class="testimonial-card swiper-slide js-testimonial-card"
+          style="background: {{ section.settings.card_bg_color }}; border-color: {{ section.settings.card_border_color }};"
+        >
+          <div class="testimonial-stars">
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+            <span class="star" style="color: {{ section.settings.star_color }};">★</span>
+          </div>
+          <h3
+            class="testimonial-title"
+            style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
+          >
+            Magic in a bottle
+          </h3>
+          <p
+            class="testimonial-text"
+            style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
+          >
+            "It's like magic in a bottle ✨"
+          </p>
+          <div
+            class="testimonial-author"
+            style="font-family: {{ section.settings.author_font }}, serif; font-style: {{ section.settings.author_style }}; color: {{ section.settings.author_color }};"
+          >
+            Muskan S.
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Swiper navigation -->
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    background: #fef9f2;
+    padding: 1rem 0 2rem;
+  }
+
+  .testimonials-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .testimonials-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .testimonials-subtitle {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .testimonials-text {
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    width: 35%;
+    margin: 1.2rem auto 0;
+    color: #666;
+    letter-spacing: 0.1em;
+  }
+
+  .testimonials-title {
+    font-family: 'Instrument Serif', sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .testimonials-subtitle.js-testimonials-subtitle {
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    width: 35%;
+    margin: 1.2rem auto 0;
+    color: #666;
+  }
+
+  .testimonials-carousel {
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+    cursor: grab;
+  }
+
+  .testimonials-carousel:active {
+    cursor: grabbing;
+  }
+
+  .testimonials-track {
+    display: flex;
+    gap: 0;
+    cursor: grab;
+  }
+
+  .testimonials-track:active {
+    cursor: grabbing;
+  }
+
+  .testimonial-card {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-right: none;
+    padding: 2rem;
+    height: 50vh;
+    width: calc(33.333% - 0px);
+    min-width: calc(33.333% - 0px);
+    cursor: grab;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .testimonial-card:active {
+    cursor: grabbing;
+  }
+
+  .testimonial-card:last-child {
+    border-right: 1px solid #e5e5e5;
+  }
+
+  /* Swiper pagination */
+  .swiper-pagination {
+    position: relative !important;
+    margin-top: 2rem;
+  }
+
+  .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background: #63001f;
+    opacity: 0.3;
+    margin: 0 8px;
+  }
+
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+  }
+
+  .testimonial-stars {
+    display: flex;
+    margin-bottom: 1rem;
+    justify-content: center;
+  }
+
+  .star {
+    color: #ff6b35;
+    font-size: 1.2rem;
+    margin-right: 2px;
+  }
+
+  .testimonial-title {
+    font-family: 'Gumani', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #191818;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .testimonial-text {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonial-author {
+    font-family: 'Gumani', serif;
+    font-size: 1rem;
+    color: #888;
+    font-weight: 400;
+  }
+
+  @media (max-width: 768px) {
+    .testimonials-section {
+      padding: 4rem 0;
+    }
+
+    .testimonials-container {
+      padding: 0 1rem;
+    }
+
+    .testimonials-title {
+      font-size: 2.2rem;
+    }
+
+    .testimonials-subtitle {
+      font-size: 1rem;
+    }
+
+    .testimonial-card {
+      padding: 1.5rem;
+      width: 100%;
+      min-width: 100%;
+    }
+
+    .testimonial-title {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .testimonials-title {
+      font-size: 1.8rem;
+    }
+
+    .testimonial-card {
+      padding: 1.25rem;
+    }
+
+    .testimonial-title {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Initialize Swiper
+    function initTestimonialsSwiper() {
+      if (typeof Swiper === 'undefined') {
+        console.error('Swiper not loaded');
+        return;
+      }
+
+      const swiper = new Swiper('.testimonials-carousel', {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 0,
+          },
+        },
+        on: {
+          init: function () {
+            // Re-observe testimonial cards for GSAP animations after Swiper init
+            if (window.reobserveTestimonialCards) {
+              setTimeout(window.reobserveTestimonialCards, 100);
+            }
+          },
+        },
+      });
+
+      return swiper;
+    }
+
+    // GSAP Text Animations
+    function initTestimonialsAnimations() {
+      if (typeof gsap === 'undefined' || typeof SplitText === 'undefined') return;
+
+      // Register plugins
+      gsap.registerPlugin(SplitText);
+
+      const section = document.querySelector('.testimonials-section');
+      if (!section) return;
+
+      // Initialize masked text reveal for header content
+      function initHeaderTextReveal() {
+        const title = document.querySelector('.js-testimonials-title');
+        const subtitles = document.querySelectorAll('.testimonials-subtitle');
+
+        if (!title || subtitles.length === 0) return;
+
+        // Create SplitText with masking for header elements
+        const titleSplitText = new SplitText(title, { type: 'lines', linesClass: 'line' });
+        const subtitleSplitTexts = Array.from(subtitles).map(
+          (subtitle) => new SplitText(subtitle, { type: 'lines', linesClass: 'line' })
+        );
+
+        // Create mask wrapper for each line
+        [titleSplitText, ...subtitleSplitTexts].forEach((splitText) => {
+          splitText.lines.forEach((line) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.overflow = 'hidden';
+            wrapper.style.lineHeight = line.parentElement.classList.contains('testimonials-title') ? '0.9' : '1.4';
+            line.parentNode.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+          });
+        });
+
+        // Set initial state for lines (hidden)
+        const allSubtitleLines = subtitleSplitTexts.flatMap((splitText) => splitText.lines);
+        const allHeaderLines = [...titleSplitText.lines, ...allSubtitleLines];
+        gsap.set(allHeaderLines, { yPercent: 110 });
+
+        return allHeaderLines;
+      }
+
+      // Initialize SplitText for testimonial card content
+      function initTestimonialCardAnimation(card) {
+        const title = card.querySelector('.testimonial-title');
+        const text = card.querySelector('.testimonial-text');
+        const author = card.querySelector('.testimonial-author');
+
+        const elements = [title, text, author].filter((el) => el);
+        if (elements.length === 0) return [];
+
+        const allLines = [];
+
+        elements.forEach((element) => {
+          const splitText = new SplitText(element, { type: 'lines', linesClass: 'line' });
+
+          // Create mask wrapper for each line
+          splitText.lines.forEach((line) => {
+            const wrapper = document.createElement('div');
+            wrapper.style.overflow = 'hidden';
+            wrapper.style.lineHeight = element.classList.contains('testimonial-title') ? '1.1' : '1.4';
+            line.parentNode.insertBefore(wrapper, line);
+            wrapper.appendChild(line);
+          });
+
+          allLines.push(...splitText.lines);
+        });
+
+        // Set initial state
+        gsap.set(allLines, { yPercent: 110 });
+
+        return allLines;
+      }
+
+      // Initialize header text after fonts are ready
+      let headerLines;
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+          headerLines = initHeaderTextReveal();
+        });
+      } else {
+        setTimeout(() => {
+          headerLines = initHeaderTextReveal();
+        }, 100);
+      }
+
+      // Create observer for header animations
+      const headerObserver = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting && headerLines) {
+            const tl = gsap.timeline();
+
+            // Animate header lines
+            tl.to(headerLines, {
+              yPercent: 0,
+              duration: 1.8,
+              stagger: 0.15,
+              ease: 'power4.out',
+            });
+
+            headerObserver.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+
+      headerObserver.observe(section);
+
+      // Observe testimonial cards for animations
+      const observeTestimonialCards = () => {
+        const testimonialCards = document.querySelectorAll('.testimonial-card');
+
+        testimonialCards.forEach((card) => {
+          // Initialize animation for this card
+          const cardLines = initTestimonialCardAnimation(card);
+
+          if (cardLines.length === 0) return;
+
+          // Create observer for this specific card
+          const cardObserver = new IntersectionObserver(
+            function (entries) {
+              if (entries[0].isIntersecting) {
+                const tl = gsap.timeline();
+
+                // Animate this card's lines
+                tl.to(cardLines, {
+                  yPercent: 0,
+                  duration: 1.8,
+                  stagger: 0.1,
+                  ease: 'power4.out',
+                });
+
+                cardObserver.disconnect();
+              }
+            },
+            {
+              threshold: 0.2,
+              rootMargin: '0px 0px -50px 0px',
+            }
+          );
+
+          cardObserver.observe(card);
+        });
+      };
+
+      // Initial observation of cards
+      setTimeout(observeTestimonialCards, 100);
+
+      // Re-observe cards when carousel creates new clones
+      const originalObserveTestimonialCards = observeTestimonialCards;
+      window.reobserveTestimonialCards = originalObserveTestimonialCards;
+    }
+
+    // Initialize Swiper with a delay to ensure it's loaded
+    setTimeout(initTestimonialsSwiper, 100);
+
+    // Initialize GSAP animations
+    initTestimonialsAnimations();
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ead1c1"
+    },
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font",
+      "label": "Subtitle Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Work Sans"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_style",
+      "label": "Subtitle Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_transform",
+      "label": "Subtitle Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "header",
+      "content": "Testimonials Text Settings"
+    },
+    {
+      "type": "select",
+      "id": "testimonials_text_font",
+      "label": "Testimonials Text Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Work Sans"
+    },
+    {
+      "type": "select",
+      "id": "testimonials_text_style",
+      "label": "Testimonials Text Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "testimonials_text_transform",
+      "label": "Testimonials Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "color",
+      "id": "testimonials_text_color",
+      "label": "Testimonials Text Color",
+      "default": "#63001fd1"
+    },
+    {
+      "type": "header",
+      "content": "Card Typography Settings"
+    },
+    {
+      "type": "select",
+      "id": "card_title_font",
+      "label": "Card Title Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "card_title_style",
+      "label": "Card Title Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "card_text_font",
+      "label": "Card Text Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Work Sans"
+    },
+    {
+      "type": "select",
+      "id": "card_text_style",
+      "label": "Card Text Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "card_text_transform",
+      "label": "Card Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "author_font",
+      "label": "Author Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "author_style",
+      "label": "Author Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "card_bg_color",
+      "label": "Card Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card Border Color",
+      "default": "#e5e5e5"
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Card Title Color",
+      "default": "#191818"
+    },
+    {
+      "type": "color",
+      "id": "card_text_color",
+      "label": "Card Text Color",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "author_color",
+      "label": "Author Color",
+      "default": "#888888"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#ff6b35"
+    },
+    {
+      "type": "header",
+      "content": "Pagination Settings"
+    },
+    {
+      "type": "color",
+      "id": "pagination_color",
+      "label": "Pagination Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "range",
+      "id": "pagination_opacity",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "label": "Pagination Opacity",
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials"
+    }
+  ]
+}
+{% endschema %}

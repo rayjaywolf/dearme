@@ -1,0 +1,79 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Design Philosophy & Brand Essence
+
+## Core Principles
+
+1. **Storytelling First**
+   - Every element should contribute to the narrative
+   - Focus on the heritage and tradition of Sacred Secret
+   - Emphasize the connection between ancient wisdom and modern luxury
+   - Create an emotional journey through the site
+
+2. **Sensory Experience**
+   - Design should evoke the richness of saffron
+   - Visual elements should suggest the smoothness of the elixir
+   - Content should reflect the depth of Ayurvedic heritage
+   - Use imagery that appeals to multiple senses
+
+3. **Modern Elegance**
+   - Balance traditional elements with contemporary design
+   - Maintain a clean, sophisticated aesthetic
+   - Ensure the site feels premium and trustworthy
+   - Use whitespace effectively to create breathing room
+
+## Design Elements
+
+### Color Palette
+
+1. **Primary Colors**
+   - Background: `#ead1c1` (Soft, Peachy Beige)
+     - Creates warmth and natural luxury
+     - Provides a calm, inviting canvas
+   - Accent: `#63001f` (Deep Burgundy/Maroon)
+     - Used for headlines and key elements
+     - Represents royalty and richness
+
+2. **Supporting Colors**
+   - Metallic Gold/Brass: For subtle highlights and accents
+   - Cream/Off-White: For text areas and contrast
+   - Deep Charcoal/Near Black: For body text
+
+### Typography
+
+1. **Headlines**
+   - Font Family: Garamond Pro or Cormorant Garamond
+   - Style: Sophisticated serif with classic elegance
+   - Usage: Main headings and important statements
+
+2. **Body Text**
+   - Font Family: Montserrat, Lato, or Open Sans
+   - Style: Clean, highly legible sans-serif
+   - Usage: All body content and general text
+
+3. **Accent Text**
+   - Font Family: Refined script font
+   - Style: Elegant, handwritten feel
+   - Usage: Highlighting "Kashmiri Saffron" and key traditional elements
+
+## Implementation Guidelines
+
+1. **Visual Hierarchy**
+   - Use color and typography to guide user attention
+   - Maintain clear content hierarchy
+   - Ensure important elements stand out
+
+2. **Content Strategy**
+   - Focus on storytelling in all copy
+   - Use sensory-rich descriptions
+   - Maintain a balance of tradition and modernity
+   - Keep messaging clear and focused
+
+3. **User Experience**
+   - Create intuitive navigation
+   - Ensure smooth transitions between sections
+   - Maintain consistent styling throughout
+   - Optimize for both desktop and mobile

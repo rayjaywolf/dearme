@@ -1,0 +1,43 @@
+{% comment %}
+  Lenis Smooth Scrolling Helper Snippet
+  
+  This snippet provides helper classes and attributes for Lenis smooth scrolling.
+  
+  Usage:
+  - Include this snippet in sections where you need scroll control
+  - Use the provided classes to prevent scrolling on specific elements
+{% endcomment %}
+
+{% comment %} 
+  Helper function to add lenis prevent attributes 
+  Usage: {% render 'lenis-helpers', type: 'prevent' %}
+         {% render 'lenis-helpers', type: 'prevent-wheel' %}
+         {% render 'lenis-helpers', type: 'prevent-touch' %}
+{% endcomment %}
+
+{% if type == 'prevent' %}
+  data-lenis-prevent
+{% elsif type == 'prevent-wheel' %}
+  data-lenis-prevent-wheel
+{% elsif type == 'prevent-touch' %}
+  data-lenis-prevent-touch
+{% endif %}
+
+{% comment %}
+  Example usage in sections:
+  
+  <div {% render 'lenis-helpers', type: 'prevent' %}>
+    <!-- This container will not participate in smooth scrolling -->
+    <div class="modal-content">
+      <!-- Scrollable modal content -->
+    </div>
+  </div>
+  
+  <div {% render 'lenis-helpers', type: 'prevent-wheel' %}>
+    <!-- This will prevent wheel scrolling only -->
+  </div>
+  
+  <div {% render 'lenis-helpers', type: 'prevent-touch' %}>
+    <!-- This will prevent touch scrolling only -->
+  </div>
+{% endcomment %} 

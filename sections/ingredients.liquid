@@ -1,0 +1,522 @@
+{% comment %}
+  Ingredients section
+{% endcomment %}
+
+<section
+  class="ingredients-section"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="ingredients-container">
+    <h2
+      class="ingredients-title"
+      data-split="heading"
+      style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
+    >
+      The
+      <em style="font-family: {{ section.settings.title_em_font }}, serif; font-style: {{ section.settings.title_em_style }}; color: {{ section.settings.title_em_color }}; text-transform: {{ section.settings.title_em_transform }};">
+        {{- 'Royals' | capitalize -}}
+      </em>
+      of Ayurveda, Bottled.
+    </h2>
+    <div class="ingredients-image-container">
+      <ul class="ingredients-list">
+        <li style="color: {{ section.settings.list_text_color }}; border-color: {{ section.settings.list_border_color }}; font-family: 'Instrument Serif', serif; font-style: italic;">
+          <img src="{{ 'saffron.png' | asset_url }}" alt="Kashmiri Saffron" loading="lazy" width="50" height="50">
+          <span>Kashmiri Saffron</span>
+        </li>
+        <li style="color: {{ section.settings.list_text_color }}; border-color: {{ section.settings.list_border_color }}; font-family: 'Instrument Serif', serif; font-style: italic;">
+          <img src="{{ 'gold.png' | asset_url }}" alt="Gold Bhasma" loading="lazy" width="50" height="50">
+          <span>Gold Bhasma</span>
+        </li>
+        <li style="color: {{ section.settings.list_text_color }}; border-color: {{ section.settings.list_border_color }}; font-family: 'Instrument Serif', serif; font-style: italic;">
+          <img src="{{ 'lotus.png' | asset_url }}" alt="Lotus" loading="lazy" width="50" height="50">
+          <span>Lotus</span>
+        </li>
+        <li style="color: {{ section.settings.list_text_color }}; border-color: {{ section.settings.list_border_color }}; font-family: 'Instrument Serif', serif; font-style: italic;">
+          <img
+            src="{{ 'Centella-Asiatica.png' | asset_url }}"
+            alt="Centella Asiatica"
+            loading="lazy"
+            width="50"
+            height="50"
+          >
+          <span>Centella Asiatica</span>
+        </li>
+        <li style="color: {{ section.settings.list_text_color }}; border-color: {{ section.settings.list_border_color }}; font-family: 'Instrument Serif', serif; font-style: italic;">
+          <img src="{{ 'Kakadu-Plum.png' | asset_url }}" alt="Kakadu Plum" loading="lazy" width="50" height="50">
+          <span>Kakadu Plum</span>
+        </li>
+        <li style="color: {{ section.settings.list_text_color }}; border-color: {{ section.settings.list_border_color }}; font-family: 'Instrument Serif', serif; font-style: italic;">
+          <img src="{{ 'turmeric.png' | asset_url }}" alt="Turmeric" loading="lazy" width="50" height="50">
+          <span>Turmeric</span>
+        </li>
+      </ul>
+      <img
+        src="{{ 'bottle.png' | asset_url }}"
+        alt="Ingredients Image"
+        class="ingredients-image"
+        loading="lazy"
+        width="300"
+        height="300"
+      >
+      <p
+        class="ingredients-description"
+        data-split="subheading"
+        style="font-family: {{ section.settings.description_font }}, serif; font-style: {{ section.settings.description_style }}; text-transform: {{ section.settings.description_transform }}; color: {{ section.settings.description_color }};"
+      >
+        Hand-selected Ayurvedic gems and nature's vibrant actives, united in our sacred elixir to deeply nurture and
+        unveil your inherent radiance—no compromise.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ingredients-section {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  .ingredients-container {
+    text-align: center;
+  }
+
+  .ingredients-title {
+    font-weight: 200;
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 4rem;
+    overflow: hidden;
+  }
+
+  .ingredients-description {
+    text-align: right;
+    font-size: 0.8rem;
+    width: 100%;
+    overflow: hidden;
+    grid-column: 3;
+  }
+
+  .ingredients-image-container {
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ingredients-image {
+    max-width: 85%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    grid-column: 2;
+  }
+
+  .ingredients-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    grid-column: 1;
+    width: 70%;
+  }
+
+  .ingredients-list li {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    text-transform: capitalize;
+    text-align: left;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ingredients-list li img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    order: 2;
+  }
+
+  .ingredients-list li span {
+    order: 1;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ingredients-title {
+      font-size: 2.5rem;
+    }
+
+    .ingredients-image-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .ingredients-image {
+      grid-column: 1;
+      max-width: 60%;
+    }
+
+    .ingredients-list {
+      grid-column: 1;
+    }
+
+    .ingredients-description {
+      grid-column: 1;
+      text-align: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Ingredients Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fef9f2"
+    },
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Title Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "title_style",
+      "label": "Title Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "title_em_font",
+      "label": "Title Emphasized Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "title_em_style",
+      "label": "Title Emphasized Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "italic"
+    },
+    {
+      "type": "select",
+      "id": "title_em_transform",
+      "label": "Title Emphasized Text Transform (Purest)",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "select",
+      "id": "description_font",
+      "label": "Description Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "description_style",
+      "label": "Description Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "title_transform",
+      "label": "Title Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "select",
+      "id": "description_transform",
+      "label": "Description Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "title_em_color",
+      "label": "Title Emphasized Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#63001fd1"
+    },
+    {
+      "type": "color",
+      "id": "list_text_color",
+      "label": "List Text Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "list_border_color",
+      "label": "List Border Color",
+      "default": "#63001fd1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients Section"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap !== 'undefined' && typeof SplitText !== 'undefined' && typeof CustomEase !== 'undefined') {
+      gsap.registerPlugin(SplitText, CustomEase);
+      CustomEase.create('osmo-ease', '0.625, 0.05, 0, 1');
+
+      var section = document.querySelector('.ingredients-section');
+      if (!section) return;
+
+      function initIngredientsAnimation() {
+        const heading = document.querySelector('.ingredients-title');
+        const description = document.querySelector('.ingredients-description');
+
+        if (!heading) return;
+
+        // Split heading
+        const headingSplit = new SplitText(heading, {
+          type: 'lines',
+          linesClass: 'line',
+        });
+
+        headingSplit.lines.forEach((line) => {
+          const wrapper = document.createElement('div');
+          wrapper.style.overflow = 'hidden';
+          line.parentNode.insertBefore(wrapper, line);
+          wrapper.appendChild(line);
+        });
+
+        gsap.set(headingSplit.lines, { yPercent: 110 });
+
+        // Remove SplitText and animation for description
+        return { headingSplit };
+      }
+
+      // Initialize SplitText after fonts are ready
+      let splitTexts;
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+          splitTexts = initIngredientsAnimation();
+        });
+      } else {
+        setTimeout(() => {
+          splitTexts = initIngredientsAnimation();
+        }, 100);
+      }
+
+      // Create observer for text animation
+      var observer = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting && splitTexts) {
+            const tl = gsap.timeline();
+
+            tl.to(splitTexts.headingSplit.lines, {
+              yPercent: 0,
+              duration: 1.6,
+              stagger: 0.15,
+              ease: 'osmo-ease',
+            });
+
+            // Animate ingredients list items
+            tl.from(
+              '.ingredients-list li',
+              {
+                opacity: 0,
+                y: 40,
+                duration: 1.2,
+                stagger: 0.18,
+                ease: 'power3.out',
+              },
+              '-=1'
+            );
+
+            // Disconnect observer after triggering
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.1 } // Same threshold as product showcase
+      );
+
+      observer.observe(section);
+
+      // Remove parallax effect
+      // window.addEventListener('load', function() {
+      //   var img = document.querySelector('.ingredients-image');
+      //   if (img && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      //     gsap.to(img, {
+      //       y: -150, // Parallax amount (adjust for more/less effect)
+      //       ease: 'none',
+      //       scrollTrigger: {
+      //         trigger: section,
+      //         start: 'top bottom',
+      //         end: 'bottom top',
+      //         scrub: true
+      //       }
+      //     });
+      //   }
+      // });
+    }
+  });
+</script>
