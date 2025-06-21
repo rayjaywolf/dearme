@@ -18,6 +18,22 @@
       with Benefits
     </h2>
     <div class="ingredients-image-container">
+      <p
+        class="ingredients-description"
+        data-split="subheading"
+        style="font-family: {{ section.settings.description_font }}, serif; font-style: {{ section.settings.description_style }}; text-transform: {{ section.settings.description_transform }}; color: {{ section.settings.description_color }};"
+      >
+        Hand-selected Ayurvedic gems and nature's vibrant actives, united in our sacred elixir to deeply nurture and
+        unveil your inherent radiance—no compromise.
+      </p>
+      <img
+        src="{{ 'bottle.png' | asset_url }}"
+        alt="Ingredients Image"
+        class="ingredients-image"
+        loading="lazy"
+        width="300"
+        height="300"
+      >
       <div class="benefits-grid">
         <div class="benefit-item">
           <img src="{{ 'elixir.png' | asset_url }}" alt="Anti-Aging Elixir" loading="lazy" width="60" height="60">
@@ -27,11 +43,11 @@
           <img src="{{ 'hydration.png' | asset_url }}" alt="Deep Hydration" loading="lazy" width="60" height="60">
           <h4 class="benefit-title" style="color: {{ section.settings.title_color }};">Deep Hydration</h4>
         </div>
-        <div class="benefit-item">
+        <div class="benefit-item" style="margin-top: 1rem;">
           <img src="{{ 'complexion.png' | asset_url }}" alt="Luminous Complexion" loading="lazy" width="60" height="60">
           <h4 class="benefit-title" style="color: {{ section.settings.title_color }};">Luminous Complexion</h4>
         </div>
-        <div class="benefit-item">
+        <div class="benefit-item" style="margin-top: 1rem;">
           <img
             src="{{ 'spots.png' | asset_url }}"
             alt="Dark Spot Diminishment"
@@ -42,22 +58,6 @@
           <h4 class="benefit-title" style="color: {{ section.settings.title_color }};">Dark Spot Diminishment</h4>
         </div>
       </div>
-      <img
-        src="{{ 'bottle.png' | asset_url }}"
-        alt="Ingredients Image"
-        class="ingredients-image"
-        loading="lazy"
-        width="300"
-        height="300"
-      >
-      <p
-        class="ingredients-description"
-        data-split="subheading"
-        style="font-family: {{ section.settings.description_font }}, serif; font-style: {{ section.settings.description_style }}; text-transform: {{ section.settings.description_transform }}; color: {{ section.settings.description_color }};"
-      >
-        Hand-selected Ayurvedic gems and nature's vibrant actives, united in our sacred elixir to deeply nurture and
-        unveil your inherent radiance—no compromise.
-      </p>
     </div>
   </div>
 </section>
@@ -89,7 +89,7 @@
     font-size: 0.8rem;
     width: 100%;
     overflow: hidden;
-    grid-column: 3;
+    grid-column: 1;
   }
 
   .ingredients-image-container {
@@ -99,6 +99,7 @@
     gap: 4rem;
     max-width: 1200px;
     margin: 0 auto;
+    grid-column: 2;
   }
 
   .ingredients-image {
@@ -113,7 +114,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
-    grid-column: 1;
+    grid-column: 3;
     position: relative;
   }
 
