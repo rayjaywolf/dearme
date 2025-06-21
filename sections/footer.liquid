@@ -3,7 +3,7 @@
     <div class="footer-links-row">
       <div class="footer-links-col">
         <div class="footer-links-title">Search</div>
-        {% assign footer_menu = linklists['footer'].links %}
+        {% assign footer_menu = linklists.footer.links %}
         {% for link in footer_menu %}
           <a href="{{ link.url }}">{{ link.title }}</a>
         {% endfor %}
@@ -23,7 +23,8 @@
         alt="Footer Logo"
         class="footer-logo"
         width="80"
-        height="80" />
+        height="80"
+      >
     </div>
     <div class="footer-newsletter-col">
       <div class="footer-newsletter-title">Dear Me News + 15% off</div>
@@ -32,38 +33,41 @@
           type="email"
           placeholder="Email address"
           name="email"
-          required />
+          required
+        >
         <button type="submit">→</button>
       </form>
       <div class="footer-social-row">
         <a
           href="#"
           aria-label="Instagram"
-          class="footer-social-link">
+          class="footer-social-link"
+        >
           <img
             src="{{ 'instagram.svg' | asset_url }}"
             alt="Instagram"
             class="footer-social-img"
             width="28"
-            height="28" />
+            height="28"
+          >
         </a>
         <a
           href="#"
           aria-label="YouTube"
-          class="footer-social-link">
+          class="footer-social-link"
+        >
           <img
             src="{{ 'youtube.svg' | asset_url }}"
             alt="YouTube"
             class="footer-social-img"
             width="28"
-            height="28" />
+            height="28"
+          >
         </a>
       </div>
     </div>
   </div>
-  <div class="footer-copyright">
-    © 2025 Dear Me. All rights reserved.
-  </div>
+  <div class="footer-copyright">© 2025 Dear Me. All rights reserved.</div>
 </footer>
 
 <style>
@@ -96,8 +100,7 @@
     gap: 8rem;
   }
   .footer-links-title {
-    font-family: "Gumani"
-    , serif;
+    font-family: 'Gumani', serif;
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -125,7 +128,6 @@
     width: 60px;
     height: 60px;
     object-fit: contain;
-
   }
   .footer-newsletter-col {
     display: flex;
@@ -136,8 +138,7 @@
   }
   .footer-newsletter-title {
     font-size: 1.75rem;
-    font-family: 'Gumani'
-    , serif;
+    font-family: 'Gumani', serif;
     margin-bottom: 0.5rem;
   }
   .footer-newsletter-form {
@@ -149,7 +150,7 @@
     overflow: hidden;
     background: transparent;
   }
-  .footer-newsletter-form input[type="email"] {
+  .footer-newsletter-form input[type='email'] {
     flex: 1;
     padding: 0.7rem 1rem;
     border: none;
@@ -209,8 +210,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: opacity 0.2s
-    , transform 0.2s;
+    transition: opacity 0.2s, transform 0.2s;
     opacity: 0.85;
   }
   .footer-social-link:hover {
