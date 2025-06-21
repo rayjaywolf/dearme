@@ -17,6 +17,7 @@
         </p>
       </div>
     </div>
+    <p class="ingredients-badge">Powered By 6 Ingredients</p>
     <div class="sacred-info-ingredients">
       <div class="sacred-info-ingredient">
         <img src="{{ 'saffron.png' | asset_url }}" alt="Kashmiri Saffron" loading="lazy" width="150" height="150">
@@ -55,6 +56,102 @@
         <img src="{{ 'turmeric.png' | asset_url }}" alt="Turmeric" loading="lazy" width="150" height="150">
         <span class="sacred-info-ingredient-name">Turmeric</span>
         <p class="sacred-info-ingredient-desc">Anti-inflammatory, evens skin tone, calms flare-ups</p>
+      </div>
+    </div>
+
+    <div class="sacred-info-why-it-works-container">
+      <div class="sacred-info-why-it-works-left">
+        <h3 class="sacred-info-section-title">Why It Works</h3>
+        <div class="sacred-info-accordion">
+          <div class="sacred-info-accordion-item">
+            <button class="sacred-info-accordion-header">
+              <span class="sacred-info-accordion-title">Brightening</span>
+              <svg
+                class="sacred-info-accordion-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path class="icon-minus" d="M3 8H13" stroke="#63001f" stroke-width="1.5" stroke-linecap="round" />
+                <path class="icon-plus" d="M8 3V13" stroke="#63001f" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </button>
+            <div class="sacred-info-accordion-panel">
+              <p>Saffron & Kakadu Plum work in synergy to restore glow</p>
+            </div>
+          </div>
+          <div class="sacred-info-accordion-item">
+            <button class="sacred-info-accordion-header">
+              <span class="sacred-info-accordion-title">Pigmentation & Dark Spots</span>
+              <svg
+                class="sacred-info-accordion-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path class="icon-minus" d="M3 8H13" stroke="#63001f" stroke-width="1.5" stroke-linecap="round" />
+                <path class="icon-plus" d="M8 3V13" stroke="#63001f" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </button>
+            <div class="sacred-info-accordion-panel">
+              <p>Turmeric and NAG fade stubborn spots without irritation</p>
+            </div>
+          </div>
+          <div class="sacred-info-accordion-item">
+            <button class="sacred-info-accordion-header">
+              <span class="sacred-info-accordion-title">Fine Lines & Wrinkles</span>
+              <svg
+                class="sacred-info-accordion-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path class="icon-minus" d="M3 8H13" stroke="#63001f" stroke-width="1.5" stroke-linecap="round" />
+                <path class="icon-plus" d="M8 3V13" stroke="#63001f" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </button>
+            <div class="sacred-info-accordion-panel">
+              <p>Gold Bhasma + Ferulic Acid improve firmness and elasticity</p>
+            </div>
+          </div>
+          <div class="sacred-info-accordion-item">
+            <button class="sacred-info-accordion-header">
+              <span class="sacred-info-accordion-title">Barrier Strength</span>
+              <svg
+                class="sacred-info-accordion-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path class="icon-minus" d="M3 8H13" stroke="#63001f" stroke-width="1.5" stroke-linecap="round" />
+                <path class="icon-plus" d="M8 3V13" stroke="#63001f" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </button>
+            <div class="sacred-info-accordion-panel">
+              <p>Centella, Panthenol, and Rice Water repair, calm, and protect</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sacred-info-why-it-works-right">
+        <div class="sacred-info-why-it-works-image-wrapper">
+          <img
+            src="{{ 'A7409882.jpg' | asset_url }}"
+            alt="Sacred Secret Lifestyle"
+            class="sacred-info-why-it-works-image"
+            loading="lazy"
+            width="500"
+            height="600"
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -124,6 +221,17 @@
     line-height: 1.8;
   }
 
+  .ingredients-badge {
+    /* text-transform: uppercase; */
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #5d6b54;
+    background: #e4ecd0;
+    padding: 0.5rem 1rem;
+    border-radius: 1000px;
+    margin-bottom: 1.5rem;
+  }
+
   .sacred-info-ingredients {
     display: flex;
     justify-content: space-between;
@@ -169,6 +277,83 @@
     max-width: 180px;
   }
 
+  .sacred-info-why-it-works-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 95%;
+    margin: 2rem auto 0;
+  }
+
+  .sacred-info-why-it-works-image-wrapper {
+    width: 100%;
+    height: 85vh;
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+
+  .sacred-info-why-it-works-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform-origin: center center;
+  }
+
+  .sacred-info-section-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 200;
+    font-size: 2.5rem;
+    color: #63001f;
+    text-align: left;
+    margin-bottom: 2.5rem;
+  }
+
+  .sacred-info-accordion-item {
+    border-bottom: 1px solid rgba(99, 0, 31, 0.2);
+  }
+
+  .sacred-info-accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.5rem 0.5rem;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .sacred-info-accordion-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #63001f;
+  }
+
+  .sacred-info-accordion-icon .icon-plus {
+    transition: transform 0.3s ease;
+  }
+
+  .sacred-info-accordion-header.active .icon-plus {
+    transform: scaleY(0);
+  }
+
+  .sacred-info-accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.83, 0, 0.17, 1);
+  }
+
+  .sacred-info-accordion-panel p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(99, 0, 31, 0.82);
+    line-height: 1.7;
+    padding: 0 0.5rem 1.5rem;
+  }
+
   @media screen and (max-width: 768px) {
     .sacred-info-section {
       padding: 4rem 0;
@@ -212,6 +397,11 @@
       font-size: 0.85rem;
       max-width: 250px;
     }
+
+    .sacred-info-why-it-works-container {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
   }
 </style>
 
@@ -229,8 +419,9 @@
       const title = document.querySelector('.sacred-info-title');
       const subtitle = document.querySelector('.sacred-info-subtitle');
       const description = document.querySelector('.sacred-info-description');
+      const whyItWorksTitle = document.querySelector('.sacred-info-section-title');
 
-      if (!title || !subtitle || !description) return;
+      if (!title || !subtitle || !description || !whyItWorksTitle) return;
 
       // Create SplitText with masking for all text elements
       const titleSplitText = new SplitText(title, {
@@ -248,8 +439,13 @@
         linesClass: 'sacred-info-line',
       });
 
+      const whyItWorksTitleSplit = new SplitText(whyItWorksTitle, {
+        type: 'lines',
+        linesClass: 'sacred-info-line',
+      });
+
       // Create mask wrapper for each line
-      [titleSplitText, subtitleSplitText, descriptionSplitText].forEach((splitText) => {
+      [titleSplitText, subtitleSplitText, descriptionSplitText, whyItWorksTitleSplit].forEach((splitText) => {
         splitText.lines.forEach((line) => {
           const wrapper = document.createElement('div');
           wrapper.style.overflow = 'hidden';
@@ -260,9 +456,17 @@
       });
 
       // Set initial state for lines (hidden)
-      gsap.set([...titleSplitText.lines, ...subtitleSplitText.lines, ...descriptionSplitText.lines], {
-        yPercent: 110,
-      });
+      gsap.set(
+        [
+          ...titleSplitText.lines,
+          ...subtitleSplitText.lines,
+          ...descriptionSplitText.lines,
+          ...whyItWorksTitleSplit.lines,
+        ],
+        {
+          yPercent: 110,
+        }
+      );
 
       // Set initial state for ingredients (hidden)
       gsap.set('.sacred-info-ingredient', {
@@ -270,7 +474,18 @@
         opacity: 0,
       });
 
-      return { titleSplitText, subtitleSplitText, descriptionSplitText };
+      // Set initial state for why-it-works image
+      gsap.set('.sacred-info-why-it-works-image', {
+        scale: 1.5,
+      });
+
+      // Set initial state for accordion items
+      gsap.set('.sacred-info-accordion-item', {
+        opacity: 0,
+        y: 50,
+      });
+
+      return { titleSplitText, subtitleSplitText, descriptionSplitText, whyItWorksTitleSplit };
     }
 
     // Initialize SplitText after fonts are ready
@@ -327,6 +542,68 @@
     );
 
     sectionObserver.observe(section);
+
+    // Create a separate observer for the "Why It Works" section
+    const whyItWorksContainer = document.querySelector('.sacred-info-why-it-works-container');
+    if (whyItWorksContainer) {
+      const whyItWorksObserver = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting && splitTexts) {
+            const tl = gsap.timeline();
+
+            // Animate image on the right
+            tl.to('.sacred-info-why-it-works-image', {
+              scale: 1,
+              duration: 2,
+              ease: 'power2.out',
+            });
+
+            // Animate "Why It Works" title on the left
+            tl.to(
+              splitTexts.whyItWorksTitleSplit.lines,
+              {
+                yPercent: 0,
+                duration: 1.5,
+                ease: 'power4.out',
+              },
+              '<+0.2'
+            );
+
+            // Animate accordion items on the left
+            tl.to(
+              '.sacred-info-accordion-item',
+              {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.15,
+                ease: 'power3.out',
+              },
+              '-=1.2'
+            );
+
+            whyItWorksObserver.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+      whyItWorksObserver.observe(whyItWorksContainer);
+    }
+
+    // Accordion functionality
+    const accordionHeaders = document.querySelectorAll('.sacred-info-accordion-header');
+    accordionHeaders.forEach((header) => {
+      header.addEventListener('click', () => {
+        const panel = header.nextElementSibling;
+        header.classList.toggle('active');
+
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+    });
   });
 </script>
 

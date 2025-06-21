@@ -29,51 +29,24 @@
     </p>
 
     <div class="blogs-grid">
-      {% comment %} --- Featured Article (Latest) --- {% endcomment %}
-      {% if articles_list[0] %}
-        {% assign article_one = articles_list[0] %}
-        <div class="blog-featured-row">
+      {% for article in articles_list limit: 3 %}
+        {%- liquid
+          assign card_bg = section.settings.featured_card_bg
+          if forloop.index == 2
+            assign card_bg = section.settings.second_card_bg
+          elsif forloop.index == 3
+            assign card_bg = section.settings.third_card_bg
+          endif
+        -%}
+        <a href="{{ article.url }}" class="blog-card">
           <div
-            class="blog-featured-image"
-            style="background-image: url('{{ article_one.image | image_url: width: 1200 }}');"
+            class="blog-card-image"
+            style="background-image: url('{{ article.image | image_url: width: 800 }}');"
           ></div>
-          <div class="blog-featured-text" style="background: {{ section.settings.featured_card_bg }};">
-            <div class="blog-tags">
-              {% for tag in article_one.tags limit: 2 %}
-                <span
-                  class="blog-tag"
-                  style="color: {{ section.settings.tag_text_color }}; border-color: {{ section.settings.tag_border_color }};"
-                >
-                  {{- tag -}}
-                </span>
-              {% endfor %}
-            </div>
-            <h3
-              class="blog-featured-title js-animated-title"
-              style="font-family: {{ section.settings.article_title_font }}, serif; font-style: {{ section.settings.article_title_style }}; color: {{ section.settings.article_title_color }};"
-            >
-              <a href="{{ article_one.url }}">{{ article_one.title }}</a>
-            </h3>
-            <div class="blog-meta" style="color: {{ section.settings.meta_text_color }};">
-              Published on {{ article_one.published_at | time_tag: format: 'date' }} |
-              {{ article_one.content | strip_html | split: ' ' | size | divided_by: 200 | round }} min read
-            </div>
-          </div>
-        </div>
-      {% endif %}
-
-      <div class="blog-row">
-        {% comment %} --- Second Latest Article --- {% endcomment %}
-        {% if articles_list[1] %}
-          {% assign article_two = articles_list[1] %}
-          <div class="blog-horizontal-card large">
-            <div
-              class="blog-horizontal-image"
-              style="background-image: url('{{ article_two.image | image_url: width: 800 }}');"
-            ></div>
-            <div class="blog-horizontal-text" style="background: {{ section.settings.second_card_bg }};">
+          <div class="blog-card-content" style="background: {{ card_bg }};">
+            <div class="blog-card-upper">
               <div class="blog-tags">
-                {% for tag in article_two.tags limit: 2 %}
+                {% for tag in article.tags limit: 2 %}
                   <span
                     class="blog-tag"
                     style="color: {{ section.settings.tag_text_color }}; border-color: {{ section.settings.tag_border_color }};"
@@ -83,75 +56,54 @@
                 {% endfor %}
               </div>
               <h3
-                class="blog-featured-title column-2-large js-animated-title"
+                class="blog-card-title js-animated-title"
                 style="font-family: {{ section.settings.article_title_font }}, serif; font-style: {{ section.settings.article_title_style }}; color: {{ section.settings.article_title_color }};"
               >
-                <a href="{{ article_two.url }}">{{ article_two.title }}</a>
+                {{ article.title }}
               </h3>
-              <div class="blog-meta column-2-meta" style="color: {{ section.settings.meta_text_color }};">
-                Published on {{ article_two.published_at | time_tag: format: 'date' }} |
-                {{ article_two.content | strip_html | split: ' ' | size | divided_by: 200 | round }} min read
-              </div>
             </div>
-          </div>
-        {% endif %}
-
-        {% comment %} --- Third Latest Article --- {% endcomment %}
-        {% if articles_list[2] %}
-          {% assign article_three = articles_list[2] %}
-          <div class="blog-horizontal-card small">
-            <div
-              class="blog-small-image"
-              style="background-image: url('{{ article_three.image | image_url: width: 600 }}');"
-            ></div>
-            <div class="blog-small-content" style="background: {{ section.settings.third_card_bg }};">
-              <h3
-                class="blog-small-title js-animated-title"
-                style="font-family: {{ section.settings.article_title_font }}, serif; font-style: {{ section.settings.article_title_style }}; color: {{ section.settings.article_title_color }};"
-              >
-                <a href="{{ article_three.url }}">{{ article_three.title }}</a>
-              </h3>
-              <div class="blog-small-meta" style="color: {{ section.settings.meta_text_color }};">
-                Published on {{ article_three.published_at | time_tag: format: 'date' }} |
-                {{ article_three.content | strip_html | split: ' ' | size | divided_by: 200 | round }} min read
-              </div>
+            <div class="blog-card-meta" style="color: {{ section.settings.meta_text_color }};">
+              {{ article.published_at | time_tag: format: 'date' }}
+              |
+              {{ article.content | strip_html | split: ' ' | size | divided_by: 200 | round }}
+              min read
             </div>
-          </div>
-        {% endif %}
-      </div>
-      <div class="blogs-button-container">
-        <a
-          href="{{ blogs['blog-posts'].url }}"
-          class="blogs-cta-button"
-          style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }};"
-        >
-          <span style="color: {{ section.settings.button_text_color }};">Read all articles</span>
-          <div class="blogs-cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
-            <svg
-              class="blogs-icon-arrow"
-              width="13"
-              height="8"
-              viewBox="0 0 13 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style="fill: {{ section.settings.button_arrow_color }};"
-            >
-              <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
-            </svg>
-            <svg
-              class="blogs-icon-arrow"
-              width="13"
-              height="8"
-              viewBox="0 0 13 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style="fill: {{ section.settings.button_arrow_color }};"
-            >
-              <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
-            </svg>
           </div>
         </a>
-      </div>
+      {% endfor %}
+    </div>
+    <div class="blogs-button-container">
+      <a
+        href="{{ blogs['blog-posts'].url }}"
+        class="blogs-cta-button"
+        style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }};"
+      >
+        <span style="color: {{ section.settings.button_text_color }};">Read all articles</span>
+        <div class="blogs-cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
+          <svg
+            class="blogs-icon-arrow"
+            width="13"
+            height="8"
+            viewBox="0 0 13 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="fill: {{ section.settings.button_arrow_color }};"
+          >
+            <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+          </svg>
+          <svg
+            class="blogs-icon-arrow"
+            width="13"
+            height="8"
+            viewBox="0 0 13 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="fill: {{ section.settings.button_arrow_color }};"
+          >
+            <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+          </svg>
+        </div>
+      </a>
     </div>
   </div>
 </section>
@@ -167,7 +119,7 @@
   }
   .blogs-container {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 4rem 4rem;
     width: 100%;
   }
   .blogs-subtitle {
@@ -193,47 +145,33 @@
   }
   .blogs-grid {
     width: 100%;
-    max-width: 1200px;
-    margin: 4rem auto 0;
-    padding: 0 2rem;
+    margin: 4rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
   }
-  .blog-featured-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    height: 450px;
-    border-radius: 0;
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-  .blog-featured-text {
-    background: #f9eccc;
-    height: 100%;
-    flex: 1 1 0;
-    padding: 3rem 3rem 2rem 3rem;
+
+  .blog-card {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    height: 500px;
+    text-decoration: none;
+    color: inherit;
   }
-  .blog-featured-image {
-    flex: 1 1 0;
+
+  .blog-card-image {
+    height: 55%;
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    height: 100%;
-    min-width: 50%;
     background-color: #f5f5f5;
     overflow: hidden;
     position: relative;
     --scale: 1.2;
   }
 
-  .blog-featured-image::before {
+  .blog-card-image::before {
     content: '';
     position: absolute;
     top: 0;
@@ -249,12 +187,21 @@
     transition: transform 1.3s ease-out;
   }
 
+  .blog-card-content {
+    height: 45%;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
   .blog-tags {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
   }
+
   .blog-tag {
     display: inline-block;
     background: transparent;
@@ -267,137 +214,17 @@
     letter-spacing: 0.05em;
     text-transform: uppercase;
   }
-  .blog-featured-title {
+
+  .blog-card-title {
     font-family: 'Gumani', serif;
     text-align: left;
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     font-weight: 400;
-    margin-bottom: 2rem;
-    line-height: 1.1;
-  }
-  .blog-featured-title a,
-  .blog-small-title a {
-    text-decoration: none;
-    color: inherit;
-  }
-  .blog-meta {
-    font-size: 0.75rem;
-    color: #333;
-    text-align: left;
-  }
-  .blog-row {
-    display: flex;
-    gap: 1rem;
-  }
-  .blog-horizontal-card {
-    display: flex;
-    flex-direction: row;
-    height: 450px;
-    border-radius: 0;
-    overflow: hidden;
-    background: none;
-    background-color: transparent;
-  }
-  .blog-horizontal-card.large {
-    width: 66.66%;
-  }
-  .blog-horizontal-card.small {
-    width: 33.33%;
-    flex-direction: column;
-    height: 450px;
-    border-radius: 0;
-    overflow: hidden;
-  }
-  .blog-horizontal-text {
-    background: #ffdad8;
-    flex: 1 1 0;
-    padding: 2rem 2rem 1.7rem 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-  .column-2-large {
-    font-size: 1.6rem;
-  }
-  .blog-horizontal-image {
-    flex: 1 1 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    height: 100%;
-    min-width: 50%;
-    background-color: #f5f5f5;
-    overflow: hidden;
-    position: relative;
-    --scale: 1.2;
+    margin-bottom: 1rem;
+    line-height: 1.2;
   }
 
-  .blog-horizontal-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: inherit;
-    transform-origin: center center;
-    transform: scale(var(--scale));
-    transition: transform 1.3s ease-out;
-  }
-
-  .blog-small-image {
-    height: 75%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 0 0 0 0;
-    background-color: #f5f5f5;
-    overflow: hidden;
-    position: relative;
-    --scale: 1.2;
-  }
-
-  .blog-small-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: inherit;
-    transform-origin: center center;
-    transform: scale(var(--scale));
-    transition: transform 1.3s ease-out;
-  }
-
-  .blog-small-content {
-    height: 25%;
-    background: #e7a579;
-    padding: 2rem 2rem 1.7rem 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    border-radius: 0 0 0 0;
-  }
-  .blog-small-title {
-    font-family: 'Gumani', serif;
-    font-size: 1.4rem;
-    font-weight: 400;
-    line-height: 1.1;
-    margin: 1rem 0;
-    text-align: left;
-  }
-  .blog-small-meta {
+  .blog-card-meta {
     font-size: 0.75rem;
     color: #333;
     text-align: left;
@@ -435,21 +262,21 @@
   }
 
   .blogs-cta-button:hover {
-    background-color: #63001f;
-    color: #fff;
-    border-color: #63001f;
+    background-color: {{ section.settings.button_hover_bg }} !important;
+    color: {{ section.settings.button_hover_text }} !important;
+    border-color: {{ section.settings.button_hover_border }} !important;
   }
 
   .blogs-cta-button:hover span {
-    color: #fff;
+    color: {{ section.settings.button_hover_text }} !important;
   }
 
   .blogs-cta-button:hover .blogs-cta-arrow {
-    background: #fff;
+    background: {{ section.settings.button_hover_arrow_bg }} !important;
   }
 
   .blogs-cta-button:hover .blogs-icon-arrow {
-    fill: #63001f;
+    fill: {{ section.settings.button_hover_arrow_color }} !important;
   }
 
   .blogs-cta-arrow {
@@ -494,24 +321,12 @@
   }
 
   @media screen and (max-width: 900px) {
-    .blog-row {
-      flex-direction: column;
+    .blogs-grid {
+      grid-template-columns: 1fr;
     }
-    .blog-horizontal-card.large,
-    .blog-horizontal-card.small {
-      width: 100%;
-    }
-    .blog-horizontal-card {
-      flex-direction: column;
+
+    .blog-card {
       height: auto;
-    }
-    .blog-horizontal-image {
-      height: 200px;
-      border-radius: 0 0 0 0;
-    }
-    .blog-horizontal-text {
-      border-radius: 0 0 0 0;
-      padding: 1.5rem 1.5rem;
     }
   }
 </style>
@@ -641,7 +456,7 @@
     });
 
     // Create observers for images
-    const blogImages = document.querySelectorAll('.blog-featured-image, .blog-horizontal-image, .blog-small-image');
+    const blogImages = document.querySelectorAll('.blog-card-image');
     blogImages.forEach((image) => {
       const imageObserver = new IntersectionObserver(
         function (entries) {
@@ -1009,6 +824,36 @@
       "id": "button_arrow_color",
       "label": "Button Arrow Color",
       "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button Hover Background",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text",
+      "label": "Button Hover Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border",
+      "label": "Button Hover Border",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_arrow_bg",
+      "label": "Button Hover Arrow Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_arrow_color",
+      "label": "Button Hover Arrow Color",
+      "default": "#63001f"
     }
   ],
   "presets": [
