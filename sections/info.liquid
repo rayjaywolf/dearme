@@ -407,203 +407,27 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    if (typeof gsap === 'undefined' || typeof SplitText === 'undefined') return;
-
-    // Register plugins
-    gsap.registerPlugin(SplitText);
-
-    const section = document.querySelector('.sacred-info-section');
-
-    // Initialize masked text reveal
-    function initMaskedTextReveal() {
-      const title = document.querySelector('.sacred-info-title');
-      const subtitle = document.querySelector('.sacred-info-subtitle');
-      const description = document.querySelector('.sacred-info-description');
-      const whyItWorksTitle = document.querySelector('.sacred-info-section-title');
-
-      if (!title || !subtitle || !description || !whyItWorksTitle) return;
-
-      // Create SplitText with masking for all text elements
-      const titleSplitText = new SplitText(title, {
-        type: 'lines',
-        linesClass: 'sacred-info-line',
-      });
-
-      const subtitleSplitText = new SplitText(subtitle, {
-        type: 'lines',
-        linesClass: 'sacred-info-line',
-      });
-
-      const descriptionSplitText = new SplitText(description, {
-        type: 'lines',
-        linesClass: 'sacred-info-line',
-      });
-
-      const whyItWorksTitleSplit = new SplitText(whyItWorksTitle, {
-        type: 'lines',
-        linesClass: 'sacred-info-line',
-      });
-
-      // Create mask wrapper for each line
-      [titleSplitText, subtitleSplitText, descriptionSplitText, whyItWorksTitleSplit].forEach((splitText) => {
-        splitText.lines.forEach((line) => {
-          const wrapper = document.createElement('div');
-          wrapper.style.overflow = 'hidden';
-          wrapper.style.lineHeight = line.parentElement.classList.contains('sacred-info-title') ? '1.2' : '1.6';
-          line.parentNode.insertBefore(wrapper, line);
-          wrapper.appendChild(line);
-        });
-      });
-
-      // Set initial state for lines (hidden)
-      gsap.set(
-        [
-          ...titleSplitText.lines,
-          ...subtitleSplitText.lines,
-          ...descriptionSplitText.lines,
-          ...whyItWorksTitleSplit.lines,
-        ],
-        {
-          yPercent: 110,
-        }
-      );
-
-      // Set initial state for ingredients (hidden)
-      gsap.set('.sacred-info-ingredient', {
-        y: 50,
-        opacity: 0,
-      });
-
-      // Set initial state for why-it-works image
-      gsap.set('.sacred-info-why-it-works-image', {
-        scale: 1.5,
-      });
-
-      // Set initial state for accordion items
-      gsap.set('.sacred-info-accordion-item', {
-        opacity: 0,
-        y: 50,
-      });
-
-      return { titleSplitText, subtitleSplitText, descriptionSplitText, whyItWorksTitleSplit };
-    }
-
-    // Initialize SplitText after fonts are ready
-    let splitTexts;
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function () {
-        splitTexts = initMaskedTextReveal();
-      });
-    } else {
-      setTimeout(() => {
-        splitTexts = initMaskedTextReveal();
-      }, 100);
-    }
-
-    // Create observer for text animations
-    const sectionObserver = new IntersectionObserver(
-      function (entries) {
-        if (entries[0].isIntersecting && splitTexts) {
-          // Create timeline for text animations
-          const tl = gsap.timeline();
-
-          // Animate all text elements
-          tl.to(
-            [
-              ...splitTexts.titleSplitText.lines,
-              ...splitTexts.subtitleSplitText.lines,
-              ...splitTexts.descriptionSplitText.lines,
-            ],
-            {
-              yPercent: 0,
-              duration: 1.8,
-              stagger: 0.15,
-              ease: 'power4.out',
+    if (typeof gsap !== 'undefined') {
+      // Animate the 'Why It Works' image only
+      const whyItWorksContainer = document.querySelector('.sacred-info-why-it-works-container');
+      if (whyItWorksContainer) {
+        gsap.set('.sacred-info-why-it-works-image', { scale: 1.5 });
+        const whyItWorksObserver = new IntersectionObserver(
+          function (entries) {
+            if (entries[0].isIntersecting) {
+              gsap.to('.sacred-info-why-it-works-image', {
+                scale: 1,
+                duration: 2,
+                ease: 'power2.out',
+              });
+              whyItWorksObserver.disconnect();
             }
-          );
-
-          // Animate ingredients
-          tl.to(
-            '.sacred-info-ingredient',
-            {
-              y: 0,
-              opacity: 1,
-              duration: 1.2,
-              stagger: 0.1,
-              ease: 'power3.out',
-            },
-            '-=1'
-          );
-
-          sectionObserver.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    sectionObserver.observe(section);
-
-    // Create a separate observer for the "Why It Works" section
-    const whyItWorksContainer = document.querySelector('.sacred-info-why-it-works-container');
-    if (whyItWorksContainer) {
-      const whyItWorksObserver = new IntersectionObserver(
-        function (entries) {
-          if (entries[0].isIntersecting && splitTexts) {
-            const tl = gsap.timeline();
-
-            // Animate image on the right
-            tl.to('.sacred-info-why-it-works-image', {
-              scale: 1,
-              duration: 2,
-              ease: 'power2.out',
-            });
-
-            // Animate "Why It Works" title on the left
-            tl.to(
-              splitTexts.whyItWorksTitleSplit.lines,
-              {
-                yPercent: 0,
-                duration: 1.5,
-                ease: 'power4.out',
-              },
-              '<+0.2'
-            );
-
-            // Animate accordion items on the left
-            tl.to(
-              '.sacred-info-accordion-item',
-              {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                stagger: 0.15,
-                ease: 'power3.out',
-              },
-              '-=1.2'
-            );
-
-            whyItWorksObserver.disconnect();
-          }
-        },
-        { threshold: 0.1 }
-      );
-      whyItWorksObserver.observe(whyItWorksContainer);
+          },
+          { threshold: 0.1 }
+        );
+        whyItWorksObserver.observe(whyItWorksContainer);
+      }
     }
-
-    // Accordion functionality
-    const accordionHeaders = document.querySelectorAll('.sacred-info-accordion-header');
-    accordionHeaders.forEach((header) => {
-      header.addEventListener('click', () => {
-        const panel = header.nextElementSibling;
-        header.classList.toggle('active');
-
-        if (panel.style.maxHeight) {
-          panel.style.maxHeight = null;
-        } else {
-          panel.style.maxHeight = panel.scrollHeight + 'px';
-        }
-      });
-    });
   });
 </script>
 

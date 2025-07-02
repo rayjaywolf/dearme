@@ -307,48 +307,12 @@
       };
 
       function initHeadingsAnimation() {
-        const headings = container.querySelectorAll('.js-animated-title');
-
-        headings.forEach((heading) => {
-          const splitText = new SplitText(heading, { type: 'lines', linesClass: 'line' });
-
-          splitText.lines.forEach((line) => {
-            const wrapper = document.createElement('div');
-            wrapper.style.overflow = 'hidden';
-            wrapper.style.lineHeight = line.parentElement.classList.contains('headings__main') ? '1' : '1.4';
-            line.parentNode.insertBefore(wrapper, line);
-            wrapper.appendChild(line);
-          });
-
-          gsap.set(splitText.lines, { yPercent: 110 });
-
-          const headingObserver = new IntersectionObserver(
-            function (entries) {
-              if (entries[0].isIntersecting) {
-                const tl = gsap.timeline();
-                tl.to(splitText.lines, {
-                  yPercent: 0,
-                  duration: 1.8,
-                  stagger: 0.1,
-                  ease: 'power4.out',
-                });
-                headingObserver.disconnect();
-              }
-            },
-            {
-              threshold: 0.2,
-              rootMargin: '0px 0px -100px 0px',
-            }
-          );
-
-          headingObserver.observe(heading);
-        });
+        // Animation removed
       }
 
       const init = () => {
         const breakPoint = '53em';
         const mm = gsap.matchMedia();
-
         mm.add(
           {
             isDesktop: `(min-width: ${breakPoint})`,
@@ -356,17 +320,13 @@
           },
           (context) => {
             let { isDesktop } = context.conditions;
-
             const cardList = gsap.utils.toArray(container.querySelectorAll('.card'));
             const group = container.querySelector('.group');
             const cont = container.querySelector('.container');
-
             if (cardList.length === 0) return;
-
             const count = cardList.length;
             const radius = isDesktop ? 290 : 180;
             const sliceAngle = (2 * Math.PI) / count;
-
             const observer = new IntersectionObserver(
               (entries) => {
                 if (entries[0].isIntersecting) {
@@ -375,7 +335,6 @@
                     gsap.set(cardList, {
                       rotation: (index) => (index + 1) * (360 / count),
                     });
-
                     const tl = gsap
                       .timeline()
                       .fromTo(
@@ -398,29 +357,23 @@
                         }
                       )
                       .to(group, { rotation: -360 - 90, duration: 3, ease: 'power4.out' }, 0);
-
                     // Mark section as animated
                     container.classList.add('cards-animated');
                   }
-
                   // Start continuous rotation
                   gsap.to(cont, { rotation: '-=360', duration: 20, ease: 'none', repeat: -1 });
-
                   const intervalId = setInterval(() => {
                     gsap.to(cardList[Math.floor(Math.random() * count)], { rotateY: '+=180', duration: 1 });
                   }, 2000);
-
                   return () => {
                     clearInterval(intervalId);
                     gsap.killTweensOf([cont, cardList, group]);
                   };
-
                   observer.disconnect();
                 }
               },
               { threshold: 0.2 }
             );
-
             observer.observe(container);
           }
         );

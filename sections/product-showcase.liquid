@@ -536,8 +536,7 @@
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      opacity: 0;
-      transform: translateY(20px);
+      opacity: 1;
     }
 
     .product-showcase__button {
@@ -655,115 +654,14 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Ensure GSAP and SplitText are loaded
-    if (typeof gsap !== 'undefined' && typeof SplitText !== 'undefined') {
-      // Register plugins
-      gsap.registerPlugin(SplitText);
-
+    if (typeof gsap !== 'undefined') {
       var section = document.querySelector('.product-showcase');
       if (!section) return;
-
       // Set initial state for image immediately
       gsap.set('.product-showcase__image', {
         scale: 1.5,
         objectPosition: 'center center',
       });
-
-      // Initialize masked text reveal
-      function initMaskedTextReveal() {
-        const title = document.querySelector('[data-split="title"]');
-        const subtitle = document.querySelector('[data-split="subtitle"]');
-        const description = document.querySelector('[data-split="description"]');
-
-        if (!title || !subtitle || !description) return;
-
-        // Create SplitText with masking for all text elements
-        const titleSplitText = new SplitText(title, {
-          type: 'lines',
-          linesClass: 'line',
-        });
-
-        const subtitleSplitText = new SplitText(subtitle, {
-          type: 'lines',
-          linesClass: 'line',
-        });
-
-        const descriptionSplitText = new SplitText(description, {
-          type: 'lines',
-          linesClass: 'line',
-        });
-
-        // Create mask wrapper for each line
-        [titleSplitText, subtitleSplitText, descriptionSplitText].forEach((splitText) => {
-          splitText.lines.forEach((line) => {
-            const wrapper = document.createElement('div');
-            wrapper.style.overflow = 'hidden';
-            wrapper.style.lineHeight = line.parentElement.classList.contains('product-showcase__title') ? '0.9' : '1.4';
-            line.parentNode.insertBefore(wrapper, line);
-            wrapper.appendChild(line);
-          });
-        });
-
-        // Set initial state for lines (hidden)
-        gsap.set([...titleSplitText.lines, ...subtitleSplitText.lines, ...descriptionSplitText.lines], {
-          yPercent: 110,
-        });
-
-        return { titleSplitText, subtitleSplitText, descriptionSplitText };
-      }
-
-      // Initialize SplitText after fonts are ready
-      let splitTexts;
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(function () {
-          splitTexts = initMaskedTextReveal();
-        });
-      } else {
-        // Fallback if fonts API is not supported
-        setTimeout(() => {
-          splitTexts = initMaskedTextReveal();
-        }, 100);
-      }
-
-      var observer = new IntersectionObserver(
-        function (entries) {
-          if (entries[0].isIntersecting && splitTexts) {
-            // Create timeline for text and button animations
-            const tl = gsap.timeline();
-
-            // Animate text lines
-            tl.to(
-              [
-                ...splitTexts.titleSplitText.lines,
-                ...splitTexts.subtitleSplitText.lines,
-                ...splitTexts.descriptionSplitText.lines,
-              ],
-              {
-                yPercent: 0,
-                duration: 1.8,
-                stagger: 0.15,
-                ease: 'power4.out',
-              }
-            )
-              // Add button animation
-              .to(
-                '.product-showcase__buttons',
-                {
-                  opacity: 1,
-                  y: 0,
-                  duration: 1,
-                  ease: 'power3.out',
-                },
-                '-=1.6'
-              );
-
-            // Disconnect observer after triggering
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.5 } // Original threshold for text animation
-      );
-
       // Create a separate observer for the image animation
       var imageObserver = new IntersectionObserver(
         function (entries) {
@@ -777,13 +675,9 @@
             imageObserver.disconnect();
           }
         },
-        { threshold: 0.1 } // Lower threshold for earlier image animation
+        { threshold: 0.1 }
       );
-
-      observer.observe(section);
       imageObserver.observe(section);
-    } else {
-      console.error('GSAP or SplitText not loaded.');
     }
   });
 </script>

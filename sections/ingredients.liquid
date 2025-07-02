@@ -176,6 +176,32 @@
   }
 </style>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap !== 'undefined') {
+      var section = document.querySelector('.ingredients-section');
+      if (!section) return;
+      // Animate ingredients list items
+      var observer = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting) {
+            gsap.from('.benefit-item', {
+              opacity: 0,
+              y: 40,
+              duration: 1.2,
+              stagger: 0.18,
+              ease: 'power3.out',
+            });
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(section);
+    }
+  });
+</script>
+
 {% schema %}
 {
   "name": "Ingredients Section",
@@ -414,104 +440,3 @@
   ]
 }
 {% endschema %}
-
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    if (typeof gsap !== 'undefined' && typeof SplitText !== 'undefined' && typeof CustomEase !== 'undefined') {
-      gsap.registerPlugin(SplitText, CustomEase);
-      CustomEase.create('osmo-ease', '0.625, 0.05, 0, 1');
-
-      var section = document.querySelector('.ingredients-section');
-      if (!section) return;
-
-      function initIngredientsAnimation() {
-        const heading = document.querySelector('.ingredients-title');
-        const description = document.querySelector('.ingredients-description');
-
-        if (!heading) return;
-
-        // Split heading
-        const headingSplit = new SplitText(heading, {
-          type: 'lines',
-          linesClass: 'line',
-        });
-
-        headingSplit.lines.forEach((line) => {
-          const wrapper = document.createElement('div');
-          wrapper.style.overflow = 'hidden';
-          line.parentNode.insertBefore(wrapper, line);
-          wrapper.appendChild(line);
-        });
-
-        gsap.set(headingSplit.lines, { yPercent: 110 });
-
-        // Remove SplitText and animation for description
-        return { headingSplit };
-      }
-
-      // Initialize SplitText after fonts are ready
-      let splitTexts;
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(function () {
-          splitTexts = initIngredientsAnimation();
-        });
-      } else {
-        setTimeout(() => {
-          splitTexts = initIngredientsAnimation();
-        }, 100);
-      }
-
-      // Create observer for text animation
-      var observer = new IntersectionObserver(
-        function (entries) {
-          if (entries[0].isIntersecting && splitTexts) {
-            const tl = gsap.timeline();
-
-            tl.to(splitTexts.headingSplit.lines, {
-              yPercent: 0,
-              duration: 1.6,
-              stagger: 0.15,
-              ease: 'osmo-ease',
-            });
-
-            // Animate ingredients list items
-            tl.from(
-              '.benefit-item',
-              {
-                opacity: 0,
-                y: 40,
-                duration: 1.2,
-                stagger: 0.18,
-                ease: 'power3.out',
-              },
-              '-=1'
-            );
-
-            // Disconnect observer after triggering
-            observer.disconnect();
-          }
-        },
-        { threshold: 0.1 } // Same threshold as product showcase
-      );
-
-      observer.observe(section);
-
-      // Remove parallax effect
-      // window.addEventListener('load', function() {
-      //   var img = document.querySelector('.ingredients-image');
-      //   if (img && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-      //     gsap.to(img, {
-      //       y: -150, // Parallax amount (adjust for more/less effect)
-      //       ease: 'none',
-      //       scrollTrigger: {
-      //         trigger: section,
-      //         start: 'top bottom',
-      //         end: 'bottom top',
-      //         scrub: true
-      //       }
-      //     });
-      //   }
-      // });
-    }
-  });
-</script>

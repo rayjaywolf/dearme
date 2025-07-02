@@ -389,154 +389,18 @@
       x: 0,
     });
 
-    // Initialize masked text reveal
-    function initMaskedTextReveal() {
-      const title = document.querySelector('.art-of-sacred-title');
-      const subtitle = document.querySelector('.art-of-sacred-subtitle');
-
-      if (!title || !subtitle) return;
-
-      // Create SplitText with masking for title and subtitle
-      const titleSplitText = new SplitText(title, {
-        type: 'lines',
-        linesClass: 'line',
-      });
-
-      const subtitleSplitText = new SplitText(subtitle, {
-        type: 'lines',
-        linesClass: 'line',
-      });
-
-      // Create mask wrapper for each line
-      [titleSplitText, subtitleSplitText].forEach((splitText) => {
-        splitText.lines.forEach((line) => {
-          const wrapper = document.createElement('div');
-          wrapper.style.overflow = 'hidden';
-          wrapper.style.lineHeight = line.parentElement.classList.contains('art-of-sacred-title') ? '1.2' : '1.6';
-          line.parentNode.insertBefore(wrapper, line);
-          wrapper.appendChild(line);
-        });
-      });
-
-      // Set initial state for lines (hidden)
-      gsap.set([...titleSplitText.lines, ...subtitleSplitText.lines], { yPercent: 110 });
-
-      return { titleSplitText, subtitleSplitText };
-    }
-
-    // Initialize SplitText after fonts are ready
-    let splitTexts;
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(function () {
-        splitTexts = initMaskedTextReveal();
-      });
-    } else {
-      setTimeout(() => {
-        splitTexts = initMaskedTextReveal();
-      }, 100);
-    }
-
-    // Create observer for main section text animations
-    const sectionObserver = new IntersectionObserver(
-      function (entries) {
-        if (entries[0].isIntersecting && splitTexts) {
-          // Create timeline for text animations
-          const tl = gsap.timeline();
-
-          // Animate title and subtitle
-          tl.to([...splitTexts.titleSplitText.lines, ...splitTexts.subtitleSplitText.lines], {
-            yPercent: 0,
-            duration: 1.8,
-            stagger: 0.15,
-            ease: 'power4.out',
-          });
-
-          sectionObserver.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
-
     // Create observer for carousel animations
     const carouselObserver = new IntersectionObserver(
       function (entries) {
         if (entries[0].isIntersecting) {
-          // Animate initial slide content
-          animateSlideContent(slides[currentIndex]);
+          // Animate initial slide content (text animation removed)
           carouselObserver.disconnect();
         }
       },
       { threshold: 0.3 }
     );
 
-    sectionObserver.observe(section);
     carouselObserver.observe(carouselContainer);
-
-    function animateSlideContent(slide) {
-      if (!slide) return;
-
-      const heading = slide.querySelector('.slide-heading');
-      const subheading = slide.querySelector('.slide-subheading');
-      const body = slide.querySelector('.slide-body');
-
-      // Reset all text to hidden state
-      if (heading) {
-        const headingSplit = new SplitText(heading, { type: 'lines', linesClass: 'line' });
-        headingSplit.lines.forEach((line) => {
-          const wrapper = document.createElement('div');
-          wrapper.style.overflow = 'hidden';
-          wrapper.style.lineHeight = '1.2';
-          line.parentNode.insertBefore(wrapper, line);
-          wrapper.appendChild(line);
-        });
-        gsap.set(headingSplit.lines, { yPercent: 110 });
-        gsap.to(headingSplit.lines, {
-          yPercent: 0,
-          duration: 1.8,
-          stagger: 0.15,
-          ease: 'power4.out',
-          delay: 0.3,
-        });
-      }
-
-      if (subheading) {
-        const subheadingSplit = new SplitText(subheading, { type: 'lines', linesClass: 'line' });
-        subheadingSplit.lines.forEach((line) => {
-          const wrapper = document.createElement('div');
-          wrapper.style.overflow = 'hidden';
-          wrapper.style.lineHeight = '1.6';
-          line.parentNode.insertBefore(wrapper, line);
-          wrapper.appendChild(line);
-        });
-        gsap.set(subheadingSplit.lines, { yPercent: 130 });
-        gsap.to(subheadingSplit.lines, {
-          yPercent: 0,
-          duration: 1.8,
-          stagger: 0.15,
-          ease: 'power4.out',
-          delay: 0.3,
-        });
-      }
-
-      if (body) {
-        const bodySplit = new SplitText(body, { type: 'lines', linesClass: 'line' });
-        bodySplit.lines.forEach((line) => {
-          const wrapper = document.createElement('div');
-          wrapper.style.overflow = 'hidden';
-          wrapper.style.lineHeight = '1.6';
-          line.parentNode.insertBefore(wrapper, line);
-          wrapper.appendChild(line);
-        });
-        gsap.set(bodySplit.lines, { yPercent: 130 });
-        gsap.to(bodySplit.lines, {
-          yPercent: 0,
-          duration: 1.5,
-          stagger: 0.15,
-          ease: 'power4.out',
-          delay: 0.3,
-        });
-      }
-    }
 
     function updateCarousel() {
       if (isAnimating) return;
@@ -559,8 +423,7 @@
         ease: 'circ.inOut',
       });
 
-      // Animate new slide content
-      animateSlideContent(slides[currentIndex]);
+      // Animate new slide content (text animation removed)
     }
 
     function goToSlide(index) {
