@@ -1,0 +1,54 @@
+{% comment %}
+  Hero Banner Section
+{% endcomment %}
+<section class="hero-banner-section">
+  <h2 class="hero-banner-title">The Royals of A<em>yurveda</em>, Bottled.</h2>
+  <img
+    src="{{ 'ingredients.png' | asset_url }}"
+    class="hero-banner-image"
+    alt="Hero Banner"
+    width="800"
+    height="600"
+  >
+</section>
+
+<style>
+  .hero-banner-section {
+    height: 85vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #ead1c1 url('{{ 'noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    margin-bottom: -1rem;
+  }
+  .hero-banner-title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 200;
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    text-align: center;
+    color: #63001f;
+  }
+  .hero-banner-title em {
+    font-style: italic;
+  }
+  .hero-banner-image {
+    width: 1000px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "presets": [{ "name": "Hero Banner" }]
+}
+{% endschema %}

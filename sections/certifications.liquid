@@ -151,82 +151,84 @@
   }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+{% comment %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-    gsap.registerPlugin(ScrollTrigger);
+      gsap.registerPlugin(ScrollTrigger);
 
-    function initCertificationsAnimation() {
-      const grid = document.querySelector('.js-certifications-grid');
-      if (!grid) return;
+      function initCertificationsAnimation() {
+        const grid = document.querySelector('.js-certifications-grid');
+        if (!grid) return;
 
-      const items = grid.querySelectorAll('.js-certification-item');
-      const icons = grid.querySelectorAll('.js-certification-icon');
-      const separators = grid.querySelectorAll('.js-certification-separator');
+        const items = grid.querySelectorAll('.js-certification-item');
+        const icons = grid.querySelectorAll('.js-certification-icon');
+        const separators = grid.querySelectorAll('.js-certification-separator');
 
-      gsap.set(items, {
-        y: 60,
-        opacity: 0,
-        scale: 0.9,
-      });
+        gsap.set(items, {
+          y: 60,
+          opacity: 0,
+          scale: 0.9,
+        });
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: grid,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none none',
-        },
-      });
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: grid,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none none',
+          },
+        });
 
-      tl.to(items, {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        rotation: 0,
-        duration: 1.2,
-        stagger: 0.15,
-        ease: 'back.out(1.7)',
-      }).to(
-        separators,
-        {
-          scaleY: 1,
+        tl.to(items, {
+          y: 0,
           opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power3.out',
-        },
-        '-=0.6'
-      );
+          scale: 1,
+          rotation: 0,
+          duration: 1.2,
+          stagger: 0.15,
+          ease: 'back.out(1.7)',
+        }).to(
+          separators,
+          {
+            scaleY: 1,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: 'power3.out',
+          },
+          '-=0.6'
+        );
 
-      icons.forEach((icon) => {
-        icon.addEventListener('mouseenter', () => {
-          gsap.to(icon, {
-            scale: 1.1,
-            duration: 0.3,
-            ease: 'power2.out',
+        icons.forEach((icon) => {
+          icon.addEventListener('mouseenter', () => {
+            gsap.to(icon, {
+              scale: 1.1,
+              duration: 0.3,
+              ease: 'power2.out',
+            });
+          });
+
+          icon.addEventListener('mouseleave', () => {
+            gsap.to(icon, {
+              scale: 1,
+              rotation: 0,
+              duration: 0.3,
+              ease: 'power2.out',
+            });
           });
         });
+      }
 
-        icon.addEventListener('mouseleave', () => {
-          gsap.to(icon, {
-            scale: 1,
-            rotation: 0,
-            duration: 0.3,
-            ease: 'power2.out',
-          });
-        });
-      });
-    }
-
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(initCertificationsAnimation);
-    } else {
-      setTimeout(initCertificationsAnimation, 100);
-    }
-  });
-</script>
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(initCertificationsAnimation);
+      } else {
+        setTimeout(initCertificationsAnimation, 100);
+      }
+    });
+  </script>
+{% endcomment %}
 
 {% schema %}
 {

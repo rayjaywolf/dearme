@@ -407,27 +407,96 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    if (typeof gsap !== 'undefined') {
-      // Animate the 'Why It Works' image only
-      const whyItWorksContainer = document.querySelector('.sacred-info-why-it-works-container');
-      if (whyItWorksContainer) {
-        gsap.set('.sacred-info-why-it-works-image', { scale: 1.5 });
-        const whyItWorksObserver = new IntersectionObserver(
-          function (entries) {
-            if (entries[0].isIntersecting) {
-              gsap.to('.sacred-info-why-it-works-image', {
-                scale: 1,
-                duration: 2,
-                ease: 'power2.out',
-              });
-              whyItWorksObserver.disconnect();
-            }
-          },
-          { threshold: 0.1 }
-        );
-        whyItWorksObserver.observe(whyItWorksContainer);
-      }
+    if (typeof gsap === 'undefined') return;
+
+    const section = document.querySelector('.sacred-info-section');
+
+    // Set initial state for ingredients (hidden)
+    gsap.set('.sacred-info-ingredient', {
+      y: 50,
+      opacity: 0,
+    });
+
+    // Set initial state for why-it-works image
+    gsap.set('.sacred-info-why-it-works-image', {
+      scale: 1.5,
+    });
+
+    // Set initial state for accordion items
+    gsap.set('.sacred-info-accordion-item', {
+      opacity: 0,
+      y: 50,
+    });
+
+    // Observer for ingredient list animation
+    const sectionObserver = new IntersectionObserver(
+      function (entries) {
+        if (entries[0].isIntersecting) {
+          // Animate ingredients
+          gsap.to('.sacred-info-ingredient', {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: 'power3.out',
+          });
+          sectionObserver.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    sectionObserver.observe(section);
+
+    // Observer for the "Why It Works" section (image and accordion only)
+    const whyItWorksContainer = document.querySelector('.sacred-info-why-it-works-container');
+    if (whyItWorksContainer) {
+      const whyItWorksObserver = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting) {
+            const tl = gsap.timeline();
+
+            // Animate image on the right
+            tl.to('.sacred-info-why-it-works-image', {
+              scale: 1,
+              duration: 2,
+              ease: 'power2.out',
+            });
+
+            // Animate accordion items on the left
+            tl.to(
+              '.sacred-info-accordion-item',
+              {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                stagger: 0.15,
+                ease: 'power3.out',
+              },
+              '-=1.2'
+            );
+
+            whyItWorksObserver.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+      whyItWorksObserver.observe(whyItWorksContainer);
     }
+
+    // Accordion functionality
+    const accordionHeaders = document.querySelectorAll('.sacred-info-accordion-header');
+    accordionHeaders.forEach((header) => {
+      header.addEventListener('click', () => {
+        const panel = header.nextElementSibling;
+        header.classList.toggle('active');
+
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+    });
   });
 </script>
 
