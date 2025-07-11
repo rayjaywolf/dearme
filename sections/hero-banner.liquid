@@ -3,8 +3,9 @@
 {% endcomment %}
 <section class="hero-banner-section">
   <h2 class="hero-banner-title">The Royals of A<em>yurveda</em>, Bottled.</h2>
+  <p class="banner-info-subtitle">Nature’s Finest, Chosen with Intention</p>
   <img
-    src="{{ 'ingredients.png' | asset_url }}"
+    src="{{ 'saffhkvopy copy.png' | asset_url }}"
     class="hero-banner-image"
     alt="Hero Banner"
     width="800"
@@ -14,26 +15,25 @@
 
 <style>
   .hero-banner-section {
-    height: 85vh;
+    height: 95vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #ead1c1 url('{{ 'noise.png' | asset_url }}');
+    background: #fef9f2 url('{{ 'noise.png' | asset_url }}');
     background-size: 150px 150px;
     background-repeat: repeat;
-    margin-bottom: -1rem;
   }
   .hero-banner-title {
     font-family: 'Instrument Serif', serif;
     font-weight: 200;
     font-size: 3rem;
     line-height: 1.2;
-    margin-bottom: 2rem;
     overflow: hidden;
     text-align: center;
     color: #63001f;
+    margin-bottom: 1rem;
   }
   .hero-banner-title em {
     font-style: italic;
@@ -43,6 +43,15 @@
     height: auto;
     display: block;
     margin: 0 auto;
+    margin-top: 2rem;
+  }
+  .banner-info-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    color: #63001f;
+    line-height: 1.6;
+    font-weight: 500;
+    margin-bottom: 2rem;
   }
 </style>
 

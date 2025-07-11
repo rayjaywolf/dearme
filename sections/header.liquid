@@ -64,11 +64,6 @@
     will-change: transform;
   }
 
-  /*
-   NEW: The ::before pseudo-element.
-   This element holds the expensive blur and background color.
-   It's always present but starts as invisible (opacity: 0).
-*/
   .header::before {
     content: '';
     position: absolute;
@@ -79,11 +74,9 @@
     background-color: #63001f;
     backdrop-filter: blur(10px);
     z-index: -1;
-    /* Sits behind the header content */
     opacity: 0;
     transition: opacity 0.4s ease;
     will-change: opacity;
-    /* Hint to the browser to optimize this */
   }
 
   /* When the header is scrolled, we just fade in the pseudo-element */

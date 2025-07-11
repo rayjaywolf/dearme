@@ -17,6 +17,10 @@
       "type": "hero-banner",
       "settings": {}
     },
+    "about": {
+      "type": "about",
+      "settings": {}
+    },
     "product_showcase": {
       "type": "product-showcase",
       "settings": {
@@ -56,6 +60,7 @@
   "order": [
     "hero",
     "hero_banner",
+    "about",
     "product_showcase",
     "ingredients",
     "marquee",
