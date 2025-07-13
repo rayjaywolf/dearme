@@ -7,25 +7,60 @@
   style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
 >
   <div class="ingredients-container">
-    <h2
-      class="ingredients-title"
-      data-split="heading"
-      style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
-    >
-      <em style="font-family: {{ section.settings.title_em_font }}, serif; font-style: {{ section.settings.title_em_style }}; color: {{ section.settings.title_em_color }}; text-transform: {{ section.settings.title_em_transform }};">
-        {{- 'Enriched' | capitalize -}}
-      </em>
-      with Benefits
-    </h2>
-    <div class="ingredients-image-container">
-      <p
-        class="ingredients-description"
-        data-split="subheading"
-        style="font-family: {{ section.settings.description_font }}, serif; font-style: {{ section.settings.description_style }}; text-transform: {{ section.settings.description_transform }}; color: {{ section.settings.description_color }};"
+    {% comment %}
+      <h2
+        class="ingredients-title"
+        data-split="heading"
+        style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
       >
-        Hand-selected Ayurvedic gems and nature's vibrant actives, united in our sacred elixir to deeply nurture and
-        unveil your inherent radiance—no compromise.
-      </p>
+        <em style="font-family: {{ section.settings.title_em_font }}, serif; font-style: {{ section.settings.title_em_style }}; color: {{ section.settings.title_em_color }}; text-transform: {{ section.settings.title_em_transform }};">
+          {{- 'Enriched' | capitalize -}}
+        </em>
+        with Benefits
+      </h2>
+    {% endcomment %}
+    <div class="ingredients-image-container">
+      <div>
+        <h2 class="product-showcase__title">Sacred Secret</h2>
+        <h3 class="product-showcase__subtitle">Age Defying Illuminating Saffron Weightless Face Serum</h3>
+        <p class="product-showcase__description">
+          Your Pathway to Timeless Beauty. Immerse in the Elixir of Kashmiri Saffron, Crafted for Royalty. Embrace
+          Radiance.
+        </p>
+        <div class="product-showcase__buttons">
+          <a
+            href=""
+            class="product-showcase__button"
+            style=""
+          >
+            <span style="">Buy Now</span>
+            <div class="intro__cta-arrow" style="">
+              <svg
+                class="icon-arrow"
+                width="13"
+                height="8"
+                viewBox="0 0 13 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style=""
+              >
+                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+              </svg>
+              <svg
+                class="icon-arrow"
+                width="13"
+                height="8"
+                viewBox="0 0 13 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="fill: {{ section.settings.button_arrow_color }};"
+              >
+                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+              </svg>
+            </div>
+          </a>
+        </div>
+      </div>
       <img
         src="{{ 'bottle.png' | asset_url }}"
         alt="Ingredients Image"
@@ -70,6 +105,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
+    background-color: #ead1c1 !important;
   }
 
   .ingredients-container {
@@ -101,6 +137,38 @@
     margin: 0 auto;
     grid-column: 2;
   }
+
+  .product-showcase__title {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 200;
+      font-size: 3rem;
+      margin: 0 0 2rem 0;
+      line-height: 0.9;
+      color: #63001f;
+      text-align: center;
+      text-transform: uppercase;
+  }
+
+    .product-showcase__subtitle {
+      font-weight: 400;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+      margin: 0 0 2rem 0;
+      line-height: 1.4;
+      width: 100%;
+      color: #63001f;
+      text-align: center;
+    }
+
+    .product-showcase__description {
+      font-family: 'Inter', serif;
+      font-size: 1rem;
+      line-height: 1.4;
+      margin: 0 0 3rem 0;
+      max-width: 100%;
+      color: #63001fd1;
+      text-align: center;
+    }
 
   .ingredients-image {
     max-width: 85%;
@@ -149,6 +217,98 @@
     line-height: 1.3;
     margin: 0;
   }
+
+  .product-showcase__buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      opacity: 1;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-showcase__button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.5rem;
+      font-size: 0.8rem;
+      text-decoration: none;
+      border-radius: 999px;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease;
+      background-color: #63001f;
+      color: #fff;
+      border: 2px solid #63001f;
+      gap: 1rem;
+      overflow: hidden;
+      max-width: 220px;
+    }
+
+    .product-showcase__button span {
+      margin-right: 3rem;
+      padding-left: 1rem;
+      color: #fff;
+    }
+
+    .intro__cta-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      background: #fff;
+      border-radius: 100%;
+      height: 2.4rem;
+      width: 2.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon-arrow {
+      width: 15px;
+      height: 10px;
+      fill: #63001f;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scaleX(1);
+      transform-origin: center;
+      transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+    }
+
+    .intro__cta-arrow .icon-arrow:last-child {
+      left: 50%;
+      opacity: 0;
+      transform: translate(-300%, -50%) scaleX(2);
+    }
+
+    .product-showcase__button:hover .intro__cta-arrow .icon-arrow:first-child {
+      opacity: 0;
+      transform: translate(200%, -50%) scaleX(2);
+    }
+
+    .product-showcase__button:hover .intro__cta-arrow .icon-arrow:last-child {
+      opacity: 1;
+      transform: translate(-50%, -50%) scaleX(1);
+    }
+
+    .product-showcase__button:hover {
+      background-color: {{ section.settings.button_hover_bg }} !important;
+      color: {{ section.settings.button_hover_text }} !important;
+      border-color: {{ section.settings.button_hover_border }} !important;
+    }
+
+    .product-showcase__button:hover span {
+      color: {{ section.settings.button_hover_text }} !important;
+    }
+
+    .product-showcase__button:hover .intro__cta-arrow {
+      background: {{ section.settings.button_hover_arrow_bg }} !important;
+    }
+
+    .product-showcase__button:hover .icon-arrow {
+      fill: {{ section.settings.button_hover_arrow_color }} !important;
+    }
 
   @media screen and (max-width: 768px) {
     .ingredients-title {

@@ -21,12 +21,12 @@
       "type": "about",
       "settings": {}
     },
-    "product_showcase": {
-      "type": "product-showcase",
-      "settings": {
-        "buy_button_link": ""
-      }
-    },
+    // "product_showcase": {
+    //   "type": "product-showcase",
+    //   "settings": {
+    //     "buy_button_link": ""
+    //   }
+    // },
     "ingredients": {
       "type": "ingredients"
     },
@@ -61,7 +61,7 @@
     "hero",
     "hero_banner",
     "about",
-    "product_showcase",
+    // "product_showcase",
     "ingredients",
     "marquee",
     "info",
