@@ -1,64 +1,155 @@
-{% doc %}
-  Renders a responsive image that might be wrapped in a link.
+{% comment %}
+  Optimized image snippet with lazy loading, modern formats, and responsive images
+  
+  Parameters:
+  - image: Image object
+  - alt: Alt text (optional, falls back to image.alt)
+  - loading: Loading strategy ('lazy', 'eager', or 'auto')
+  - sizes: Sizes attribute for responsive images
+  - class: CSS classes
+  - width: Image width
+  - height: Image height
+  - quality: Image quality (1-100)
+{% endcomment %}
 
-  When `width`, `height` and `crop` are provided, the image will be rendered
-  with a fixed aspect ratio.
-
-  Serves as an example of how to use the `image_url` filter and `image_tag` filter
-  as well as how you can use LiquidDoc to document your code.
-
-  @param {image} image - The image to be rendered
-  @param {string} [url] - An optional destination URL for the image
-  @param {string} [class] - Optional class to be added to the image wrapper
-  @param {number} [width] - The highest resolution width of the image to be rendered
-  @param {number} [height] - The highest resolution height of the image to be rendered
-  @param {string} [crop] - The crop position of the image
-
-  @example
-  {% render 'image', image: product.featured_image %}
-  {% render 'image', image: product.featured_image, url: product.url %}
-  {% render 'image',
-    class: 'product__image',
-    image: product.featured_image,
-    url: product.url,
-    width: 1200,
-    height: 800,
-    crop: 'center',
-  %}
-{% enddoc %}
-
-{% liquid
-  unless height
-    assign width = width | default: image.width
-  endunless
-
-  if url
-    assign wrapper = 'a'
-  else
-    assign wrapper = 'div'
+{%- liquid
+  assign loading = loading | default: 'lazy'
+  assign quality = quality | default: 85
+  assign alt_text = alt | default: image.alt | default: ''
+  assign img_class = class | default: ''
+  
+  if loading == 'lazy'
+    assign img_class = img_class | append: ' lazy'
   endif
-%}
+-%}
 
-<{{ wrapper }}
-  class="image {{ class }}"
-  {% if url %}
-    href="{{ url }}"
-  {% endif %}
->
-  {{ image | image_url: width: width, height: height, crop: crop | image_tag }}
-</{{ wrapper }}>
+{%- if image -%}
+  {%- liquid
+    # Generate responsive image sizes
+    assign image_widths = '300,400,600,800,1000,1200,1600,2000'
+    assign image_sizes = sizes | default: '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+    
+    # Create srcset for different screen densities
+    assign srcset_webp = ''
+    assign srcset_original = ''
+    
+    for width_str in image_widths
+      assign width_int = width_str | plus: 0
+      if width_int <= image.width
+        assign webp_url = image | image_url: width: width_int, format: 'webp', quality: quality
+        assign original_url = image | image_url: width: width_int, quality: quality
+        
+        unless srcset_webp == blank
+          assign srcset_webp = srcset_webp | append: ', '
+        endunless
+        assign srcset_webp = srcset_webp | append: webp_url | append: ' ' | append: width_int | append: 'w'
+        
+        unless srcset_original == blank
+          assign srcset_original = srcset_original | append: ', '
+        endunless
+        assign srcset_original = srcset_original | append: original_url | append: ' ' | append: width_int | append: 'w'
+      endif
+    endfor
+    
+    # Fallback image URL
+    assign fallback_width = width | default: 800
+    assign fallback_url = image | image_url: width: fallback_width, quality: quality
+    assign webp_fallback = image | image_url: width: fallback_width, format: 'webp', quality: quality
+  -%}
+  
+  <picture class="responsive-image">
+    {%- if srcset_webp != blank -%}
+      <source 
+        srcset="{{ srcset_webp }}" 
+        sizes="{{ image_sizes }}" 
+        type="image/webp"
+      >
+    {%- endif -%}
+    
+    <img
+      {%- if loading == 'lazy' -%}
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {{ width | default: image.width }} {{ height | default: image.height }}'%3E%3C/svg%3E"
+        data-src="{{ fallback_url }}"
+        {%- if srcset_original != blank -%}
+          data-srcset="{{ srcset_original }}"
+        {%- endif -%}
+      {%- else -%}
+        src="{{ fallback_url }}"
+        {%- if srcset_original != blank -%}
+          srcset="{{ srcset_original }}"
+        {%- endif -%}
+      {%- endif -%}
+      
+      alt="{{ alt_text | escape }}"
+      
+      {%- if width -%}
+        width="{{ width }}"
+      {%- endif -%}
+      
+      {%- if height -%}
+        height="{{ height }}"
+      {%- endif -%}
+      
+      {%- if image_sizes and loading != 'lazy' -%}
+        sizes="{{ image_sizes }}"
+      {%- elsif loading == 'lazy' -%}
+        data-sizes="{{ image_sizes }}"
+      {%- endif -%}
+      
+      class="{{ img_class }}"
+      loading="{{ loading }}"
+      decoding="async"
+    >
+  </picture>
+{%- else -%}
+  {%- comment %} Placeholder when no image is provided {%- endcomment -%}
+  <div class="image-placeholder {{ img_class }}" 
+       style="width: {{ width | default: '100%' }}; height: {{ height | default: '200px' }}; background: #f5f5f5; display: flex; align-items: center; justify-content: center;">
+    <span style="color: #999;">No image</span>
+  </div>
+{%- endif -%}
 
 {% stylesheet %}
-  .image {
+  .responsive-image {
     display: block;
-    position: relative;
-    overflow: hidden;
     width: 100%;
     height: auto;
   }
 
-  .image > img {
+  .responsive-image img {
     width: 100%;
     height: auto;
+    display: block;
+  }
+
+  .lazy {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .lazy.loaded {
+    opacity: 1;
+  }
+
+  .image-placeholder {
+    background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  }
+
+  /* Performance optimizations */
+  .responsive-image img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+
+  @supports (content-visibility: auto) {
+    .responsive-image {
+      content-visibility: auto;
+      contain-intrinsic-size: 300px;
+    }
   }
 {% endstylesheet %}

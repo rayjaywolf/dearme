@@ -1,50 +1,57 @@
-// Lenis Smooth Scrolling Initialization
-// Initialize Lenis when DOM is ready
-document.addEventListener("DOMContentLoaded", function () {
-  // Register GSAP ScrollTrigger plugin if available
-  if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
-    gsap.registerPlugin(ScrollTrigger);
+// Optimized Lenis Smooth Scrolling Initialization
+(function() {
+  'use strict';
+  
+  // Check if Lenis is already loaded or if smooth scrolling is disabled
+  if (window.lenis || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
   }
 
-  // Initialize Lenis
-  const lenis = new Lenis({
-    duration: 1.5,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -8 * t)),
-    direction: "vertical",
-    gestureDirection: "vertical",
-    smooth: true,
-    mouseMultiplier: 0.8,
-    smoothTouch: true,
-    touchMultiplier: 1.5,
-    infinite: false,
-    autoRaf: true,
-  });
+  let lenis;
+  let isInitialized = false;
 
-  // Listen for the scroll event and log the event data (optional for debugging)
-  lenis.on("scroll", (e) => {
-    // You can add custom scroll event handling here
-    // console.log(e);
-  });
-
-  // GSAP ScrollTrigger integration (if GSAP ScrollTrigger is loaded)
-  if (typeof ScrollTrigger !== "undefined") {
-    // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
-    lenis.on("scroll", ScrollTrigger.update);
-
-    // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
+  function initializeLenis() {
+    if (isInitialized || typeof Lenis === 'undefined') return;
+    
+    // Initialize Lenis with optimized settings
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -8 * t)),
+      direction: "vertical",
+      gestureDirection: "vertical",
+      smooth: true,
+      mouseMultiplier: 0.8,
+      smoothTouch: false, // Disabled for better mobile performance
+      touchMultiplier: 1.5,
+      infinite: false,
+      autoRaf: true,
     });
 
-    // Disable lag smoothing in GSAP to prevent any delay in scroll animations
-    gsap.ticker.lagSmoothing(0);
-  }
+    // GSAP ScrollTrigger integration (if available)
+    if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
+      gsap.registerPlugin(ScrollTrigger);
+      
+      // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
+      lenis.on("scroll", ScrollTrigger.update);
 
-  // Handle anchor links
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener("click", function (e) {
+      // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
+
+      // Disable lag smoothing in GSAP to prevent any delay in scroll animations
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    // Optimized anchor link handling with event delegation
+    document.addEventListener("click", function(e) {
+      const anchor = e.target.closest('a[href^="#"]');
+      if (!anchor) return;
+      
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
+      const targetId = anchor.getAttribute("href").substring(1);
+      const target = document.getElementById(targetId);
+      
       if (target) {
         lenis.scrollTo(target, {
           offset: 0,
@@ -52,9 +59,34 @@ document.addEventListener("DOMContentLoaded", function () {
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
       }
-    });
-  });
+    }, { passive: false });
 
-  // Expose lenis globally for potential use in other scripts
-  window.lenis = lenis;
-});
+    // Expose lenis globally for potential use in other scripts
+    window.lenis = lenis;
+    isInitialized = true;
+  }
+
+  // Initialize when DOM is ready and Lenis is available
+  function checkAndInit() {
+    if (typeof Lenis !== 'undefined') {
+      initializeLenis();
+    } else {
+      // Wait for Lenis to load
+      const checkLenis = setInterval(() => {
+        if (typeof Lenis !== 'undefined') {
+          clearInterval(checkLenis);
+          initializeLenis();
+        }
+      }, 100);
+      
+      // Timeout after 5 seconds
+      setTimeout(() => clearInterval(checkLenis), 5000);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkAndInit);
+  } else {
+    checkAndInit();
+  }
+})();

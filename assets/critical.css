@@ -1,11 +1,12 @@
 /** Critical CSS for the theme. This file is included on every page. */
 
-/* Custom Fonts */
+/* Custom Fonts - Optimized with font-display: swap */
 @font-face {
   font-family: 'Gumani';
   src: url('{{ 'Gumani.otf' | asset_url }}') format('opentype');
   font-weight: normal;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -13,6 +14,7 @@
   src: url('{{ 'PPEditorialNew-Regular-BF644b214ff145f.otf' | asset_url }}') format('opentype');
   font-weight: 400;
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -20,6 +22,7 @@
   src: url('{{ 'PPEditorialNew-Italic-BF644b214fb0c0a.otf' | asset_url }}') format('opentype');
   font-weight: 400;
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -27,6 +30,7 @@
   src: url('{{ 'PPEditorialNew-Ultralight-BF644b21500d0c0.otf' | asset_url }}') format('opentype');
   font-weight: 200; /* Ultralight weight */
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -34,6 +38,7 @@
   src: url('{{ 'PPEditorialNew-UltralightItalic-BF644b214ff1e9b.otf' | asset_url }}') format('opentype');
   font-weight: 200; /* Ultralight weight */
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -41,6 +46,7 @@
   src: url('{{ 'PPEditorialNew-Ultrabold-BF644b21500840c.otf' | asset_url }}') format('opentype');
   font-weight: 800; /* Ultrabold weight */
   font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -48,10 +54,13 @@
   src: url('{{ 'PPEditorialNew-UltraboldItalic-BF644b214faef01.otf' | asset_url }}') format('opentype');
   font-weight: 800; /* Ultrabold weight */
   font-style: italic;
+  font-display: swap;
 }
 
 /* Reset styles inspired by https://www.joshwcomeau.com/css/custom-css-reset/ */
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
 }
@@ -146,14 +155,39 @@ body {
  * the entire viewport.
  */
 .shopify-section {
+  display: grid;
+  grid-template-columns: 
+    [full-start] minmax(1rem, 1fr) 
+    [main-start] minmax(0, 1200px) 
+    [main-end] minmax(1rem, 1fr) 
+    [full-end];
+  justify-content: center;
 }
 
 /* Child elements, by default, are constrained to the central column of the grid. */
 .shopify-section > * {
-  grid-column: 2;
+  grid-column: main;
 }
 
 /* Child elements that use the full-width utility class span the entire viewport. */
 .shopify-section > .full-width {
-  grid-column: 1 / -1;
+  grid-column: full;
+}
+
+/* Performance optimizations */
+.hero-section,
+.hero-background {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

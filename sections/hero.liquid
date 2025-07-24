@@ -7,21 +7,28 @@
   style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
 >
   <div class="hero-background">
-    <video autoplay muted loop playsinline>
-      <source src="{{ 'demo-comp.mp4' | asset_url }}" type="video/mp4">
+    <video autoplay muted loop playsinline preload="metadata">
+      <source data-src="{{ 'demo-comp.mp4' | asset_url }}" type="video/mp4">
       {% if section.settings.background_image %}
-        <img
-          src="{{ section.settings.background_image | img_url: 'master' }}"
-          alt="{{ section.settings.background_image.alt | default: 'Hero background image' }}"
-          loading="lazy"
-          width="1920"
+        {% render 'image', 
+          image: section.settings.background_image, 
+          alt: section.settings.background_image.alt | default: 'Hero background image',
+          loading: 'eager',
+          width: 1920,
+          height: 1080,
+          class: 'hero-fallback-image'
+        %}
+      {% else %}
+        {% comment %} Fallback poster image {% endcomment %}
+        <img 
+          src="{{ 'hero-poster.jpg' | asset_url }}" 
+          alt="Hero background" 
+          class="hero-poster"
+          width="1920" 
           height="1080"
         >
       {% endif %}
     </video>
-    {% unless section.settings.background_image %}
-      {% comment %} Fallback image if no background image is set {% endcomment %}
-    {% endunless %}
   </div>
   <div
     class="hero-content-overlay"
