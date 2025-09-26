@@ -3,7 +3,7 @@
 {% endcomment %}
 <section
   class="testimonials-section"
-  style="background: #ead1c1 url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+  style="background: #fef9f2 url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
 >
   <div class="testimonials-container">
     <div class="testimonials-header">
@@ -17,13 +17,13 @@
         class="testimonials-title js-testimonials-title"
         style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
       >
-        They Thought Nothing Would Work… Until This Did
+        Loved by Skin Like Yours
       </h2>
       <p
         class="testimonials-text js-testimonials-text"
         style="font-family: {{ section.settings.testimonials_text_font }}, serif; font-style: {{ section.settings.testimonials_text_style }}; text-transform: {{ section.settings.testimonials_text_transform }}; color: {{ section.settings.testimonials_text_color }};"
       >
-        Not testimonials. Just truth from people who’ve lived through irritation, sensitivity, and finally, healing.
+        Here's what early users are saying about Sacred Secret.
       </p>
     </div>
 
@@ -41,12 +41,6 @@
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
             </div>
-            <h3
-              class="testimonial-title"
-              style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
-            >
-              Life-changing night serum
-            </h3>
             <p
               class="testimonial-text"
               style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
@@ -74,12 +68,6 @@
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
             </div>
-            <h3
-              class="testimonial-title"
-              style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
-            >
-              Perfect for sensitive skin
-            </h3>
             <p
               class="testimonial-text"
               style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
@@ -107,12 +95,6 @@
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
             </div>
-            <h3
-              class="testimonial-title"
-              style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
-            >
-              Instant glow results
-            </h3>
             <p
               class="testimonial-text"
               style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
@@ -140,12 +122,6 @@
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
             </div>
-            <h3
-              class="testimonial-title"
-              style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
-            >
-              Heals acne marks fast
-            </h3>
             <p
               class="testimonial-text"
               style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
@@ -173,12 +149,6 @@
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
             </div>
-            <h3
-              class="testimonial-title"
-              style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
-            >
-              Reduced pigmentation amazingly
-            </h3>
             <p
               class="testimonial-text"
               style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
@@ -206,12 +176,6 @@
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
               <span class="star" style="color: {{ section.settings.star_color }};">★</span>
             </div>
-            <h3
-              class="testimonial-title"
-              style="font-family: {{ section.settings.card_title_font }}, serif; font-style: {{ section.settings.card_title_style }}; color: {{ section.settings.card_title_color }};"
-            >
-              Magic in a bottle
-            </h3>
             <p
               class="testimonial-text"
               style="font-family: {{ section.settings.card_text_font }}, serif; font-style: {{ section.settings.card_text_style }}; text-transform: {{ section.settings.card_text_transform }}; color: {{ section.settings.card_text_color }};"
@@ -227,14 +191,16 @@
           </div>
         </div>
       </div>
+      <div class="swiper-pagination"></div>
     </div>
   </div>
 </section>
 
 <style>
   .testimonials-section {
-    background: #ead1c1;
-    padding: 0rem 0 4rem;
+    background: #fef9f2;
+    padding: 4rem 0;
+    height: 100%;
   }
 
   .testimonials-container {
@@ -251,7 +217,7 @@
   .testimonials-subtitle {
     font-size: 0.9rem;
     text-transform: uppercase;
-    color: #666;
+    color: #63001f;
     margin-bottom: 0.75rem;
     letter-spacing: 0.1em;
   }
@@ -262,7 +228,7 @@
     text-transform: uppercase;
     width: 45%;
     margin: 1.2rem auto 0;
-    color: #666;
+    color: #63001f;
     letter-spacing: 0.1em;
   }
 
@@ -270,7 +236,8 @@
     font-family: 'Instrument Serif', sans-serif;
     font-size: 3rem;
     font-weight: 400;
-    font-style: italic;
+    color: #63001f;
+    /* font-style: italic; */
   }
 
   .testimonials-subtitle.js-testimonials-subtitle {
@@ -295,11 +262,11 @@
   }
 
   .testimonial-card {
-    background: #ffffff;
-    border: 1px solid #000;
+    background: transparent;
+    border: none;
     border-radius: 16px;
-    padding: 2rem;
-    height: 50vh;
+    /* padding: 2rem; */
+    /* height: 50vh; */
     width: 100%;
     min-width: 0;
     cursor: grab;
@@ -322,13 +289,14 @@
 
   .star {
     color: #ff6b35;
-    font-size: 1.2rem;
+    font-size: 1.75rem;
     margin-right: 2px;
+    margin-bottom: 2rem;
   }
 
   .testimonial-title {
     font-family: 'Instrument Serif', serif;
-    font-size: 1.3rem;
+    font-size: 2rem;
     font-weight: 600;
     color: #191818;
     margin-bottom: 1rem;
@@ -336,18 +304,45 @@
   }
 
   .testimonial-text {
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    /* text-transform: uppercase; */
+    font-family: 'Inter', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.4;
     color: #444;
-    margin-bottom: 1.5rem;
+    margin-bottom: 3rem;
+    width: 60%;
   }
 
   .testimonial-author {
-    font-family: 'Gumani', serif;
-    font-size: 1rem;
-    color: #888;
+    /* text-transform: uppercase; */
+    font-size: 1.2rem;
+    color: #666;
     font-weight: 400;
+  }
+
+  .swiper-pagination {
+    position: relative;
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .swiper-pagination-bullet {
+    width: 12px;
+    height: 6px;
+    background-color: #adaeb3;
+    opacity: 1;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    margin: 0 2px;
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 45px;
+    border-radius: 5px;
+    background-color: #63001f;
   }
 
   @media (max-width: 1024px) {
@@ -408,16 +403,20 @@
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     new Swiper('.testimonials-swiper', {
-      slidesPerView: 3,
+      slidesPerView: 1,
       spaceBetween: 32,
       loop: true,
       autoplay: {
         delay: 3000,
         disableOnInteraction: false,
       },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
       breakpoints: {
-        1024: { slidesPerView: 3 },
-        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 1 },
+        768: { slidesPerView: 1 },
         0: { slidesPerView: 1 },
       },
     });

@@ -19,7 +19,7 @@
 
     <div class="footer-logo-col">
       <img
-        src="{{ 'footer-logo.png' | asset_url }}"
+        src="{{ 'Dear-Me-clmlmopy.png' | asset_url }}"
         alt="Footer Logo"
         class="footer-logo"
         width="100"
@@ -27,7 +27,11 @@
       >
     </div>
     <div class="footer-newsletter-col">
-      <div class="footer-newsletter-title">Dear Me News + 15% off</div>
+      <div class="footer-newsletter-title">
+        Join Dear Me community to get exclusive access to product pre-launches, behind the scenes content, and special
+        community-only offers.
+      </div>
+      <div class="footer-newsletter-subtitle">Sign up now to get 10% off on your 1st purchase.</div>
       <form class="footer-newsletter-form" autocomplete="off">
         <input
           type="email"
@@ -39,9 +43,11 @@
       </form>
       <div class="footer-social-row">
         <a
-          href="#"
+          href="https://www.instagram.com/dearme.in?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
           aria-label="Instagram"
           class="footer-social-link"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <img
             src="{{ 'instagram.svg' | asset_url }}"
@@ -52,14 +58,16 @@
           >
         </a>
         <a
-          href="#"
+          href="https://youtube.com/@dearmeconsciousayurveda?si=KnJCQn1IxJlRVE7z"
           aria-label="YouTube"
           class="footer-social-link"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <img
             src="{{ 'youtube.svg' | asset_url }}"
             alt="YouTube"
-            class="footer-social-img"
+            class="footer-social-img footer-social-img-youtube"
             width="28"
             height="28"
           >
@@ -123,9 +131,9 @@
     align-items: flex-start;
   }
   .footer-logo {
-    width: 80px;
-    height: 80px;
-    object-fit: contain;
+    width: 180px;
+    /* height: 180px; */
+    /* object-fit: contain; */
   }
   .footer-newsletter-col {
     display: flex;
@@ -135,17 +143,26 @@
     justify-content: flex-start;
   }
   .footer-newsletter-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-family: 'Inter', serif;
     margin-bottom: 0.5rem;
-    color: #ead1c1;
-    font-weight: 500;
+    color: #fff;
+    opacity: 0.75;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+  .footer-newsletter-subtitle {
+    font-size: 1rem;
+    font-family: 'Inter', serif;
+    color: #fff;
+    line-height: 1.4;
+    margin-bottom: 0.75rem;
+    font-weight: bold;
   }
   .footer-newsletter-form {
     display: flex;
     width: 100%;
-    /* max-width: 350px; */
-    border: 1px solid #fff;
+    border: 1px solid #ead1c1;
     border-radius: 2px;
     overflow: hidden;
     background: transparent;
@@ -158,6 +175,13 @@
     color: #fff;
     font-size: 1rem;
     outline: none;
+  }
+  .footer-newsletter-form input[type='email']::placeholder {
+    color: #fff;
+    opacity: 0.75;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.4;
   }
   .footer-newsletter-form button {
     background: none;
@@ -215,12 +239,15 @@
   }
   .footer-social-link:hover {
     opacity: 1;
-    transform: scale(1.08);
   }
   .footer-social-img {
     width: 28px;
     height: 28px;
     display: block;
+  }
+  .footer-social-img-youtube {
+    width: 32px;
+    height: 32px;
   }
 </style>
 

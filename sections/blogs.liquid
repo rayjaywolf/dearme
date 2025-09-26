@@ -9,235 +9,162 @@
   style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
 >
   <div class="blogs-container">
-    <p
-      class="blogs-subtitle"
-      style="font-family: {{ section.settings.subtitle_font }}, serif; font-style: {{ section.settings.subtitle_style }}; text-transform: {{ section.settings.subtitle_transform }}; color: {{ section.settings.subtitle_color }};"
-    >
-      Our Blog
-    </p>
-    <h2
-      class="blogs-title"
-      style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
-    >
-      News & Stories
-    </h2>
-    <p
-      class="blogs-text"
-      style="font-family: {{ section.settings.text_font }}, serif; font-style: {{ section.settings.text_style }}; text-transform: {{ section.settings.text_transform }}; color: {{ section.settings.text_color }};"
-    >
-      Explore our stories of change, recent news, the work we do, and ways to make an even greater impact together.
-    </p>
-
-    <div class="blogs-grid">
-      {% for article in articles_list limit: 3 %}
-        {%- liquid
-          assign card_bg = section.settings.featured_card_bg
-          if forloop.index == 2
-            assign card_bg = section.settings.second_card_bg
-          elsif forloop.index == 3
-            assign card_bg = section.settings.third_card_bg
-          endif
-        -%}
-        <a href="{{ article.url }}" class="blog-card">
-          <div
-            class="blog-card-image"
-            style="background-image: url('{{ article.image | image_url: width: 800 }}');"
-          ></div>
-          <div class="blog-card-content" style="background: {{ card_bg }};">
-            <div class="blog-card-upper">
-              <div class="blog-tags">
-                {% for tag in article.tags limit: 2 %}
-                  <span
-                    class="blog-tag"
-                    style="color: {{ section.settings.tag_text_color }}; border-color: {{ section.settings.tag_border_color }};"
-                  >
-                    {{- tag -}}
-                  </span>
-                {% endfor %}
+    <div class="blogs-columns">
+      <div class="blogs-column blogs-column-left">
+        <div class="blogs-row">
+          <div class="blogs-text-content">
+            <h3 class="blogs-subheading">our blog</h3>
+            <h2 class="blogs-heading">News & Stories</h2>
+            <a
+              href="{{ blogs['blog-posts'].url }}"
+              class="blogs-button"
+              style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }}; font-family: {{ section.settings.button_font }}, sans-serif; text-transform: {{ section.settings.button_transform }}; font-style: {{ section.settings.button_style }};"
+            >
+              <span style="color: {{ section.settings.button_text_color }};">Read all articles</span>
+              <div class="blogs-cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
+                <svg
+                  class="blogs-icon-arrow"
+                  width="13"
+                  height="8"
+                  viewBox="0 0 13 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="fill: {{ section.settings.button_arrow_color }};"
+                >
+                  <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+                </svg>
+                <svg
+                  class="blogs-icon-arrow"
+                  width="13"
+                  height="8"
+                  viewBox="0 0 13 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="fill: {{ section.settings.button_arrow_color }};"
+                >
+                  <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+                </svg>
               </div>
-              <h3
-                class="blog-card-title js-animated-title"
-                style="font-family: {{ section.settings.article_title_font }}, serif; font-style: {{ section.settings.article_title_style }}; color: {{ section.settings.article_title_color }};"
-              >
-                {{ article.title }}
-              </h3>
-            </div>
-            <div class="blog-card-meta" style="color: {{ section.settings.meta_text_color }};">
-              {{ article.published_at | time_tag: format: 'date' }}
-              |
-              {{ article.content | strip_html | split: ' ' | size | divided_by: 200 | round }}
-              min read
-            </div>
+            </a>
           </div>
-        </a>
-      {% endfor %}
-    </div>
-    <div class="blogs-button-container">
-      <a
-        href="{{ blogs['blog-posts'].url }}"
-        class="blogs-cta-button"
-        style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }};"
-      >
-        <span style="color: {{ section.settings.button_text_color }};">Read all articles</span>
-        <div class="blogs-cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
-          <svg
-            class="blogs-icon-arrow"
-            width="13"
-            height="8"
-            viewBox="0 0 13 8"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            style="fill: {{ section.settings.button_arrow_color }};"
-          >
-            <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
-          </svg>
-          <svg
-            class="blogs-icon-arrow"
-            width="13"
-            height="8"
-            viewBox="0 0 13 8"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            style="fill: {{ section.settings.button_arrow_color }};"
-          >
-            <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
-          </svg>
         </div>
-      </a>
+      </div>
+      <div class="blogs-column blogs-column-right">
+        <div class="blogs-articles-row">
+          {% for article in articles_list limit: 3 %}
+            <a href="{{ article.url }}" class="article-item">
+              <div class="article-text-content">
+                <div class="article-date">{{ article.published_at | time_tag: format: 'date' }}</div>
+                <h4 class="article-name">{{ article.title }}</h4>
+              </div>
+              <div class="article-image-container">
+                <img
+                  src="{{ article.image | image_url: width: 800 }}"
+                  alt="{{ article.title }}"
+                  class="article-image"
+                  loading="lazy"
+                >
+                <span class="article-arrow-button">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
+          {% endfor %}
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* Your existing CSS styles remain unchanged */
   .blogs-section {
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: start;
-    background-color: #fef9f2;
-  }
-  .blogs-container {
-    text-align: center;
-    padding: 4rem 4rem;
-    width: 100%;
-  }
-  .blogs-subtitle {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    color: #666;
-    margin-bottom: 0.75rem;
-    letter-spacing: 0.1em;
-  }
-  .blogs-title {
-    font-family: 'Instrument Serif', sans-serif;
-    font-size: 3rem;
-    font-weight: 400;
-    font-style: italic;
-  }
-  .blogs-text {
-    font-size: 0.9rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    width: 35%;
-    margin: 0 auto;
-    margin-top: 1.2rem;
-  }
-  .blogs-grid {
-    width: 100%;
-    margin: 4rem 0 0;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .blog-card {
-    display: flex;
-    flex-direction: column;
-    border-radius: 1rem;
-    overflow: hidden;
-    height: 500px;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .blog-card-image {
-    height: 55%;
-    background-size: cover;
-    background-position: center;
-    background-color: #f5f5f5;
-    overflow: hidden;
+    align-items: center;
     position: relative;
-    --scale: 1.2;
+    background-color: #ead1c1 !important;
   }
 
-  .blog-card-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+  .blogs-container {
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .blogs-columns {
+    display: grid;
+    grid-template-columns: 28% 72%;
+    gap: 1rem;
     width: 100%;
     height: 100%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: inherit;
-    transform-origin: center center;
-    transform: scale(var(--scale));
-    transition: transform 1.3s ease-out;
+    margin-bottom: 3rem;
+    margin-top: 3rem;
   }
 
-  .blog-card-content {
-    height: 45%;
-    padding: 1.5rem;
+  .blogs-column {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+    overflow: hidden;
   }
 
-  .blog-tags {
-    margin-bottom: 1rem;
+  .blogs-column-left {
     display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
   }
 
-  .blog-tag {
-    display: inline-block;
-    background: transparent;
-    color: #333;
-    border-radius: 2em;
-    padding: 0.3em 1.2em;
-    font-size: 0.75rem;
-    font-weight: 500;
-    border: 0.9px solid #333;
-    letter-spacing: 0.05em;
+  .blogs-row {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0rem;
+  }
+
+  .blogs-text-content {
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .blogs-subheading {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #63001f;
+    margin: 0 0 1rem 0;
+    letter-spacing: 0.1em;
+  }
+
+  .blogs-heading {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    font-weight: 200;
+    line-height: 1.2;
+    color: #63001f;
+    margin: 0 0 2rem 0;
+    text-align: left;
+  }
+
+  .blogs-description {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 2rem 0;
+    text-align: left;
+    line-height: 1.4;
     text-transform: uppercase;
   }
 
-  .blog-card-title {
-    font-family: 'Gumani', serif;
-    text-align: left;
-    font-size: 1.5rem;
-    font-weight: 400;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-  }
-
-  .blog-card-meta {
-    font-size: 0.75rem;
-    color: #333;
-    text-align: left;
-  }
-
-  .blogs-button-container {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    margin-top: 2rem;
-  }
-
-  .blogs-cta-button {
+  .blogs-button {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -247,36 +174,16 @@
     border-radius: 999px;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
-    background-color: #fff;
-    color: #63001f;
-    border: 1px solid #63001f;
-    gap: 1rem;
+    border: none;
+    gap: 4rem;
     overflow: hidden;
-    max-width: 250px;
+    max-width: 300px;
+    margin-top: 2rem;
   }
 
-  .blogs-cta-button span {
+  .blogs-button span {
     margin-right: 1rem;
     padding-left: 1rem;
-    color: #63001f;
-  }
-
-  .blogs-cta-button:hover {
-    background-color: {{ section.settings.button_hover_bg }} !important;
-    color: {{ section.settings.button_hover_text }} !important;
-    border-color: {{ section.settings.button_hover_border }} !important;
-  }
-
-  .blogs-cta-button:hover span {
-    color: {{ section.settings.button_hover_text }} !important;
-  }
-
-  .blogs-cta-button:hover .blogs-cta-arrow {
-    background: {{ section.settings.button_hover_arrow_bg }} !important;
-  }
-
-  .blogs-cta-button:hover .blogs-icon-arrow {
-    fill: {{ section.settings.button_hover_arrow_color }} !important;
   }
 
   .blogs-cta-arrow {
@@ -284,7 +191,6 @@
     align-items: center;
     justify-content: center;
     transition: transform 0.3s ease;
-    background: #63001f;
     border-radius: 100%;
     height: 2.4rem;
     width: 2.4rem;
@@ -295,7 +201,6 @@
   .blogs-icon-arrow {
     width: 15px;
     height: 10px;
-    fill: #fff;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -310,23 +215,192 @@
     transform: translate(-300%, -50%) scaleX(2);
   }
 
-  .blogs-cta-button:hover .blogs-cta-arrow .blogs-icon-arrow:first-child {
+  .blogs-button:hover .blogs-cta-arrow .blogs-icon-arrow:first-child {
     opacity: 0;
     transform: translate(200%, -50%) scaleX(2);
   }
 
-  .blogs-cta-button:hover .blogs-cta-arrow .blogs-icon-arrow:last-child {
+  .blogs-button:hover .blogs-cta-arrow .blogs-icon-arrow:last-child {
     opacity: 1;
     transform: translate(-50%, -50%) scaleX(1);
   }
 
-  @media screen and (max-width: 900px) {
-    .blogs-grid {
+  .blogs-button:hover {
+    background-color: {{ section.settings.button_text_color }} !important;
+    color: {{ section.settings.button_bg_color }} !important;
+    border: none !important;
+  }
+  .blogs-button:hover span {
+    color: {{ section.settings.button_bg_color }} !important;
+  }
+  .blogs-button:hover .blogs-cta-arrow {
+    background: {{ section.settings.button_bg_color }} !important;
+  }
+  .blogs-button:hover .blogs-icon-arrow {
+    fill: {{ section.settings.button_text_color }} !important;
+  }
+
+  .blogs-column-right {
+    overflow: hidden;
+    max-width: 100%;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0;
+  }
+
+  .blogs-articles-row {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    max-width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    box-sizing: border-box;
+  }
+
+  .blogs-articles-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .article-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    width: 420px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .article-text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .article-date {
+    font-size: 12px;
+    color: #666;
+    margin: 0 0 0.5rem 0;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .article-name {
+    /* font-family: 'Instrument Serif', serif; */
+    font-size: 20px;
+    font-weight: bold;
+    color: #63001f;
+    margin: 0 0 0.5rem 0;
+    text-align: left;
+    text-transform: uppercase;
+    width: 80%;
+  }
+
+
+  .article-image-container {
+    position: relative;
+    width: 420px;
+    height: 312px;
+    margin-top: 1.5rem;
+  }
+
+  .article-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    flex-shrink: 0;
+  }
+
+  .article-arrow-button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #63001f;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background 0.1s ease, color 0.1s ease, border-color 0.1s ease;
+  }
+
+  .article-item:hover .article-arrow-button {
+    background: #63001f;
+    color: white;
+    border-color: #63001f;
+  }
+
+  .article-item:hover .article-arrow-button svg {
+    stroke: #ffffff;
+    transition: stroke 0.3s ease;
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .blogs-columns {
       grid-template-columns: 1fr;
+      gap: 2rem;
     }
 
-    .blog-card {
-      height: auto;
+    .blogs-column {
+      padding: 1rem;
+    }
+
+    .blogs-heading {
+      font-size: 2rem;
+    }
+
+    .blogs-subheading {
+      font-size: 0.9rem;
+    }
+
+    .article-item {
+      width: 300px;
+    }
+
+    .article-date {
+      font-size: 10px;
+    }
+
+    .article-name {
+      font-size: 1rem;
+    }
+
+
+    .article-image-container {
+      width: 300px;
+      height: 223px;
+    }
+
+
+    .article-image {
+      width: 100%;
+      height: 100%;
+    }
+
+    .article-arrow-button {
+      width: 32px;
+      height: 32px;
+      bottom: 12px;
+      right: 12px;
+    }
+
+    .article-arrow-button svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .blogs-articles-row {
+      gap: 0.8rem;
     }
   }
 </style>
@@ -652,6 +726,70 @@
     {
       "type": "header",
       "content": "Button Settings"
+    },
+    {
+      "type": "select",
+      "id": "button_font",
+      "label": "Button Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "button_transform",
+      "label": "Button Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
     },
     {
       "type": "color",
