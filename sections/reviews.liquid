@@ -1,0 +1,394 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.js" defer></script>
+
+<script>
+  const reviews = [
+    {
+      text: 'Within a week of regular usage everyone around me started complimenting about the glow, freshness on my skin. Awesome product!!!',
+      author: 'Kriti K.',
+    },
+    {
+      text: 'As a person who struggles with sparse acne that leaves dark spots behind, this helped to quickly get rid of those marks. I was shocked at how quickly my skin healed and brightened.',
+      author: 'Tarini',
+    },
+    {
+      text: 'I love Sacred Secret. It has reduced the pigmentation to a very great extent. Also my skin feels so soft and plump. My skin barrier is getting better with each passing day.',
+      author: 'Sandeep R.',
+    },
+    {
+      text: 'My go to night regime serum. This serum changed the texture of my face in just a few uses and it smells amazing.',
+      author: 'Gautami',
+    },
+    {
+      text: 'I have sensitive skin and am always a bit nervous to try new products. Immediately after the first use my skin looked great and I had no reactions. Highly recommend!',
+      author: 'Twinkle',
+    },
+    {
+      text: "It's like magic in a bottle ✨",
+      author: 'Muskan S.',
+    },
+  ];
+
+  function renderReviews() {
+    const container = document.getElementById('reviews-container');
+    if (!container) return;
+
+    const reviewsHTML = reviews
+      .map(
+        (review) => `
+      <div class="keen-slider__slide">
+        <div class="reviews-section__shape-container">
+          <div class="reviews-section__inverted">
+            <div class="reviews-section__quotes"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8.09 11.6314H3.4C3.48 6.96144 4.4 6.19144 7.27 4.49144C7.6 4.29144 7.71 3.87144 7.51 3.53144C7.32 3.20144 6.89 3.09144 6.56 3.29144C3.18 5.29144 2 6.51144 2 12.3214V17.7114C2 19.4214 3.39 20.8014 5.09 20.8014H8.09C9.85 20.8014 11.18 19.4714 11.18 17.7114V14.7114C11.18 12.9614 9.85 11.6314 8.09 11.6314Z" fill="#63001f"></path> <path d="M18.9086 11.6314H14.2186C14.2986 6.96144 15.2186 6.19144 18.0886 4.49144C18.4186 4.29144 18.5286 3.87144 18.3286 3.53144C18.1286 3.20144 17.7086 3.09144 17.3686 3.29144C13.9886 5.29144 12.8086 6.51144 12.8086 12.3314V17.7214C12.8086 19.4314 14.1986 20.8114 15.8986 20.8114H18.8986C20.6586 20.8114 21.9886 19.4814 21.9886 17.7214V14.7214C21.9986 12.9614 20.6686 11.6314 18.9086 11.6314Z" fill="#63001f"></path> </g></svg></div>
+            <div class="reviews-section__stars">★★★★★</div>
+            <span class="reviews-section__shape-text">${review.text}</span>
+          </div>
+          <span class="reviews-section__signature-text">- ${review.author}</span>
+        </div>
+      </div>
+    `
+      )
+      .join('');
+
+    container.innerHTML = reviewsHTML;
+  }
+
+  function initializeSlider() {
+    const sliderElement = document.getElementById('reviews-slider');
+    if (!sliderElement) return;
+
+    const autoplayPlugin = (slider) => {
+      let timeout;
+      let mouseOver = false;
+
+      function clearNextTimeout() {
+        clearTimeout(timeout);
+      }
+
+      function nextTimeout() {
+        clearNextTimeout();
+        if (mouseOver) return;
+        timeout = setTimeout(() => {
+          slider.next();
+        }, 3000);
+      }
+
+      slider.on('created', () => {
+        slider.container.addEventListener('mouseover', () => {
+          mouseOver = true;
+          clearNextTimeout();
+        });
+        slider.container.addEventListener('mouseout', () => {
+          mouseOver = false;
+          nextTimeout();
+        });
+        nextTimeout();
+      });
+      slider.on('dragStarted', clearNextTimeout);
+      slider.on('animationEnded', nextTimeout);
+      slider.on('updated', nextTimeout);
+    };
+
+    const keenSlider = new KeenSlider(
+      sliderElement,
+      {
+        loop: true,
+        mode: 'free-snap',
+        slides: {
+          perView: 3,
+          spacing: 10,
+        },
+        breakpoints: {
+          '(max-width: 1024px)': {
+            slides: {
+              perView: 2,
+              spacing: 15,
+            },
+          },
+          '(max-width: 480px)': {
+            slides: {
+              perView: 1,
+              spacing: 10,
+            },
+          },
+        },
+      },
+      [autoplayPlugin]
+    );
+
+    const dotsContainer = document.getElementById('reviews-dots');
+    if (dotsContainer) {
+      const dots = keenSlider.track.details.slides.map((_, idx) => {
+        const dot = document.createElement('button');
+        dot.className = 'reviews-section__dot';
+        dot.addEventListener('click', () => keenSlider.moveToIdx(idx));
+        return dot;
+      });
+
+      dotsContainer.append(...dots);
+
+      const updateDots = () => {
+        const currentSlide = keenSlider.track.details.rel;
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('reviews-section__dot--active', idx === currentSlide);
+        });
+      };
+
+      keenSlider.on('created', updateDots);
+      keenSlider.on('slideChanged', updateDots);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderReviews();
+    setTimeout(initializeSlider, 100);
+  });
+</script>
+
+<svg width="0" height="0" style="position: absolute;">
+  <defs>
+    <clipPath id="clip" clipPathUnits="objectBoundingBox">
+      <path d="M0.042,0 H0.958 A0.042,0.053,0,0,1,1,0.053 V0.947 A0.042,0.053,0,0,1,0.958,1 H0.381 A0.032,0.04,0,0,1,0.348,0.96 V0.91 A0.027,0.034,0,0,0,0.321,0.876 H0.032 A0.032,0.04,0,0,1,0,0.835 V0.053 A0.042,0.053,0,0,1,0.042,0 Z"></path>
+    </clipPath>
+  </defs>
+</svg>
+<section
+  class="reviews-section"
+  style="background: #fef9f2 url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="reviews-section__container">
+    <div class="reviews-section__header">
+      <p class="reviews-section__subtitle">Testimonials</p>
+      <h2 class="reviews-section__title js-reviews-title">Loved by Skin Like <em>Yours</em></h2>
+      <p class="reviews-section__description js-reviews-text">
+        Here's what early users are saying about Sacred Secret.
+      </p>
+    </div>
+
+    <div class="reviews-section__carousel-wrapper">
+      <div class="keen-slider" id="reviews-slider">
+        <div class="keen-slider__track" id="reviews-container"></div>
+      </div>
+
+      <div class="reviews-section__dots" id="reviews-dots"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews-section {
+    background: #fef9f2;
+    padding: 4rem 0;
+    height: 100%;
+  }
+
+  .reviews-section__container {
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .reviews-section__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .reviews-section__subtitle {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #63001f;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .reviews-section__title {
+    font-family: 'Instrument Serif', sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
+    color: #63001f;
+  }
+
+  .reviews-section__description {
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    width: 45%;
+    margin: 1.2rem auto 0;
+    color: #63001f;
+    letter-spacing: 0.1em;
+  }
+
+  .reviews-section__carousel-wrapper {
+    position: relative;
+    margin-top: 2rem;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .keen-slider {
+    overflow: hidden;
+    border-radius: 20px;
+    cursor: grab;
+  }
+
+  .keen-slider:active {
+    cursor: grabbing;
+  }
+
+  .keen-slider__track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .reviews-section__dots {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 3rem;
+  }
+
+  .reviews-section__dot {
+    width: 12px;
+    height: 6px;
+    background-color: #adaeb3;
+    opacity: 1;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin: 0 2px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .reviews-section__dot--active {
+    width: 45px;
+    border-radius: 10px;
+    background-color: #63001f;
+  }
+
+  .reviews-section__shape-container {
+    width: 402px;
+    height: 322px;
+    position: relative;
+  }
+
+  .reviews-section__inverted {
+    clip-path: url('#clip');
+    width: 402px;
+    height: 322px;
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20402%20322%22%3E%3Cpath%20d%3D%22M17%2C1H385A16%2C16%200%2C0%2C1%20401%2C17V305A16%2C16%200%2C0%2C1%20385%2C321H153A12%2C12%200%2C0%2C1%20141%2C309V293A12%2C12%200%2C0%2C0%20129%2C281H13A12%2C12%200%2C0%2C1%201%2C269V17A16%2C16%200%2C0%2C1%2017%2C1Z%22%20fill%3D%22%23ffffff%22%20%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 2rem 0rem;
+    position: relative;
+  }
+
+  .reviews-section__quotes {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 0.1;
+    z-index: 1;
+  }
+
+  .reviews-section__stars {
+    color: #ff6b35;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 0rem;
+    margin-top: 0rem;
+  }
+
+  .reviews-section__shape-text {
+    color: #63001f;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.4;
+    padding-top: 1rem;
+  }
+
+  .reviews-section__signature-text {
+    width: 140px;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #63001f;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 10;
+  }
+
+  @media (max-width: 480px) {
+    .reviews-section {
+      padding: 2.5rem 0;
+    }
+
+    .reviews-section__container {
+      padding: 0 1rem;
+    }
+
+    .reviews-section__header {
+      margin-bottom: 2rem;
+    }
+
+    .reviews-section__title {
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .reviews-section__description {
+      width: 95%;
+      font-size: 12px;
+    }
+
+    .reviews-section__carousel-wrapper {
+      width: 100%;
+    }
+
+    .reviews-section__shape-container {
+      width: 100%;
+      height: auto;
+    }
+
+    .reviews-section__inverted {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 402 / 322;
+      padding: 1.5rem 1.5rem 0;
+    }
+
+    .reviews-section__quotes {
+      width: 2rem;
+      height: 2rem;
+      top: 1rem;
+      left: 1rem;
+    }
+
+    .reviews-section__shape-text {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .reviews-section__dots {
+      margin-top: 2rem;
+    }
+
+    .reviews-section__signature-text {
+      width: 34.8%;
+      height: 12.4%;
+    }
+  }
+</style>

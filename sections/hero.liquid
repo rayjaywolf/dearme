@@ -6,7 +6,7 @@
   class="hero-section"
   style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
 >
-  <div class="hero-background">
+  <div class="hero-section__background">
     <video autoplay muted loop playsinline>
       <source src="{{ 'demo-comp.mp4' | asset_url }}" type="video/mp4">
       {% if section.settings.background_image %}
@@ -24,12 +24,12 @@
     {% endunless %}
   </div>
   <div
-    class="hero-content-overlay"
+    class="hero-section__overlay"
     style="background-color: rgba(0, 0, 0, {{ section.settings.overlay_opacity | divided_by: 100.0 }});"
   ></div>
-  <div class="hero-content">
+  <div class="hero-section__content">
     <h1
-      class="hero__headline"
+      class="hero-section__headline"
       data-split="heading"
       style="font-family: {{ section.settings.heading_font }}, serif; font-size: {{ section.settings.heading_size }}rem; color: {{ section.settings.heading_color }}; text-transform: {{ section.settings.heading_transform }}; font-style: {{ section.settings.heading_style }};"
     >
@@ -37,7 +37,7 @@
       <br>
     </h1>
     <p
-      class="hero__subheadline"
+      class="hero-section__subheadline"
       data-split="subheading"
       style="font-family: {{ section.settings.subheading_font }}, serif; font-size: {{ section.settings.subheading_size }}rem; color: {{ section.settings.subheading_color }}; text-transform: {{ section.settings.subheading_transform }}; font-style: {{ section.settings.subheading_style }};"
     >
@@ -46,13 +46,15 @@
     </p>
     <a
       href="{{ section.settings.button_link }}"
-      class="hero__button"
+      class="hero-section__button"
       style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }}; font-family: {{ section.settings.button_font }}, sans-serif; text-transform: {{ section.settings.button_transform }}; font-style: {{ section.settings.button_style }};"
     >
-      <span style="color: {{ section.settings.button_text_color }};">Reveal my glow</span>
-      <div class="intro_cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
+      <span class="hero-section__button-text" style="color: {{ section.settings.button_text_color }};"
+        >Reveal my glow</span
+      >
+      <div class="hero-section__cta" style="background: {{ section.settings.button_arrow_bg }};">
         <svg
-          class="iconArrow"
+          class="hero-section__cta-icon"
           width="13"
           height="8"
           viewBox="0 0 13 8"
@@ -63,7 +65,7 @@
           <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
         </svg>
         <svg
-          class="iconArrow"
+          class="hero-section__cta-icon"
           width="13"
           height="8"
           viewBox="0 0 13 8"
@@ -81,17 +83,18 @@
 {% stylesheet %}
   .hero-section {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    overflow: hidden; /* Hide overflowing background image */
+    overflow: hidden;
     padding: 4rem 2rem;
     position: relative;
     will-change: transform;
   }
 
-  .hero-background {
+  .hero-section__background {
     position: absolute;
     top: 0;
     left: 0;
@@ -100,21 +103,21 @@
     z-index: 1;
   }
 
-  .hero-background video,
-  .hero-background img {
+  .hero-section__background video,
+  .hero-section__background img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
   }
 
-  .hero-background video {
+  .hero-section__background video {
     position: absolute;
     top: 0;
     left: 0;
   }
 
-  .hero-content-overlay {
+  .hero-section__overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -123,13 +126,13 @@
     z-index: 2;
   }
 
-  .hero-content {
+  .hero-section__content {
     z-index: 3;
     max-width: 100%;
     margin: 0 auto;
   }
 
-  .hero__headline {
+  .hero-section__headline {
     font-weight: 200;
     text-transform: capitalize;
     margin-bottom: 1.2rem;
@@ -141,42 +144,42 @@
     line-height: 1.1;
   }
 
-  .hero__headline em {
+  .hero-section__headline em {
     font-family: 'Instrument Serif', serif !important;
     font-style: italic !important;
     text-transform: none !important;
   }
 
   /* SplitText masking styles */
-  .hero__headline .line,
-  .hero__subheadline .line {
+  .hero-section__headline .line,
+  .hero-section__subheadline .line {
     display: block;
     will-change: transform;
     overflow: hidden;
   }
 
-  .hero__headline .word,
-  .hero__subheadline .word {
+  .hero-section__headline .word,
+  .hero-section__subheadline .word {
     display: inline-block;
   }
 
-  .hero__headline .letter,
-  .hero__subheadline .letter {
+  .hero-section__headline .letter,
+  .hero-section__subheadline .letter {
     display: inline-block;
   }
 
-  .hero__subheadline {
+  .hero-section__subheadline {
     text-transform: uppercase;
     margin: auto;
     margin-bottom: 2rem;
     max-width: 40rem;
     position: absolute;
-    top: 22rem;
+    top: 21rem;
     transform: translateX(-50%);
     left: 50%;
   }
 
-  .hero__button {
+  .hero-section__button {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -195,12 +198,12 @@
     overflow: hidden;
   }
 
-  .hero__button span {
+  .hero-section__button-text {
     margin-right: 1rem;
     padding-left: 1rem;
   }
 
-  .intro_cta-arrow {
+  .hero-section__cta {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -212,7 +215,7 @@
     overflow: hidden;
   }
 
-  .iconArrow {
+  .hero-section__cta-icon {
     width: 15px;
     height: 10px;
     position: absolute;
@@ -223,68 +226,172 @@
     transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
   }
 
-  .intro_cta-arrow .iconArrow:last-child {
+  .hero-section__cta .hero-section__cta-icon:last-child {
     left: 50%;
     opacity: 0;
     transform: translate(-300%, -50%) scaleX(2);
   }
 
-  .hero__button:hover .intro_cta-arrow .iconArrow:first-child {
+  .hero-section__button:hover .hero-section__cta .hero-section__cta-icon:first-child {
     opacity: 0;
     transform: translate(200%, -50%) scaleX(2);
   }
 
-  .hero__button:hover .intro_cta-arrow .iconArrow:last-child {
+  .hero-section__button:hover .hero-section__cta .hero-section__cta-icon:last-child {
     opacity: 1;
     transform: translate(-50%, -50%) scaleX(1);
   }
 
-  /* Responsive adjustments */
+  /* Mobile styles for all mobile devices */
   @media (max-width: 768px) {
-    .hero__headline {
-      font-size: 1.6rem;
-      top: 10rem;
+    .hero-section {
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      min-height: 100dvh;
     }
-    .hero__subheadline {
-      font-size: 0.5rem;
-      position: absolute;
-      top: 14rem;
+
+    .hero-section__headline {
+      font-size: 2.5rem !important;
+      top: 12rem;
+      width: 90%;
+      line-height: 1.1;
       left: 50%;
       transform: translateX(-50%);
+    }
+
+    .hero-section__subheadline {
+      font-size: 0.9rem !important;
+      top: 18rem;
+      width: 85%;
+      line-height: 1.4;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .hero-section__button {
+      font-size: 0.75rem !important;
+      padding: 0.6rem 1rem;
+      gap: 2rem;
+      bottom: 3rem;
+      min-width: 200px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .hero-section__button-text {
+      margin-right: 0;
+      padding-left: 0.5rem;
+    }
+
+    .hero-section__cta {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+
+    .hero-section__cta-icon {
+      width: 12px;
+      height: 8px;
+    }
+  }
+
+  /* Extra small mobile devices */
+  @media (max-width: 480px) {
+    .hero-section {
+      padding: 1.5rem 0.75rem;
+    }
+
+    .hero-section__headline {
+      font-size: 48px !important;
+      top: 10rem;
       width: 70%;
-      text-align: center;
     }
-    .hero__button {
-      font-size: 0.6rem;
-      padding: 0.5rem 0.75rem;
+
+    .hero-section__subheadline {
+      font-size: 14px !important;
+      top: 18rem;
+      width: 90%;
     }
-    .hero__button span {
-      padding-left: 0;
+
+    .hero-section__button {
+      font-size: 0.7rem !important;
+      padding: 0.5rem 0.7rem;
+      gap: 1.5rem;
+      bottom: 2.5rem;
+      min-width: 200px;
     }
-    .intro_cta-arrow {
-      width: 3.5rem;
+
+    .hero-section__cta {
+      width: 2.2rem;
       height: 2.2rem;
     }
-    .iconArrow {
+
+    .hero-section__cta-icon {
       width: 10px;
+      height: 6px;
+    }
+  }
+
+  /* Large mobile devices and small tablets */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .hero-section__headline {
+      font-size: 3rem !important;
+      top: 14rem;
+    }
+
+    .hero-section__subheadline {
+      font-size: 1rem !important;
+      top: 20rem;
+    }
+
+    .hero-section__button {
+      font-size: 0.8rem !important;
+      bottom: 4rem;
+    }
+  }
+
+  /* Additional mobile optimizations */
+  @media (max-width: 768px) {
+    .hero-section__headline,
+    .hero-section__subheadline,
+    .hero-section__button {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    .hero-section__background video {
+      object-fit: cover;
+      object-position: center;
     }
   }
 {% endstylesheet %}
 
 <style>
-  .hero__button:hover {
+  .hero-section__button {
     background-color: {{ section.settings.button_text_color }} !important;
     color: {{ section.settings.button_bg_color }} !important;
-    border: none !important;
   }
-  .hero__button:hover span {
+  .hero-section__button .hero-section__button-text {
     color: {{ section.settings.button_bg_color }} !important;
   }
-  .hero__button:hover .intro_cta-arrow {
+  .hero-section__button .hero-section__cta {
     background: {{ section.settings.button_bg_color }} !important;
   }
-  .hero__button:hover .iconArrow {
+  .hero-section__button .hero-section__cta-icon {
     fill: {{ section.settings.button_text_color }} !important;
+  }
+  .hero-section__button:hover {
+    background-color: {{ section.settings.button_bg_color }} !important;
+    color: {{ section.settings.button_text_color }} !important;
+    border: none !important;
+  }
+  .hero-section__button:hover .hero-section__button-text {
+    color: {{ section.settings.button_text_color }} !important;
+  }
+  .hero-section__button:hover .hero-section__cta {
+    background: {{ section.settings.button_text_color }} !important;
+  }
+  .hero-section__button:hover .hero-section__cta-icon {
+    fill: {{ section.settings.button_bg_color }} !important;
   }
 </style>
 

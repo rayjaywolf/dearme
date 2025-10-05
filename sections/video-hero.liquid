@@ -1,0 +1,351 @@
+{%- liquid
+  assign subheading_font_size_desktop = section.settings.subheading_font_size | divided_by: 10.0
+  assign heading_font_size_desktop = section.settings.heading_font_size
+  assign heading_font_size_mobile = section.settings.heading_font_size | times: 0.6 | round
+-%}
+
+<section
+  class="video-hero-section"
+  style="
+    --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --background-color: {{ section.settings.background_color }};
+    --text-color: {{ section.settings.text_color }};
+    --subheading-font-weight: {{ section.settings.subheading_font_weight }};
+    --subheading-text-transform: {{ section.settings.subheading_text_transform }};
+    --subheading-font-size: {{ subheading_font_size_desktop }}rem;
+    --heading-font-weight: {{ section.settings.heading_font_weight }};
+    --heading-text-transform: {{ section.settings.heading_text_transform }};
+    --heading-font-size-desktop: {{ heading_font_size_desktop }}px;
+    --heading-font-size-mobile: {{ heading_font_size_mobile }}px;
+  "
+>
+  <div class="video-hero-section__container">
+    <div class="video-hero-section__video-wrapper">
+      <video
+        class="video-hero-section__video"
+        {% if section.settings.autoplay %}
+          autoplay
+        {% endif %}
+        {% if section.settings.muted %}
+          muted
+        {% endif %}
+        {% if section.settings.loop %}
+          loop
+        {% endif %}
+        playsinline
+      >
+        <source src="{{ 'fieldstoface.mp4' | asset_url }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <div class="video-hero-section__video-overlay"></div>
+
+      <div class="video-hero-section__text-overlay">
+        {%- if section.settings.subheading != blank -%}
+          <h3 class="video-hero-section__subheading">
+            {{ section.settings.subheading }}
+          </h3>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <div class="video-hero-section__heading">
+            {{ section.settings.heading }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .video-hero-section {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    padding: 1rem;
+    padding-top: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color);
+    background-image: url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    position: relative;
+    overflow: hidden;
+  }
+  .video-hero-section__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .video-hero-section__video-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .video-hero-section__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .video-hero-section__video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, var(--overlay-opacity));
+    z-index: 5;
+  }
+  .video-hero-section__text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    width: 100%;
+    padding: 2rem;
+  }
+  .video-hero-section__subheading {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--subheading-font-size);
+    font-weight: var(--subheading-font-weight);
+    text-transform: var(--subheading-text-transform);
+    color: var(--text-color);
+    margin: 0 0 1rem 0;
+    letter-spacing: 0.1em;
+  }
+  .video-hero-section__heading {
+    font-family: 'Instrument Serif', serif;
+    font-size: var(--heading-font-size-desktop);
+    font-weight: var(--heading-font-weight);
+    text-transform: var(--heading-text-transform);
+    line-height: 1.2;
+    color: var(--text-color);
+    margin: 0;
+  }
+  .video-hero-section__heading p {
+    margin: 0;
+  }
+  /* Mobile responsive adjustments */
+  @media screen and (max-width: 768px) {
+    .video-hero-section {
+      height: 70vh;
+      padding: 0.5rem;
+      padding-top: 0;
+    }
+
+    .video-hero-section__video-wrapper {
+      border-radius: 12px;
+    }
+
+    .video-hero-section__heading {
+      font-size: var(--heading-font-size-mobile);
+      line-height: 1.1;
+    }
+
+    .video-hero-section__subheading {
+      font-size: calc(var(--subheading-font-size) * 0.9);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.08em;
+    }
+
+    .video-hero-section__text-overlay {
+      max-width: 95%;
+      padding: 1.2rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .video-hero-section {
+      height: 80vh;
+      padding: 0.5rem;
+      padding-top: 0;
+    }
+
+    .video-hero-section__video-wrapper {
+      border-radius: 8px;
+    }
+
+    .video-hero-section__heading {
+      font-size: calc(var(--heading-font-size-mobile) * 1.1);
+      line-height: 1.1;
+    }
+
+    .video-hero-section__subheading {
+      font-size: calc(var(--subheading-font-size) * 0.8);
+      margin-bottom: 0.8rem;
+    }
+
+    .video-hero-section__text-overlay {
+      max-width: 98%;
+      padding: 1rem;
+    }
+  }
+
+  /* Performance optimizations for mobile */
+  @media screen and (max-width: 768px) {
+    .video-hero-section__video {
+      will-change: transform;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+    }
+
+    .video-hero-section__text-overlay {
+      will-change: transform;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Video Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Authentic Kashmiri Mogra Saffron: <br> GI Tagged, Government Approved, Glow Guaranteed."
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>From the Valleys of Kashmir <br> to Your Skin</p>"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#FEF9F2"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Subheading Typography"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size",
+      "min": 8,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 9
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font Weight",
+      "default": 400
+    },
+    {
+      "type": "select",
+      "id": "subheading_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Heading Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "label": "Font Size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_font_weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "label": "Font Weight",
+      "default": 200
+    },
+    {
+      "type": "select",
+      "id": "heading_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Video Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay Video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "muted",
+      "label": "Mute Video",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop Video",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Video Overlay Opacity",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Hero"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,342 @@
+<section class="feed-section">
+  <div class="feed-section__container">
+    <h2 class="feed-section__title">Our <em>Instagram</em></h2>
+
+    <div class="feed-section__app-slot">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when '@app' %}
+              <div class="feed-section__app-block" {{ block.shopify_attributes }}>
+                {% render block %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      {% else %}
+        <div class="feed-section__placeholder">
+          Add the Instafeed app block here to sync your latest Instagram posts.
+        </div>
+      {% endif %}
+    </div>
+
+    {% if section.settings.button_label != blank %}
+      <a
+        href="{{ section.settings.button_link | default: 'https://www.instagram.com/dearme.in' }}"
+        class="feed-section__button"
+        style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; font-family: {{ section.settings.button_font }}, sans-serif; text-transform: {{ section.settings.button_transform }}; font-style: {{ section.settings.button_style }};"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span class="feed-section__button-text" style="color: {{ section.settings.button_text_color }};">
+          {{- section.settings.button_label -}}
+        </span>
+        <div class="feed-section__cta" style="background: {{ section.settings.button_arrow_bg }};">
+          <svg
+            class="feed-section__cta-icon"
+            width="13"
+            height="8"
+            viewBox="0 0 13 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="fill: {{ section.settings.button_arrow_color }};"
+          >
+            <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+          </svg>
+          <svg
+            class="feed-section__cta-icon"
+            width="13"
+            height="8"
+            viewBox="0 0 13 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="fill: {{ section.settings.button_arrow_color }};"
+          >
+            <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+          </svg>
+        </div>
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .feed-section {
+    width: 100%;
+    padding: 2rem 1.5rem 4rem;
+    background: #fef9f2 url('{{ 'noise.png' | asset_url }}');
+    background-size: 150px 150px;
+  }
+
+  .feed-section__container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    align-items: stretch;
+  }
+
+  .feed-section__title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    text-transform: capitalize;
+    font-weight: 400;
+    text-align: center;
+    color: #63001f;
+  }
+
+  .feed-section__app-slot {
+    width: 100%;
+  }
+
+  .feed-section__app-block {
+    width: 100%;
+  }
+
+  .feed-section__placeholder {
+    border: 1px dashed rgba(99, 0, 31, 0.2);
+    border-radius: 12px;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    color: rgba(99, 0, 31, 0.7);
+  }
+
+  .feed-section__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: background-color 0.3s ease;
+    border: none;
+    gap: 4rem;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  .feed-section__button-text {
+    margin-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .feed-section__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    border-radius: 100%;
+    height: 2.4rem;
+    width: 2.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .feed-section__cta-icon {
+    width: 15px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+  }
+
+  .feed-section__cta .feed-section__cta-icon:last-child {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
+
+  .feed-section__button:hover .feed-section__cta .feed-section__cta-icon:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
+
+  .feed-section__button:hover .feed-section__cta .feed-section__cta-icon:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+
+  .feed-section__button {
+    background-color: {{ section.settings.button_text_color }} !important;
+    color: {{ section.settings.button_bg_color }} !important;
+  }
+
+  .feed-section__button .feed-section__button-text {
+    color: {{ section.settings.button_bg_color }} !important;
+  }
+
+  .feed-section__button .feed-section__cta {
+    background: {{ section.settings.button_bg_color }} !important;
+  }
+
+  .feed-section__button .feed-section__cta-icon {
+    fill: {{ section.settings.button_text_color }} !important;
+  }
+
+  .feed-section__button:hover {
+    background-color: {{ section.settings.button_bg_color }} !important;
+    color: {{ section.settings.button_text_color }} !important;
+  }
+
+  .feed-section__button:hover .feed-section__button-text {
+    color: {{ section.settings.button_text_color }} !important;
+  }
+
+  .feed-section__button:hover .feed-section__cta {
+    background: {{ section.settings.button_text_color }} !important;
+  }
+
+  .feed-section__button:hover .feed-section__cta-icon {
+    fill: {{ section.settings.button_bg_color }} !important;
+  }
+
+  /* Mobile responsive adjustments */
+  @media screen and (max-width: 480px) {
+    .feed-section {
+      padding: 2rem 1rem;
+    }
+
+    .feed-section__container {
+      gap: 2rem;
+    }
+
+    .feed-section__title {
+      font-size: 32px;
+      margin-bottom: 0.6rem;
+      line-height: 1.05;
+    }
+
+    .feed-section__button {
+      font-size: 12px;
+      padding: 0.4rem 0.4rem;
+      gap: 2rem;
+      max-width: 250px;
+    }
+
+    .feed-section__button-text {
+      margin-right: 0.8rem;
+      padding-left: 0.8rem;
+    }
+
+    .feed-section__cta {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .feed-section__cta-icon {
+      width: 12px;
+      height: 8px;
+    }
+
+    .feed-section__placeholder {
+      padding: 2rem 1rem;
+      font-size: 12px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Feed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "our instagram"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Go to our Instagram"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "select",
+      "id": "button_font",
+      "label": "Button font",
+      "options": [
+        { "value": "Inter", "label": "Inter" },
+        { "value": "Instrument Serif", "label": "Instrument Serif" },
+        { "value": "Gumani", "label": "Gumani" },
+        { "value": "PPEditorial New", "label": "PPEditorial New" }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button font style",
+      "options": [
+        { "value": "normal", "label": "Regular" },
+        { "value": "italic", "label": "Italic" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "button_transform",
+      "label": "Button text transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_bg",
+      "label": "Button arrow background",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_color",
+      "label": "Button arrow color",
+      "default": "#ffffff"
+    }
+  ],
+  "max_blocks": 1,
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Feed"
+    }
+  ]
+}
+{% endschema %}
