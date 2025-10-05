@@ -1,475 +1,12 @@
-{% comment %}
-  Product Showcase section
-{% endcomment %}
-
-<section
-  class="product-showcase-section"
-  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
->
-  <div class="product-showcase-section__container">
-    <div class="product-showcase-section__grid">
-      <!-- Left Column: Skin Concerns -->
-      <div class="product-showcase-section__column product-showcase-section__column--left">
-        <h3 class="product-showcase-section__concerns-subheading">
-          From redness to dullness, Sacred Secret is designed to address sensitive skin's top struggles without
-          irritation.
-        </h3>
-        <div class="product-showcase-section__concerns-list">
-          <div class="product-showcase-section__concern">
-            <div class="product-showcase-section__concern-problem">Dullness</div>
-            <div class="product-showcase-section__concern-arrow" aria-hidden="true">↓</div>
-            <div class="product-showcase-section__concern-solution">Brightened with Saffron + Rice Water</div>
-          </div>
-          <div class="product-showcase-section__concern">
-            <div class="product-showcase-section__concern-problem">Redness/Irritation</div>
-            <div class="product-showcase-section__concern-arrow" aria-hidden="true">↓</div>
-            <div class="product-showcase-section__concern-solution">Calmed with Centella + Panthenol</div>
-          </div>
-          <div class="product-showcase-section__concern">
-            <div class="product-showcase-section__concern-problem">Weak Barrier</div>
-            <div class="product-showcase-section__concern-arrow" aria-hidden="true">↓</div>
-            <div class="product-showcase-section__concern-solution">Strengthened with Niacinamide + Bifida Ferment</div>
-          </div>
-          <div class="product-showcase-section__concern">
-            <div class="product-showcase-section__concern-problem">Dehydration</div>
-            <div class="product-showcase-section__concern-arrow" aria-hidden="true">↓</div>
-            <div class="product-showcase-section__concern-solution">
-              Plumped with Low-MW Hyaluronic Acid + Propanediol
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Center Column: Product Image -->
-      <div class="product-showcase-section__column product-showcase-section__column--center">
-        <img
-          src="{{ 'bottle.png' | asset_url }}"
-          alt="Sacred Secret Bottle"
-          class="product-showcase-section__image"
-          loading="lazy"
-          width="300"
-          height="300"
-        >
-      </div>
-
-      <!-- Right Column: Product Info -->
-      <div class="product-showcase-section__column product-showcase-section__column--right">
-        <h2 class="product-showcase__title">Sacred <span>Secret</span></h2>
-        <h3 class="product-showcase__subtitle">Age Defying Illuminating Saffron Weightless Face Serum</h3>
-        <p class="product-showcase__description">
-          Your Pathway to Timeless Beauty. Immerse in the Elixir of Kashmiri Saffron, Crafted for Royalty. Embrace
-          Radiance.
-        </p>
-        <div class="product-showcase__actions">
-          <a
-            href=""
-            class="product-showcase__button"
-            style=""
-          >
-            <span class="product-showcase__button-text" style="">Buy Now</span>
-            <div class="product-showcase__cta" style="">
-              <svg
-                class="product-showcase__cta-icon"
-                width="13"
-                height="8"
-                viewBox="0 0 13 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                style=""
-              >
-                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
-              </svg>
-              <svg
-                class="product-showcase__cta-icon"
-                width="13"
-                height="8"
-                viewBox="0 0 13 8"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                style="fill: {{ section.settings.button_arrow_color }};"
-              >
-                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
-              </svg>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<style>
-  .product-showcase-section {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    background-color: #ead1c1 !important;
-    padding: 4rem 3rem 4rem;
-  }
-
-  .product-showcase-section__container {
-    text-align: center;
-  }
-
-  .product-showcase-section__title {
-    font-weight: 200;
-    font-size: 3rem;
-    margin: 0 0 2rem 0;
-    line-height: 0.9;
-    color: #63001f;
-    text-align: center;
-    text-transform: capitalize;
-    span {
-      font-style: italic;
-    }
-  }
-
-  .product-showcase-section__description {
-    text-align: left;
-    font-family: 'Inter', serif;
-    font-size: 14px;
-    line-height: 1.4;
-    margin: 0 0 3rem 0;
-    max-width: 100%;
-    color: #444;
-    text-align: center;
-  }
-
-  .product-showcase-section__grid {
-    display: grid;
-    align-items: center;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1rem;
-    max-width: 1400px;
-    margin: 0 auto;
-    width: 100%;
-  }
-
-  .product-showcase-section__column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .product-showcase-section__column--left {
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .product-showcase-section__column--center {
-    align-items: center;
-  }
-
-  .product-showcase-section__column--right {
-    align-items: center;
-    text-align: center;
-    margin-right: -0.5rem;
-  }
-
-  .product-showcase-section__concerns-subheading {
-    font-size: 14px;
-    color: #444;
-    margin: 0 0 4rem 0;
-    line-height: 1.5;
-    text-transform: none;
-    letter-spacing: 0.01em;
-    font-weight: 400;
-    max-width: 420px;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  .product-showcase-section__concerns-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2.25rem 2rem;
-    width: 100%;
-  }
-
-  .product-showcase-section__concern {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    text-align: center;
-  }
-
-  .product-showcase-section__concern-arrow {
-    font-size: 16px;
-    color: #63001f;
-    letter-spacing: 0.1em;
-  }
-
-  .product-showcase-section__concern-problem {
-    font-family: 'Inter', serif;
-    text-transform: uppercase;
-    font-weight: bold;
-    font-size: 14px;
-    color: #63001f;
-    letter-spacing: 0.01em;
-  }
-
-  .product-showcase-section__concern-solution {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: #444;
-    line-height: 1.65;
-    letter-spacing: 0.02em;
-    max-width: 360px;
-    /* text-transform: uppercase; */
-  }
-
-  .product-showcase__title {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 200;
-    font-size: 3rem;
-    margin: 0 0 2rem 0;
-    line-height: 0.9;
-    color: #63001f;
-    text-align: center;
-    text-transform: capitalize;
-    span {
-      font-style: italic;
-    }
-  }
-
-  .product-showcase__subtitle {
-    font-weight: 400;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    margin: 0 0 2rem 0;
-    line-height: 1.4;
-    width: 100%;
-    color: #63001f;
-    text-align: center;
-  }
-
-  .product-showcase__description {
-    font-family: 'Inter', serif;
-    font-size: 14px;
-    line-height: 1.4;
-    margin: 0 0 3rem 0;
-    max-width: 100%;
-    color: #444;
-    text-align: center;
-  }
-
-  .product-showcase-section__image {
-    max-width: 85%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    margin-left: 110px;
-    grid-column: 1;
-  }
-
-  .product-showcase-section__image-container > div:last-child {
-    grid-column: 2;
-  }
-
-  .product-showcase__actions {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    opacity: 1;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .product-showcase__button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 0.5rem;
-    font-size: 0.8rem;
-    text-decoration: none;
-    border-radius: 999px;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease;
-    background-color: #63001f;
-    color: #ffffff;
-    border: none;
-    gap: 1rem;
-    overflow: hidden;
-    max-width: 220px;
-  }
-
-  .product-showcase__button-text {
-    margin-right: 3rem;
-    padding-left: 1rem;
-    color: #ffffff;
-  }
-
-  .product-showcase__cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
-    background: #ffffff;
-    border-radius: 100%;
-    height: 2.4rem;
-    width: 2.4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .product-showcase__cta-icon {
-    width: 15px;
-    height: 10px;
-    fill: #63001f;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scaleX(1);
-    transform-origin: center;
-    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
-  }
-
-  .product-showcase__cta .product-showcase__cta-icon:last-child {
-    left: 50%;
-    opacity: 0;
-    transform: translate(-300%, -50%) scaleX(2);
-  }
-
-  .product-showcase__button:hover .product-showcase__cta .product-showcase__cta-icon:first-child {
-    opacity: 0;
-    transform: translate(200%, -50%) scaleX(2);
-  }
-
-  .product-showcase__button:hover .product-showcase__cta .product-showcase__cta-icon:last-child {
-    opacity: 1;
-    transform: translate(-50%, -50%) scaleX(1);
-  }
-
-  .product-showcase__button:hover {
-    background-color: #ffffff !important;
-    color: #63001f !important;
-    border: none !important;
-  }
-
-  .product-showcase__button:hover .product-showcase__button-text {
-    color: #63001f !important;
-  }
-
-  .product-showcase__button:hover .product-showcase__cta {
-    background: #63001f !important;
-  }
-
-  .product-showcase__button:hover .product-showcase__cta-icon {
-    fill: #ffffff !important;
-  }
-
-  /* Mobile responsive adjustments */
-  @media screen and (max-width: 480px) {
-    .product-showcase-section {
-      padding: 2rem 1rem;
-    }
-
-    .product-showcase-section__grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .product-showcase-section__column--left {
-      order: 3;
-    }
-
-    .product-showcase-section__column--center {
-      order: 1;
-    }
-
-    .product-showcase-section__column--right {
-      order: 2;
-    }
-
-    .product-showcase-section__column--left,
-    .product-showcase-section__column--right {
-      align-items: center;
-      text-align: center;
-    }
-
-    .product-showcase-section__title,
-    .product-showcase__title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .product-showcase__subtitle {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .product-showcase__description {
-      font-size: 12px;
-      margin-bottom: 2rem;
-      line-height: 1.3;
-    }
-
-    .product-showcase-section__image {
-      max-width: 60%;
-      margin: 0 auto 0 6.25rem;
-      display: block;
-      margin-bottom: -1.2rem;
-    }
-
-    .product-showcase-section__concerns-subheading {
-      font-size: 12px;
-      margin-bottom: 2rem;
-      max-width: 90%;
-    }
-
-    .product-showcase-section__concerns-list {
-      gap: 1.5rem;
-      grid-template-columns: 1fr;
-    }
-
-    .product-showcase-section__concern {
-      text-align: center;
-    }
-
-    .product-showcase-section__concern-problem {
-      font-size: 12px;
-    }
-
-    .product-showcase-section__concern-solution {
-      font-size: 11px;
-      line-height: 1.4;
-    }
-
-    .product-showcase__button {
-      max-width: 180px;
-      font-size: 0.7rem;
-      padding: 0.4rem 0.4rem;
-      gap: 0.8rem;
-    }
-
-    .product-showcase__button-text {
-      margin-right: 2rem;
-      padding-left: 0.8rem;
-    }
-
-    .product-showcase__cta {
-      width: 2rem;
-      height: 2rem;
-    }
-
-    .product-showcase__cta-icon {
-      width: 12px;
-      height: 8px;
-    }
-  }
-</style>
-
 {% schema %}
 {
   "name": "Product Showcase",
   "settings": [
+    {
+      "type": "url",
+      "id": "buy_button_link",
+      "label": "Buy Button Link"
+    },
     {
       "type": "header",
       "content": "Background Settings"
@@ -478,7 +15,7 @@
       "type": "color",
       "id": "background_color",
       "label": "Background Color",
-      "default": "#fef9f2"
+      "default": "#ead1c1"
     },
     {
       "type": "header",
@@ -502,8 +39,8 @@
           "label": "PPEditorial New"
         },
         {
-          "value": "Work Sans",
-          "label": "Work Sans"
+          "value": "Inter",
+          "label": "Inter"
         }
       ],
       "default": "Instrument Serif"
@@ -526,8 +63,8 @@
     },
     {
       "type": "select",
-      "id": "title_em_font",
-      "label": "Title Emphasized Font",
+      "id": "subtitle_font",
+      "label": "Subtitle Font",
       "options": [
         {
           "value": "Gumani",
@@ -542,16 +79,16 @@
           "label": "PPEditorial New"
         },
         {
-          "value": "Work Sans",
-          "label": "Work Sans"
+          "value": "Inter",
+          "label": "Inter"
         }
       ],
-      "default": "Instrument Serif"
+      "default": "Inter"
     },
     {
       "type": "select",
-      "id": "title_em_style",
-      "label": "Title Emphasized Style",
+      "id": "subtitle_style",
+      "label": "Subtitle Font Style",
       "options": [
         {
           "value": "normal",
@@ -562,19 +99,7 @@
           "label": "Italic"
         }
       ],
-      "default": "italic"
-    },
-    {
-      "type": "select",
-      "id": "title_em_transform",
-      "label": "Title Emphasized Text Transform (Purest)",
-      "options": [
-        { "value": "none", "label": "None" },
-        { "value": "capitalize", "label": "Capitalize" },
-        { "value": "uppercase", "label": "Uppercase" },
-        { "value": "lowercase", "label": "Lowercase" }
-      ],
-      "default": "capitalize"
+      "default": "normal"
     },
     {
       "type": "select",
@@ -586,8 +111,44 @@
           "label": "Gumani"
         },
         {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
           "value": "Inter",
           "label": "Inter"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "description_style",
+      "label": "Description Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "button_font",
+      "label": "Button Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
         },
         {
           "value": "Instrument Serif",
@@ -598,16 +159,16 @@
           "label": "PPEditorial New"
         },
         {
-          "value": "Work Sans",
-          "label": "Work Sans"
+          "value": "Inter",
+          "label": "Inter"
         }
       ],
       "default": "Inter"
     },
     {
       "type": "select",
-      "id": "description_style",
-      "label": "Description Font Style",
+      "id": "button_style",
+      "label": "Button Font Style",
       "options": [
         {
           "value": "normal",
@@ -642,7 +203,31 @@
           "label": "Lowercase"
         }
       ],
-      "default": "capitalize"
+      "default": "uppercase"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_transform",
+      "label": "Subtitle Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
     },
     {
       "type": "select",
@@ -669,6 +254,30 @@
       "default": "none"
     },
     {
+      "type": "select",
+      "id": "button_transform",
+      "label": "Button Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
       "type": "header",
       "content": "Color Settings"
     },
@@ -680,8 +289,8 @@
     },
     {
       "type": "color",
-      "id": "title_em_color",
-      "label": "Title Emphasized Color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
       "default": "#63001f"
     },
     {
@@ -692,15 +301,388 @@
     },
     {
       "type": "color",
-      "id": "grid_border_color",
-      "label": "Grid Border Color",
-      "default": "#63001fd1"
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_bg",
+      "label": "Button Arrow Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_color",
+      "label": "Button Arrow Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button Hover Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text",
+      "label": "Button Hover Text Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_border",
+      "label": "Button Hover Border Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_arrow_bg",
+      "label": "Button Hover Arrow Background",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_arrow_color",
+      "label": "Button Hover Arrow Color",
+      "default": "#ffffff"
     }
   ],
   "presets": [
     {
-      "name": "Product Showcase"
+      "name": "Product Showcase",
+      "category": "Product"
     }
   ]
 }
 {% endschema %}
+
+<div
+  class="product-showcase"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="product-showcase__container">
+    <div class="product-showcase__image-container">
+      <div class="product-showcase__image-wrapper">
+        <img
+          src="{{ 'A7409894.jpg' | asset_url }}"
+          alt="Sacred Secret Serum"
+          class="product-showcase__image"
+          loading="lazy"
+          width="800"
+          height="1000"
+        >
+      </div>
+    </div>
+
+    <div class="product-showcase__content">
+      <h2
+        class="product-showcase__title"
+        data-split="title"
+        style="font-family: {{ section.settings.title_font }}, serif; font-style: {{ section.settings.title_style }}; text-transform: {{ section.settings.title_transform }}; color: {{ section.settings.title_color }};"
+      >
+        Sacred Secret
+      </h2>
+      <h3
+        class="product-showcase__subtitle"
+        data-split="subtitle"
+        style="font-family: {{ section.settings.subtitle_font }}, serif; font-style: {{ section.settings.subtitle_style }}; text-transform: {{ section.settings.subtitle_transform }}; color: {{ section.settings.subtitle_color }};"
+      >
+        Age Defying Illuminating Saffron Weightless Face Serum
+      </h3>
+      <p
+        class="product-showcase__description"
+        data-split="description"
+        style="font-family: {{ section.settings.description_font }}, serif; font-style: {{ section.settings.description_style }}; text-transform: {{ section.settings.description_transform }}; color: {{ section.settings.description_color }};"
+      >
+        Your Pathway to Timeless Beauty. Immerse in the Elixir of Kashmiri Saffron, Crafted for Royalty. Embrace
+        Radiance.
+      </p>
+      <div class="product-showcase__buttons">
+        <a
+          href="{{ section.settings.buy_button_link }}"
+          class="product-showcase__button"
+          style="font-family: {{ section.settings.button_font }}, sans-serif; font-style: {{ section.settings.button_style }}; text-transform: {{ section.settings.button_transform }}; background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }};"
+        >
+          <span style="color: {{ section.settings.button_text_color }};">Buy Now</span>
+          <div class="intro__cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
+            <svg
+              class="icon-arrow"
+              width="13"
+              height="8"
+              viewBox="0 0 13 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="fill: {{ section.settings.button_arrow_color }};"
+            >
+              <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+            </svg>
+            <svg
+              class="icon-arrow"
+              width="13"
+              height="8"
+              viewBox="0 0 13 8"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style="fill: {{ section.settings.button_arrow_color }};"
+            >
+              <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+            </svg>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+    .product-showcase {
+      height: 90vh;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #fef9f2;
+    }
+
+    .product-showcase__container {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+
+    .product-showcase__image-container {
+      padding: 2rem;
+      width: 50%;
+      height: 100%;
+    }
+
+    .product-showcase__image-wrapper {
+      width: 100%;
+      height: 100%;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .product-showcase__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform-origin: center center;
+    }
+
+    .product-showcase__content {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0 6rem;
+      color: #63001f;
+    }
+
+    /* .product-showcase__title {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 200;
+      font-size: 4rem;
+      margin: 0 0 1.5rem 0;
+      line-height: 0.9;
+      color: #63001f;
+      text-align: center;
+  }
+
+    .product-showcase__subtitle {
+      font-weight: 400;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      margin: 0 0 2rem 0;
+      line-height: 1.4;
+      width: 100%;
+      color: #63001f;
+      text-align: center;
+    }
+
+    .product-showcase__description {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.4;
+      margin: 0 0 3rem 0;
+      max-width: 100%;
+      color: #63001fd1;
+      text-align: center;
+    } */
+
+    /* SplitText masking styles */
+    .product-showcase__title .line,
+    .product-showcase__subtitle .line,
+    .product-showcase__description .line {
+      display: block;
+      will-change: transform;
+      overflow: hidden;
+    }
+
+    .product-showcase__buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      opacity: 1;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-showcase__button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.5rem;
+      font-size: 0.8rem;
+      text-decoration: none;
+      border-radius: 999px;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease;
+      background-color: #63001f;
+      color: #fff;
+      border: 2px solid #63001f;
+      gap: 1rem;
+      overflow: hidden;
+      max-width: 220px;
+    }
+
+    .product-showcase__button span {
+      margin-right: 3rem;
+      padding-left: 1rem;
+      color: #fff;
+    }
+
+    .intro__cta-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      background: #fff;
+      border-radius: 100%;
+      height: 2.4rem;
+      width: 2.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon-arrow {
+      width: 15px;
+      height: 10px;
+      fill: #63001f;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scaleX(1);
+      transform-origin: center;
+      transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+    }
+
+    .intro__cta-arrow .icon-arrow:last-child {
+      left: 50%;
+      opacity: 0;
+      transform: translate(-300%, -50%) scaleX(2);
+    }
+
+    .product-showcase__button:hover .intro__cta-arrow .icon-arrow:first-child {
+      opacity: 0;
+      transform: translate(200%, -50%) scaleX(2);
+    }
+
+    .product-showcase__button:hover .intro__cta-arrow .icon-arrow:last-child {
+      opacity: 1;
+      transform: translate(-50%, -50%) scaleX(1);
+    }
+
+    .product-showcase__button:hover {
+      background-color: {{ section.settings.button_hover_bg }} !important;
+      color: {{ section.settings.button_hover_text }} !important;
+      border-color: {{ section.settings.button_hover_border }} !important;
+    }
+
+    .product-showcase__button:hover span {
+      color: {{ section.settings.button_hover_text }} !important;
+    }
+
+    .product-showcase__button:hover .intro__cta-arrow {
+      background: {{ section.settings.button_hover_arrow_bg }} !important;
+    }
+
+    .product-showcase__button:hover .icon-arrow {
+      fill: {{ section.settings.button_hover_arrow_color }} !important;
+    }
+
+    @media screen and (max-width: 768px) {
+      .product-showcase__container {
+        flex-direction: column;
+      }
+
+      .product-showcase__image-container,
+      .product-showcase__content {
+        width: 100%;
+        height: 50vh;
+      }
+
+      .product-showcase__content {
+        padding: 2rem;
+      }
+
+      .product-showcase__title {
+        font-size: 2.5rem;
+      }
+
+      .product-showcase__subtitle {
+        font-size: 1rem;
+      }
+
+      .product-showcase__description {
+        font-size: 1.2rem;
+        max-width: 100%;
+      }
+    }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof gsap !== 'undefined') {
+      var section = document.querySelector('.product-showcase');
+      if (!section) return;
+      // Set initial state for image immediately
+      gsap.set('.product-showcase__image', {
+        scale: 1.5,
+        objectPosition: 'center center',
+      });
+      // Create a separate observer for the image animation
+      var imageObserver = new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting) {
+            // Start image zoom out animation
+            gsap.to('.product-showcase__image', {
+              scale: 1,
+              duration: 2,
+              ease: 'power2.out',
+            });
+            imageObserver.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
+      imageObserver.observe(section);
+    }
+  });
+</script>

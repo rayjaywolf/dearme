@@ -6,228 +6,90 @@
   class="ingredients-section"
   style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
 >
-  <div class="ingredients-section__container">
-    <div class="ingredients-section__columns">
-      <div class="ingredients-section__column ingredients-section__column--left">
-        <div class="ingredients-section__row ingredients-section__row--top">
-          <div class="ingredients-section__text">
-            <h3 class="ingredients-section__subheading">all in one multi benefit serum.</h3>
-            <h2 class="ingredients-section__heading">
-              Powerful blend of science-backed actives and heritage botanicals
-            </h2>
-            <button
-              type="button"
-              id="ingredients-modal-trigger"
-              class="ingredients-section__button"
-              aria-haspopup="dialog"
-              aria-expanded="false"
-              style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }}; font-family: {{ section.settings.button_font }}, sans-serif; text-transform: {{ section.settings.button_transform }}; font-style: {{ section.settings.button_style }};"
-            >
-              <span class="ingredients-section__button-label" style="color: {{ section.settings.button_text_color }};"
-                >View all ingredients</span
-              >
-              <div class="ingredients-section__cta" style="background: {{ section.settings.button_arrow_bg }};">
-                <svg
-                  class="ingredients-section__cta-icon"
-                  width="13"
-                  height="8"
-                  viewBox="0 0 13 8"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style="fill: {{ section.settings.button_arrow_color }};"
-                >
-                  <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
-                </svg>
-                <svg
-                  class="ingredients-section__cta-icon"
-                  width="13"
-                  height="8"
-                  viewBox="0 0 13 8"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style="fill: {{ section.settings.button_arrow_color }};"
-                >
-                  <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
-                </svg>
-              </div>
-            </button>
-            <div
-              class="ingredients-section__modal"
-              id="ingredients-modal"
-              aria-hidden="true"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="ingredients-modal-title"
-            >
-              <div class="ingredients-section__modal-overlay" role="presentation"></div>
-              <div class="ingredients-section__modal-content" role="document">
-                <button type="button" class="ingredients-section__modal-close" aria-label="Close ingredients list">
-                  &times;
-                </button>
-                <h3 class="ingredients-section__modal-title" id="ingredients-modal-title">Full Ingredients List</h3>
-                <p class="ingredients-section__modal-body">
-                  Aqua (Water), Propylene Glycol, Niacinamide, Centella Asiatica Extract, Panthenol, Glycyrrhiza Glabra
-                  (Licorice) Root Extract, Betula Alba (Birch) Sap, Oryza Sativa (Rice) Extract, Bifida Ferment Lysate,
-                  Xanthan Gum, Sodium Hyaluronate, Crocus Sativus (Saffron) Stigma Extract, 3-O-Ethyl Ascorbic Acid,
-                  Betaine, Propanediol, Dimethyl Isosorbide, Nelumbo Nucifera (Lotus) Flower Extract, Curcuma Longa
-                  (Turmeric) Root Extract, Terminalia Ferdinandiana (Kakadu Plum) Fruit Extract, Phenoxyethanol,
-                  Ethylhexylglycerin, Disodium EDTA.
-                </p>
-              </div>
-            </div>
+  <div class="ingredients-container">
+    <div class="ingredients-three-columns">
+      <!-- Left Column: Skin Concerns -->
+      <div class="ingredients-column ingredients-column-left">
+        <h3 class="skin-concerns-subheading">
+          From redness to dullness, Sacred Secret is designed to address sensitive skin's top struggles without
+          irritation.
+        </h3>
+        <div class="skin-concerns-list">
+          <div class="concern-item">
+            <div class="concern-problem">Dullness</div>
+            <div class="concern-arrow" aria-hidden="true">↓</div>
+            <div class="concern-solution">Brightened with Saffron + Rice Water</div>
+          </div>
+          <div class="concern-item">
+            <div class="concern-problem">Redness/Irritation</div>
+            <div class="concern-arrow" aria-hidden="true">↓</div>
+            <div class="concern-solution">Calmed with Centella + Panthenol</div>
+          </div>
+          <div class="concern-item">
+            <div class="concern-problem">Weak Barrier</div>
+            <div class="concern-arrow" aria-hidden="true">↓</div>
+            <div class="concern-solution">Strengthened with Niacinamide + Bifida Ferment</div>
+          </div>
+          <div class="concern-item">
+            <div class="concern-problem">Dehydration</div>
+            <div class="concern-arrow" aria-hidden="true">↓</div>
+            <div class="concern-solution">Plumped with Low-MW Hyaluronic Acid + Propanediol</div>
           </div>
         </div>
       </div>
-      <div class="ingredients-section__column ingredients-section__column--right">
-        <div class="ingredients-section__images-row">
-          <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Saffron</h4>
-            <p class="ingredients-section__ingredient-description">
-              Rich in antioxidants like crocin and safranal, saffron helps brighten skin tone and reduce pigmentation.
-            </p>
-            <div class="ingredients-section__ingredient-image-container">
-              <img
-                src="{{ 'ingredient-saffron.png' | asset_url }}"
-                alt="Saffron"
-                class="ingredients-section__ingredient-image"
-                loading="lazy"
+
+      <!-- Center Column: Product Image -->
+      <div class="ingredients-column ingredients-column-center">
+        <img
+          src="{{ 'bottle.png' | asset_url }}"
+          alt="Sacred Secret Bottle"
+          class="ingredients-image"
+          loading="lazy"
+          width="300"
+          height="300"
+        >
+      </div>
+
+      <!-- Right Column: Product Info -->
+      <div class="ingredients-column ingredients-column-right">
+        <h2 class="product-showcase__title">Sacred <span>Secret</span></h2>
+        <h3 class="product-showcase__subtitle">Age Defying Illuminating Saffron Weightless Face Serum</h3>
+        <p class="product-showcase__description">
+          Your Pathway to Timeless Beauty. Immerse in the Elixir of Kashmiri Saffron, Crafted for Royalty. Embrace
+          Radiance.
+        </p>
+        <div class="product-showcase__buttons">
+          <a
+            href=""
+            class="product-showcase__button"
+            style=""
+          >
+            <span style="">Buy Now</span>
+            <div class="intro__cta-arrow" style="">
+              <svg
+                class="icon-arrow"
+                width="13"
+                height="8"
+                viewBox="0 0 13 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style=""
               >
-              <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Brightening</div>
-                <div class="ingredients-section__ingredient-badge">Antioxidant</div>
-              </div>
-            </div>
-          </div>
-          <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Niacinamide</h4>
-            <p class="ingredients-section__ingredient-description">
-              A stable form of Vitamin B3 that improves barrier function, reduces redness, and evens skin tone.
-            </p>
-            <div class="ingredients-section__ingredient-image-container">
-              <img
-                src="{{ 'ingredient-niacinamide.jpg' | asset_url }}"
-                alt="Niacinamide"
-                class="ingredients-section__ingredient-image"
-                loading="lazy"
+                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+              </svg>
+              <svg
+                class="icon-arrow"
+                width="13"
+                height="8"
+                viewBox="0 0 13 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="fill: {{ section.settings.button_arrow_color }};"
               >
-              <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Brightening</div>
-                <div class="ingredients-section__ingredient-badge">Anti-inflammatory</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
-              </div>
+                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+              </svg>
             </div>
-          </div>
-          <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Centella Asiatica (Cica)</h4>
-            <p class="ingredients-section__ingredient-description">
-              Contains asiaticoside and madecassoside, known to accelerate wound healing and soothe inflammation.
-            </p>
-            <div class="ingredients-section__ingredient-image-container">
-              <img
-                src="{{ 'ingredient-centela.jpg' | asset_url }}"
-                alt="Centella Asiatica"
-                class="ingredients-section__ingredient-image"
-                loading="lazy"
-              >
-              <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Anti-inflammatory</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
-              </div>
-            </div>
-          </div>
-          <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Rice Water Extract</h4>
-            <p class="ingredients-section__ingredient-description">
-              Naturally rich in amino acids, vitamins, and minerals that soften skin and enhance radiance.
-            </p>
-            <div class="ingredients-section__ingredient-image-container">
-              <img
-                src="{{ 'ingreient-rice-water.jpg' | asset_url }}"
-                alt="Rice Water Extract"
-                class="ingredients-section__ingredient-image"
-                loading="lazy"
-              >
-              <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Brightening</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
-              </div>
-            </div>
-          </div>
-          <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Panthenol (Pro-Vitamin B5)</h4>
-            <p class="ingredients-section__ingredient-description">
-              Converts to pantothenic acid in skin, providing deep hydration and promoting barrier repair.
-            </p>
-            <div class="ingredients-section__ingredient-image-container">
-              <img
-                src="{{ 'ingredient-panthenol.jpg' | asset_url }}"
-                alt="Panthenol"
-                class="ingredients-section__ingredient-image"
-                loading="lazy"
-              >
-              <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Hydrating</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
-                <div class="ingredients-section__ingredient-badge">Anti-inflammatory</div>
-              </div>
-            </div>
-          </div>
-          <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Propanediol</h4>
-            <p class="ingredients-section__ingredient-description">
-              A plant-derived humectant that enhances penetration of actives while maintaining skin hydration.
-            </p>
-            <div class="ingredients-section__ingredient-image-container">
-              <img
-                src="{{ 'ingredient-propanediol.jpg' | asset_url }}"
-                alt="Propanediol"
-                class="ingredients-section__ingredient-image"
-                loading="lazy"
-              >
-              <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Hydrating</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
-              </div>
-            </div>
-          </div>
-          <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Bifida Ferment Lysate</h4>
-            <p class="ingredients-section__ingredient-description">
-              A probiotic-derived lysate shown to strengthen the skin barrier and improve resistance to environmental
-              stress.
-            </p>
-            <div class="ingredients-section__ingredient-image-container">
-              <img
-                src="{{ 'ingredient-bifida-ferment-lysate.jpg' | asset_url }}"
-                alt="Bifida Ferment Lysate"
-                class="ingredients-section__ingredient-image"
-                loading="lazy"
-              >
-              <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Antioxidant</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
-                <div class="ingredients-section__ingredient-badge">Barrier Strengthening</div>
-              </div>
-            </div>
-          </div>
-          <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Hyaluronic Acid</h4>
-            <p class="ingredients-section__ingredient-description">
-              Smaller HA molecules penetrate deeper layers to boost hydration, elasticity, and plumpness.
-            </p>
-            <div class="ingredients-section__ingredient-image-container">
-              <img
-                src="{{ 'ingredient-hyaluronic-acid.jpg' | asset_url }}"
-                alt="Hyaluronic Acid"
-                class="ingredients-section__ingredient-image"
-                loading="lazy"
-              >
-              <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Hydrating</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
-              </div>
-            </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -236,93 +98,176 @@
 
 <style>
   .ingredients-section {
-    /* height: 85vh; */
+    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    background-color: #fef9f2 !important;
+    background-color: #ead1c1 !important;
+    padding: 4rem 3rem 4rem;
   }
 
-  .ingredients-section__container {
-    width: 100%;
-    margin: 0;
-    padding: 2rem;
-    padding-bottom: 0;
-    height: 100%;
-    display: flex;
-    align-items: center;
+  .ingredients-container {
+    text-align: center;
   }
 
-  .ingredients-section__columns {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 1rem;
-    width: 100%;
-    height: 100%;
-    /* margin-bottom: 3rem; */
-    margin-top: 2rem;
-  }
-
-  .ingredients-section__column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem;
-    box-sizing: border-box;
+  .ingredients-title {
+    font-weight: 200;
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 3rem;
     overflow: hidden;
   }
 
-  .ingredients-section__column--left {
+  .ingredients-description {
+    text-align: left;
+    font-size: 0.8rem;
+    width: 100%;
+    overflow: hidden;
+    grid-column: 1;
+  }
+
+  .ingredients-three-columns {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .ingredients-column {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-  }
-
-  .ingredients-section__row {
-    flex: 1;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    padding: 0rem;
+    align-items: center;
+    text-align: center;
   }
 
-  .ingredients-section__row--top {
-    /* Top row specific styles */
-  }
-
-  .ingredients-section__row--bottom {
-    /* Bottom row specific styles */
-  }
-
-  .ingredients-section__text {
+  .ingredients-column-left {
+    align-items: flex-start;
     text-align: left;
-    max-width: 100%;
   }
 
-  .ingredients-section__subheading {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
+  .ingredients-column-center {
+    align-items: center;
+  }
+
+  .ingredients-column-right {
+    align-items: center;
+    text-align: center;
+  }
+
+  .skin-concerns-subheading {
+    font-size: 14px;
+    color: #444;
+    margin: 0 0 4rem 0;
+    line-height: 1.5;
+    text-transform: none;
+    letter-spacing: 0.01em;
     font-weight: 400;
-    text-transform: uppercase;
+    max-width: 420px;
+    text-align: center;
+  }
+
+  .skin-concerns-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2.25rem 2rem;
+    width: 100%;
+  }
+
+  .concern-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .concern-arrow {
+    font-size: 16px;
     color: #63001f;
-    margin: 0 0 1rem 0;
     letter-spacing: 0.1em;
   }
 
-  .ingredients-section__heading {
+  .concern-problem {
     font-family: 'Instrument Serif', serif;
-    font-size: 48px;
-    font-weight: 200;
-    line-height: 1.2;
+    font-size: 22px;
+    font-weight: 400;
     color: #63001f;
-    margin: 0 0 2rem 0;
-    text-align: left;
+    letter-spacing: 0.01em;
   }
 
-  .ingredients-section__button {
+  .concern-solution {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.65;
+    letter-spacing: 0.02em;
+    max-width: 360px;
+    /* text-transform: uppercase; */
+  }
+
+  .product-showcase__title {
+    font-family: 'Instrument Serif', serif;
+    font-weight: 200;
+    font-size: 3rem;
+    margin: 0 0 2rem 0;
+    line-height: 0.9;
+    color: #63001f;
+    text-align: center;
+    text-transform: capitalize;
+    span {
+      font-style: italic;
+    }
+  }
+
+  .product-showcase__subtitle {
+    font-weight: 400;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin: 0 0 2rem 0;
+    line-height: 1.4;
+    width: 100%;
+    color: #63001f;
+    text-align: center;
+  }
+
+  .product-showcase__description {
+    font-family: 'Inter', serif;
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0 0 3rem 0;
+    max-width: 100%;
+    color: #444;
+    text-align: center;
+  }
+
+  .ingredients-image {
+    max-width: 85%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    margin-left: 90px;
+    grid-column: 1;
+  }
+
+  .ingredients-image-container > div:last-child {
+    grid-column: 2;
+  }
+
+  .product-showcase__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    opacity: 1;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-showcase__button {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -332,25 +277,26 @@
     border-radius: 999px;
     text-transform: uppercase;
     transition: background-color 0.3s ease;
+    background-color: #ffffff;
+    color: #63001f;
     border: none;
-    gap: 4rem;
+    gap: 1rem;
     overflow: hidden;
-    max-width: 300px;
-    margin-top: 2rem;
-    cursor: pointer;
-    border: none;
+    max-width: 220px;
   }
 
-  .ingredients-section__button-label {
-    margin-right: 1rem;
+  .product-showcase__button span {
+    margin-right: 3rem;
     padding-left: 1rem;
+    color: #63001f;
   }
 
-  .ingredients-section__cta {
+  .intro__cta-arrow {
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.3s ease;
+    background: #63001f;
     border-radius: 100%;
     height: 2.4rem;
     width: 2.4rem;
@@ -358,9 +304,10 @@
     overflow: hidden;
   }
 
-  .ingredients-section__cta-icon {
+  .icon-arrow {
     width: 15px;
     height: 10px;
+    fill: #ffffff;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -369,376 +316,82 @@
     transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
   }
 
-  .ingredients-section__cta .ingredients-section__cta-icon:last-child {
+  .intro__cta-arrow .icon-arrow:last-child {
     left: 50%;
     opacity: 0;
     transform: translate(-300%, -50%) scaleX(2);
   }
 
-  .ingredients-section__button:hover .ingredients-section__cta .ingredients-section__cta-icon:first-child {
+  .product-showcase__button:hover .intro__cta-arrow .icon-arrow:first-child {
     opacity: 0;
     transform: translate(200%, -50%) scaleX(2);
   }
 
-  .ingredients-section__button:hover .ingredients-section__cta .ingredients-section__cta-icon:last-child {
+  .product-showcase__button:hover .intro__cta-arrow .icon-arrow:last-child {
     opacity: 1;
     transform: translate(-50%, -50%) scaleX(1);
   }
 
-  .ingredients-section__button {
-    background-color: {{ section.settings.button_text_color }} !important;
-    color: {{ section.settings.button_bg_color }} !important;
-  }
-  .ingredients-section__button .ingredients-section__button-label {
-    color: {{ section.settings.button_bg_color }} !important;
-  }
-  .ingredients-section__button .ingredients-section__cta {
-    background: {{ section.settings.button_bg_color }} !important;
-  }
-  .ingredients-section__button .ingredients-section__cta-icon {
-    fill: {{ section.settings.button_text_color }} !important;
-  }
-  .ingredients-section__button:hover {
-    background-color: {{ section.settings.button_bg_color }} !important;
-    color: {{ section.settings.button_text_color }} !important;
+  .product-showcase__button:hover {
+    background-color: #63001f !important;
+    color: #ffffff !important;
     border: none !important;
   }
-  .ingredients-section__button:hover .ingredients-section__button-label {
-    color: {{ section.settings.button_text_color }} !important;
-  }
-  .ingredients-section__button:hover .ingredients-section__cta {
-    background: {{ section.settings.button_text_color }} !important;
-  }
-  .ingredients-section__button:hover .ingredients-section__cta-icon {
-    fill: {{ section.settings.button_bg_color }} !important;
+
+  .product-showcase__button:hover span {
+    color: #ffffff !important;
   }
 
-  .ingredients-section__modal {
-    position: fixed;
-    inset: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+  .product-showcase__button:hover .intro__cta-arrow {
+    background: #ffffff !important;
   }
 
-  .ingredients-section__modal[aria-hidden='false'] {
-    display: flex;
-  }
-
-  .ingredients-section__modal-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.35);
-    backdrop-filter: blur(4px);
-  }
-
-  .ingredients-section__modal-content {
-    position: relative;
-    max-width: min(90vw, 680px);
-    background: #ffffff;
-    border-radius: 24px;
-    padding: 2rem 2.5rem;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
-    color: #2a2a2a;
-    z-index: 1;
-    line-height: 1.6;
-    font-family: 'Inter', sans-serif;
-  }
-
-  .ingredients-section__modal-title {
-    margin: 0 0 1rem 0;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #63001f;
-  }
-
-  .ingredients-section__modal-body {
-    margin: 0;
-    font-size: 0.95rem;
-    color: #3f3f3f;
-  }
-
-  .ingredients-section__modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: #63001f;
-    color: #fff;
-    font-size: 1.4rem;
-    line-height: 1;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease, background-color 0.2s ease;
-  }
-
-  .ingredients-section__modal-close:hover {
-    background: #450012;
+  .product-showcase__button:hover .icon-arrow {
+    fill: #63001f !important;
   }
 
   @media screen and (max-width: 768px) {
-    .ingredients-section__modal-content {
-      padding: 1.5rem;
-      border-radius: 18px;
+    .ingredients-title {
+      font-size: 2.5rem;
     }
 
-    .ingredients-section__modal-title {
-      font-size: 1.2rem;
-    }
-
-    .ingredients-section__modal-body {
-      font-size: 0.9rem;
-    }
-  }
-
-  .ingredients-section__column--right {
-    overflow: hidden;
-    max-width: 100%;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: 0;
-  }
-
-  .ingredients-section__images-row {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    width: 100%;
-    max-width: 100%;
-    /* padding: 1rem 0; */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    box-sizing: border-box;
-  }
-
-  .ingredients-section__images-row::-webkit-scrollbar {
-    display: none;
-  }
-
-  .ingredients-section__ingredient {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex-shrink: 0;
-    width: 420px;
-  }
-
-  .ingredients-section__ingredient-name {
-    font-family: 'Instrument Serif', serif;
-    font-size: 40px;
-    font-weight: 400;
-    color: #63001f;
-    margin: 0 0 0.4rem 0;
-    text-align: left;
-  }
-
-  .ingredients-section__ingredient-description {
-    font-size: 14px;
-    color: #666;
-    margin: 0 0 1rem 0;
-    text-align: left;
-    line-height: 1.4;
-    text-transform: uppercase;
-  }
-
-  .ingredients-section__ingredient-image-container {
-    position: relative;
-    width: 420px;
-    height: 312px;
-    margin-top: 2rem;
-  }
-
-  .ingredients-section__ingredient-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 16px;
-    flex-shrink: 0;
-  }
-
-  .ingredients-section__ingredient-badges {
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    max-width: calc(100% - 32px);
-  }
-
-  .ingredients-section__ingredient-badge {
-    background: #63001f;
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    padding: 6px 12px;
-    font-size: 11px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    line-height: 1.2;
-    white-space: nowrap;
-  }
-
-  /* Mobile responsive adjustments */
-  @media screen and (max-width: 480px) {
-    .ingredients-section__container {
-      padding: 1rem 1rem 1rem;
-      padding-right: 0;
-    }
-
-    .ingredients-section__columns {
+    .ingredients-three-columns {
       grid-template-columns: 1fr;
-      gap: 1.75rem;
-    }
-
-    .ingredients-section__column {
-      padding: 0rem;
-    }
-
-    .ingredients-section__column--right {
-      padding: 0;
-    }
-
-    .ingredients-section__heading {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .ingredients-section__subheading {
-      font-size: 0.8rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .ingredients-section__button {
-      max-width: 250px;
-      font-size: 0.7rem;
-      padding: 0.4rem 0.4rem;
       gap: 2rem;
-      margin-top: 1.5rem;
     }
 
-    .ingredients-section__button-label {
-      margin-right: 0.8rem;
-      padding-left: 0.8rem;
+    .ingredients-column-left,
+    .ingredients-column-right {
+      align-items: center;
+      text-align: center;
     }
 
-    .ingredients-section__cta {
-      width: 2rem;
-      height: 2rem;
+    .ingredients-image {
+      max-width: 60%;
     }
 
-    .ingredients-section__cta-icon {
-      width: 12px;
-      height: 8px;
+    .skin-concerns-list {
+      gap: 1rem;
     }
 
-    .ingredients-section__ingredient {
-      width: 280px;
+    .concern-item {
+      text-align: center;
     }
 
-    .ingredients-section__ingredient:last-child {
-      margin-right: 1rem;
+    .concern-problem {
+      font-size: 20px;
     }
 
-    .ingredients-section__ingredient-name {
-      font-size: 1.2rem;
-      margin-bottom: 0.3rem;
-      text-align: left;
-      /* transform: translateX(0.5rem); */
-    }
-
-    .ingredients-section__ingredient-description {
-      font-size: 12px;
-      margin-bottom: 0.8rem;
-      line-height: 1.3;
-      text-align: left;
-      /* transform: translateX(0.5rem); */
-      width: 95%;
-    }
-
-    .ingredients-section__ingredient-image-container {
-      width: 100%;
-      height: 200px;
-      margin-top: 0.25rem;
-    }
-
-    .ingredients-section__ingredient-badges {
-      bottom: 10px;
-      left: 10px;
-      gap: 3px;
-    }
-
-    .ingredients-section__ingredient-badge {
-      font-size: 8px;
-      padding: 3px 6px;
-    }
-
-    .ingredients-section__images-row {
-      gap: 0rem;
-      flex-direction: column;
-      overflow-x: hidden;
-      overflow-y: auto;
-      height: 100%;
-      padding-right: 1rem;
-    }
-
-    .ingredients-section__ingredient {
-      width: 100%;
-      margin-bottom: 1.5rem;
-    }
-
-    .ingredients-section__ingredient:last-child {
-      margin-right: 0;
-      margin-bottom: 0;
+    .concern-solution {
+      font-size: 13px;
+      margin: 0 auto;
     }
   }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    var trigger = document.getElementById('ingredients-modal-trigger');
-    var modal = document.getElementById('ingredients-modal');
-    if (!trigger || !modal) return;
-
-    var closeBtn = modal.querySelector('.ingredients-section__modal-close');
-    var overlay = modal.querySelector('.ingredients-section__modal-overlay');
-
-    function openModal() {
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      trigger.setAttribute('aria-expanded', 'true');
-      if (closeBtn) closeBtn.focus();
-    }
-
-    function closeModal() {
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      trigger.setAttribute('aria-expanded', 'false');
-      trigger.focus();
-    }
-
-    trigger.addEventListener('click', openModal);
-    if (closeBtn) closeBtn.addEventListener('click', closeModal);
-    if (overlay) overlay.addEventListener('click', closeModal);
-
-    document.addEventListener('keydown', function (event) {
-      if (event.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
-        closeModal();
-      }
-    });
-  });
-</script>
-
 {% schema %}
 {
-  "name": "Ingredients",
+  "name": "Ingredients Section",
   "settings": [
     {
       "type": "header",
@@ -749,22 +402,6 @@
       "id": "background_color",
       "label": "Background Color",
       "default": "#fef9f2"
-    },
-    {
-      "type": "header",
-      "content": "Content Settings"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section Title",
-      "default": "Ingredients 2 Section"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Section Description",
-      "default": "This is the second ingredients section with customizable content."
     },
     {
       "type": "header",
@@ -788,8 +425,8 @@
           "label": "PPEditorial New"
         },
         {
-          "value": "Inter",
-          "label": "Inter"
+          "value": "Work Sans",
+          "label": "Work Sans"
         }
       ],
       "default": "Instrument Serif"
@@ -812,6 +449,58 @@
     },
     {
       "type": "select",
+      "id": "title_em_font",
+      "label": "Title Emphasized Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "title_em_style",
+      "label": "Title Emphasized Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "italic"
+    },
+    {
+      "type": "select",
+      "id": "title_em_transform",
+      "label": "Title Emphasized Text Transform (Purest)",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "select",
       "id": "description_font",
       "label": "Description Font",
       "options": [
@@ -830,6 +519,10 @@
         {
           "value": "PPEditorial New",
           "label": "PPEditorial New"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
         }
       ],
       "default": "Inter"
@@ -910,123 +603,26 @@
     },
     {
       "type": "color",
+      "id": "title_em_color",
+      "label": "Title Emphasized Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
       "id": "description_color",
       "label": "Description Color",
       "default": "#63001fd1"
     },
     {
-      "type": "header",
-      "content": "Button Settings"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button Label",
-      "default": "View all ingredients"
-    },
-    {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link"
-    },
-    {
-      "type": "select",
-      "id": "button_font",
-      "label": "Button Font",
-      "options": [
-        {
-          "value": "Gumani",
-          "label": "Gumani"
-        },
-        {
-          "value": "Instrument Serif",
-          "label": "Instrument Serif"
-        },
-        {
-          "value": "PPEditorial New",
-          "label": "PPEditorial New"
-        },
-        {
-          "value": "Inter",
-          "label": "Inter"
-        }
-      ],
-      "default": "Inter"
-    },
-    {
-      "type": "select",
-      "id": "button_style",
-      "label": "Button Font Style",
-      "options": [
-        {
-          "value": "normal",
-          "label": "Regular"
-        },
-        {
-          "value": "italic",
-          "label": "Italic"
-        }
-      ],
-      "default": "normal"
-    },
-    {
-      "type": "select",
-      "id": "button_transform",
-      "label": "Button Text Transform",
-      "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "capitalize",
-          "label": "Capitalize"
-        },
-        {
-          "value": "uppercase",
-          "label": "Uppercase"
-        },
-        {
-          "value": "lowercase",
-          "label": "Lowercase"
-        }
-      ],
-      "default": "uppercase"
-    },
-    {
       "type": "color",
-      "id": "button_bg_color",
-      "label": "Button Background Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "button_text_color",
-      "label": "Button Text Color",
-      "default": "#63001f"
-    },
-    {
-      "type": "color",
-      "id": "button_border_color",
-      "label": "Button Border Color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "color",
-      "id": "button_arrow_bg",
-      "label": "Button Arrow Background",
-      "default": "#63001f"
-    },
-    {
-      "type": "color",
-      "id": "button_arrow_color",
-      "label": "Button Arrow Color",
-      "default": "#ffffff"
+      "id": "grid_border_color",
+      "label": "Grid Border Color",
+      "default": "#63001fd1"
     }
   ],
   "presets": [
     {
-      "name": "Ingredients"
+      "name": "Ingredients Section"
     }
   ]
 }

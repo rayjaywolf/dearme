@@ -1,0 +1,110 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Visual Design Implementation Guidelines
+
+## Layout Principles
+
+1. **Grid System**
+   - Use a 12-column grid for flexibility
+   - Maintain consistent spacing
+   - Create visual hierarchy through layout
+   - Ensure responsive behavior
+
+2. **Spacing**
+   - Use consistent padding and margins
+   - Create breathing room between elements
+   - Maintain visual balance
+   - Follow 8px grid system
+
+## Component Design
+
+1. **Buttons**
+   - Primary: Deep Burgundy (`#63001f`) with gold accents
+   - Secondary: Transparent with border
+   - Hover states with subtle animations
+   - Consistent padding and border-radius
+
+2. **Cards & Sections**
+   - Soft shadows for depth
+   - Rounded corners for modern feel
+   - Consistent padding
+   - Clear visual hierarchy
+
+3. **Images**
+   - High-quality product photography
+   - Lifestyle images showing usage
+   - Traditional elements and ingredients
+   - Consistent aspect ratios
+
+## Animation & Interaction
+
+1. **Transitions**
+   - Smooth, subtle animations
+   - Duration: 300-400ms
+   - Easing: ease-in-out
+   - Purposeful movement
+
+2. **Hover States**
+   - Subtle scaling or color shifts
+   - Smooth transitions
+   - Clear feedback
+   - Consistent behavior
+
+## Responsive Design
+
+1. **Breakpoints**
+   - Mobile: < 768px
+   - Tablet: 768px - 1024px
+   - Desktop: > 1024px
+   - Large Desktop: > 1440px
+
+2. **Mobile Considerations**
+   - Simplified navigation
+   - Touch-friendly targets
+   - Optimized images
+   - Readable typography
+
+## Asset Guidelines
+
+1. **Images**
+   - Format: WebP with JPG fallback
+   - Resolution: 2x for retina displays
+   - Compression: Optimized for web
+   - Alt text required
+
+2. **Icons**
+   - Consistent style
+   - SVG format preferred
+   - Meaningful names
+   - Accessible implementation
+
+## Code Implementation
+
+1. **CSS Structure**
+   - Use CSS custom properties for colors
+   - Follow BEM methodology
+   - Maintain consistent naming
+   - Document complex styles
+
+2. **Performance**
+   - Optimize asset loading
+   - Minimize CSS/JS
+   - Use lazy loading
+   - Implement proper caching
+
+## Quality Assurance
+
+1. **Cross-browser Testing**
+   - Chrome, Firefox, Safari
+   - Edge and IE11 if required
+   - Mobile browsers
+   - Different devices
+
+2. **Accessibility**
+   - WCAG 2.1 compliance
+   - Keyboard navigation
+   - Screen reader support
+   - Color contrast checking

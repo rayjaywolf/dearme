@@ -8,24 +8,22 @@
   class="blogs-section"
   style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
 >
-  <div class="blogs-section__container">
-    <div class="blogs-section__columns">
-      <div class="blogs-section__column blogs-section__column--left">
-        <div class="blogs-section__row">
-          <div class="blogs-section__text">
-            <h3 class="blogs-section__subheading">our blog</h3>
-            <h2 class="blogs-section__heading">News & Stories</h2>
+  <div class="blogs-container">
+    <div class="blogs-columns">
+      <div class="blogs-column blogs-column-left">
+        <div class="blogs-row">
+          <div class="blogs-text-content">
+            <h3 class="blogs-subheading">our blog</h3>
+            <h2 class="blogs-heading">News & Stories</h2>
             <a
               href="{{ blogs['blog-posts'].url }}"
-              class="blogs-section__button"
+              class="blogs-button"
               style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }}; font-family: {{ section.settings.button_font }}, sans-serif; text-transform: {{ section.settings.button_transform }}; font-style: {{ section.settings.button_style }};"
             >
-              <span class="blogs-section__button-text" style="color: {{ section.settings.button_text_color }};"
-                >Read all articles</span
-              >
-              <div class="blogs-section__cta" style="background: {{ section.settings.button_arrow_bg }};">
+              <span style="color: {{ section.settings.button_text_color }};">Read all articles</span>
+              <div class="blogs-cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
                 <svg
-                  class="blogs-section__cta-icon"
+                  class="blogs-icon-arrow"
                   width="13"
                   height="8"
                   viewBox="0 0 13 8"
@@ -36,7 +34,7 @@
                   <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
                 </svg>
                 <svg
-                  class="blogs-section__cta-icon"
+                  class="blogs-icon-arrow"
                   width="13"
                   height="8"
                   viewBox="0 0 13 8"
@@ -51,22 +49,22 @@
           </div>
         </div>
       </div>
-      <div class="blogs-section__column blogs-section__column--right">
-        <div class="blogs-section__articles">
+      <div class="blogs-column blogs-column-right">
+        <div class="blogs-articles-row">
           {% for article in articles_list limit: 3 %}
-            <a href="{{ article.url }}" class="blogs-section__article">
-              <div class="blogs-section__article-text">
-                <div class="blogs-section__article-date">{{ article.published_at | time_tag: format: 'date' }}</div>
-                <h4 class="blogs-section__article-title">{{ article.title }}</h4>
+            <a href="{{ article.url }}" class="article-item">
+              <div class="article-text-content">
+                <div class="article-date">{{ article.published_at | time_tag: format: 'date' }}</div>
+                <h4 class="article-name">{{ article.title }}</h4>
               </div>
-              <div class="blogs-section__article-media">
+              <div class="article-image-container">
                 <img
                   src="{{ article.image | image_url: width: 800 }}"
                   alt="{{ article.title }}"
-                  class="blogs-section__article-image"
+                  class="article-image"
                   loading="lazy"
                 >
-                <span class="blogs-section__article-cta">
+                <span class="article-arrow-button">
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
@@ -90,7 +88,7 @@
     background-color: #ead1c1 !important;
   }
 
-  .blogs-section__container {
+  .blogs-container {
     width: 100%;
     margin: 0;
     padding: 2rem;
@@ -99,7 +97,7 @@
     align-items: center;
   }
 
-  .blogs-section__columns {
+  .blogs-columns {
     display: grid;
     grid-template-columns: 28% 72%;
     gap: 1rem;
@@ -109,7 +107,7 @@
     margin-top: 3rem;
   }
 
-  .blogs-section__column {
+  .blogs-column {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -118,26 +116,26 @@
     overflow: hidden;
   }
 
-  .blogs-section__column--left {
+  .blogs-column-left {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
   }
 
-  .blogs-section__row {
+  .blogs-row {
     flex: 1;
     display: flex;
     align-items: center;
     padding: 0rem;
   }
 
-  .blogs-section__text {
+  .blogs-text-content {
     text-align: left;
     max-width: 100%;
   }
 
-  .blogs-section__subheading {
+  .blogs-subheading {
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     font-weight: 400;
@@ -147,7 +145,7 @@
     letter-spacing: 0.1em;
   }
 
-  .blogs-section__heading {
+  .blogs-heading {
     font-family: 'Instrument Serif', serif;
     font-size: 48px;
     font-weight: 200;
@@ -157,7 +155,16 @@
     text-align: left;
   }
 
-  .blogs-section__button {
+  .blogs-description {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 2rem 0;
+    text-align: left;
+    line-height: 1.4;
+    text-transform: uppercase;
+  }
+
+  .blogs-button {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -174,12 +181,12 @@
     margin-top: 2rem;
   }
 
-  .blogs-section__button-text {
+  .blogs-button span {
     margin-right: 1rem;
     padding-left: 1rem;
   }
 
-  .blogs-section__cta {
+  .blogs-cta-arrow {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -191,7 +198,7 @@
     overflow: hidden;
   }
 
-  .blogs-section__cta-icon {
+  .blogs-icon-arrow {
     width: 15px;
     height: 10px;
     position: absolute;
@@ -202,51 +209,38 @@
     transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
   }
 
-  .blogs-section__cta .blogs-section__cta-icon:last-child {
+  .blogs-cta-arrow .blogs-icon-arrow:last-child {
     left: 50%;
     opacity: 0;
     transform: translate(-300%, -50%) scaleX(2);
   }
 
-  .blogs-section__button:hover .blogs-section__cta .blogs-section__cta-icon:first-child {
+  .blogs-button:hover .blogs-cta-arrow .blogs-icon-arrow:first-child {
     opacity: 0;
     transform: translate(200%, -50%) scaleX(2);
   }
 
-  .blogs-section__button:hover .blogs-section__cta .blogs-section__cta-icon:last-child {
+  .blogs-button:hover .blogs-cta-arrow .blogs-icon-arrow:last-child {
     opacity: 1;
     transform: translate(-50%, -50%) scaleX(1);
   }
 
-  .blogs-section__button {
+  .blogs-button:hover {
     background-color: {{ section.settings.button_text_color }} !important;
     color: {{ section.settings.button_bg_color }} !important;
-  }
-  .blogs-section__button .blogs-section__button-text {
-    color: {{ section.settings.button_bg_color }} !important;
-  }
-  .blogs-section__button .blogs-section__cta {
-    background: {{ section.settings.button_bg_color }} !important;
-  }
-  .blogs-section__button .blogs-section__cta-icon {
-    fill: {{ section.settings.button_text_color }} !important;
-  }
-  .blogs-section__button:hover {
-    background-color: {{ section.settings.button_bg_color }} !important;
-    color: {{ section.settings.button_text_color }} !important;
     border: none !important;
   }
-  .blogs-section__button:hover .blogs-section__button-text {
-    color: {{ section.settings.button_text_color }} !important;
+  .blogs-button:hover span {
+    color: {{ section.settings.button_bg_color }} !important;
   }
-  .blogs-section__button:hover .blogs-section__cta {
-    background: {{ section.settings.button_text_color }} !important;
+  .blogs-button:hover .blogs-cta-arrow {
+    background: {{ section.settings.button_bg_color }} !important;
   }
-  .blogs-section__button:hover .blogs-section__cta-icon {
-    fill: {{ section.settings.button_bg_color }} !important;
+  .blogs-button:hover .blogs-icon-arrow {
+    fill: {{ section.settings.button_text_color }} !important;
   }
 
-  .blogs-section__column--right {
+  .blogs-column-right {
     overflow: hidden;
     max-width: 100%;
     align-items: flex-start;
@@ -254,7 +248,7 @@
     padding: 0;
   }
 
-  .blogs-section__articles {
+  .blogs-articles-row {
     display: flex;
     gap: 1rem;
     overflow-x: auto;
@@ -266,11 +260,11 @@
     box-sizing: border-box;
   }
 
-  .blogs-section__articles::-webkit-scrollbar {
+  .blogs-articles-row::-webkit-scrollbar {
     display: none;
   }
 
-  .blogs-section__article {
+  .article-item {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -280,13 +274,13 @@
     color: inherit;
   }
 
-  .blogs-section__article-text {
+  .article-text-content {
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
   }
 
-  .blogs-section__article-date {
+  .article-date {
     font-size: 12px;
     color: #666;
     margin: 0 0 0.5rem 0;
@@ -295,7 +289,8 @@
     letter-spacing: 0.05em;
   }
 
-  .blogs-section__article-title {
+  .article-name {
+    /* font-family: 'Instrument Serif', serif; */
     font-size: 20px;
     font-weight: bold;
     color: #63001f;
@@ -305,14 +300,15 @@
     width: 80%;
   }
 
-  .blogs-section__article-media {
+
+  .article-image-container {
     position: relative;
     width: 420px;
     height: 312px;
     margin-top: 1.5rem;
   }
 
-  .blogs-section__article-image {
+  .article-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -320,7 +316,7 @@
     flex-shrink: 0;
   }
 
-  .blogs-section__article-cta {
+  .article-arrow-button {
     position: absolute;
     bottom: 16px;
     right: 16px;
@@ -337,118 +333,74 @@
     transition: background 0.1s ease, color 0.1s ease, border-color 0.1s ease;
   }
 
-  .blogs-section__article:hover .blogs-section__article-cta {
+  .article-item:hover .article-arrow-button {
     background: #63001f;
     color: white;
     border-color: #63001f;
   }
 
-  .blogs-section__article:hover .blogs-section__article-cta svg {
+  .article-item:hover .article-arrow-button svg {
     stroke: #ffffff;
     transition: stroke 0.3s ease;
   }
 
-  @media screen and (max-width: 480px) {
-    .blogs-section__container {
-      padding: 0rem 1rem;
-      padding-right: 0;
-    }
 
-    .blogs-section__columns {
+  @media screen and (max-width: 768px) {
+    .blogs-columns {
       grid-template-columns: 1fr;
       gap: 2rem;
     }
 
-    .blogs-section__column {
-      padding: 0rem;
+    .blogs-column {
+      padding: 1rem;
     }
 
-    .blogs-section__column--left {
-      padding: 0rem;
+    .blogs-heading {
+      font-size: 2rem;
     }
 
-    .blogs-section__column--right {
-      padding: 0;
+    .blogs-subheading {
+      font-size: 0.9rem;
     }
 
-    .blogs-section__heading {
-      font-size: 32px;
-      margin-bottom: 0.6rem;
-      line-height: 1.05;
+    .article-item {
+      width: 300px;
     }
 
-    .blogs-section__subheading {
-      font-size: 12px;
-      margin-bottom: 0.5rem;
-    }
-
-    .blogs-section__button {
-      font-size: 12px;
-      padding: 0.4rem 0.4rem;
-      gap: 2rem;
-      max-width: 250px;
-      margin-top: 1.5rem;
-    }
-
-    .blogs-section__button-text {
-      margin-right: 0.8rem;
-      padding-left: 0.8rem;
-    }
-
-    .blogs-section__cta {
-      width: 2rem;
-      height: 2rem;
-    }
-
-    .blogs-section__cta-icon {
-      width: 12px;
-      height: 8px;
-    }
-
-    .blogs-section__article {
-      width: 280px;
-    }
-
-    .blogs-section__article:last-child {
-      margin-right: 1rem;
-    }
-
-    .blogs-section__article-date {
+    .article-date {
       font-size: 10px;
-      /* transform: translateX(0.5rem); */
     }
 
-    .blogs-section__article-title {
-      font-size: 12px;
-      line-height: 1.4;
-      /* transform: translateX(0.5rem); */
+    .article-name {
+      font-size: 1rem;
     }
 
-    .blogs-section__article-media {
-      width: 280px;
-      height: 200px;
-      margin-top: 1rem;
+
+    .article-image-container {
+      width: 300px;
+      height: 223px;
     }
 
-    .blogs-section__article-image {
+
+    .article-image {
       width: 100%;
       height: 100%;
     }
 
-    .blogs-section__article-cta {
+    .article-arrow-button {
       width: 32px;
       height: 32px;
-      bottom: 10px;
-      right: 10px;
+      bottom: 12px;
+      right: 12px;
     }
 
-    .blogs-section__article-cta svg {
+    .article-arrow-button svg {
       width: 12px;
       height: 12px;
     }
 
-    .blogs-section__articles {
-      gap: 1rem;
+    .blogs-articles-row {
+      gap: 0.8rem;
     }
   }
 </style>

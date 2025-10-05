@@ -13,15 +13,25 @@
       "type": "hero",
       "settings": {}
     },
-    "saffron": {
-      "type": "saffron",
+    "hero_banner": {
+      "type": "hero-banner",
       "settings": {}
     },
-    "product_showcase": {
-      "type": "product-showcase"
+    "about": {
+      "type": "about",
+      "settings": {}
     },
+    // "product_showcase": {
+    //   "type": "product-showcase",
+    //   "settings": {
+    //     "buy_button_link": ""
+    //   }
+    // },
     "ingredients": {
       "type": "ingredients"
+    },
+    "ingredients_2": {
+      "type": "ingredients-2"
     },
     "feature": {
       "type": "feature"
@@ -29,8 +39,8 @@
     "marquee": {
       "type": "marquee"
     },
-    "video_hero": {
-      "type": "video-hero"
+    "saffron": {
+      "type": "saffron"
     },
     // "info": {
     //   "type": "info",
@@ -48,16 +58,8 @@
     "blogs": {
       "type": "blogs"
     },
-    "reviews": {
-      "type": "reviews",
-      "settings": {}
-    },
-    "feed": {
-      "type": "feed",
-      "settings": {}
-    },
-    "founders_note": {
-      "type": "founders-note",
+    "testimonials": {
+      "type": "testimonials",
       "settings": {}
     },
     // "instagram": {
@@ -67,15 +69,18 @@
   "order": [
     "hero",
     "marquee",
-    "video_hero",
     "saffron",
-    "product_showcase",
+    "hero_banner",
+    "about",
     "ingredients",
+    "ingredients_2",
     "feature",
-    "reviews",
-    "feed",
-    "founders_note",
+    // "info",
+    // "art_of_sacred",
+    // "certifications",
     "animal_for_animal",
     "blogs",
+    "testimonials",
+    // "instagram"
   ]
 }

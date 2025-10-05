@@ -1,0 +1,958 @@
+{% comment %}
+  Ingredients 2 section
+{% endcomment %}
+
+<section
+  class="ingredients-2-section"
+  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="ingredients-2-container">
+    <div class="ingredients-2-columns">
+      <div class="ingredients-2-column ingredients-2-column-left">
+        <div class="ingredients-2-row ingredients-2-row-top">
+          <div class="ingredients-2-text-content">
+            <h3 class="ingredients-2-subheading">all in one multi benefit serum.</h3>
+            <h2 class="ingredients-2-heading">Powerful blend of science-backed actives and heritage botanicals</h2>
+            <button
+              type="button"
+              id="ingredients-2-modal-trigger"
+              class="ingredients-2-button"
+              aria-haspopup="dialog"
+              aria-expanded="false"
+              style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }}; font-family: {{ section.settings.button_font }}, sans-serif; text-transform: {{ section.settings.button_transform }}; font-style: {{ section.settings.button_style }};"
+            >
+              <span style="color: {{ section.settings.button_text_color }};">View all ingredients</span>
+              <div class="ingredients-2-cta-arrow" style="background: {{ section.settings.button_arrow_bg }};">
+                <svg
+                  class="ingredients-2-icon-arrow"
+                  width="13"
+                  height="8"
+                  viewBox="0 0 13 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="fill: {{ section.settings.button_arrow_color }};"
+                >
+                  <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+                </svg>
+                <svg
+                  class="ingredients-2-icon-arrow"
+                  width="13"
+                  height="8"
+                  viewBox="0 0 13 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="fill: {{ section.settings.button_arrow_color }};"
+                >
+                  <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+                </svg>
+              </div>
+            </button>
+            <div
+              class="ingredients-2-modal"
+              id="ingredients-2-modal"
+              aria-hidden="true"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="ingredients-2-modal-title"
+            >
+              <div class="ingredients-2-modal-overlay" role="presentation"></div>
+              <div class="ingredients-2-modal-content" role="document">
+                <button type="button" class="ingredients-2-modal-close" aria-label="Close ingredients list">
+                  &times;
+                </button>
+                <h3 class="ingredients-2-modal-title" id="ingredients-2-modal-title">Full Ingredients List</h3>
+                <p class="ingredients-2-modal-body">
+                  Aqua (Water), Propylene Glycol, Niacinamide, Centella Asiatica Extract, Panthenol, Glycyrrhiza Glabra
+                  (Licorice) Root Extract, Betula Alba (Birch) Sap, Oryza Sativa (Rice) Extract, Bifida Ferment Lysate,
+                  Xanthan Gum, Sodium Hyaluronate, Crocus Sativus (Saffron) Stigma Extract, 3-O-Ethyl Ascorbic Acid,
+                  Betaine, Propanediol, Dimethyl Isosorbide, Nelumbo Nucifera (Lotus) Flower Extract, Curcuma Longa
+                  (Turmeric) Root Extract, Terminalia Ferdinandiana (Kakadu Plum) Fruit Extract, Phenoxyethanol,
+                  Ethylhexylglycerin, Disodium EDTA.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ingredients-2-column ingredients-2-column-right">
+        <div class="ingredients-2-images-row">
+          <div class="ingredient-item">
+            <h4 class="ingredient-name">Saffron</h4>
+            <p class="ingredient-description">
+              Rich in antioxidants like crocin and safranal, saffron helps brighten skin tone and reduce pigmentation.
+            </p>
+            <div class="ingredient-image-container">
+              <img
+                src="{{ 'ingredient-saffron.png' | asset_url }}"
+                alt="Saffron"
+                class="ingredient-image"
+                loading="lazy"
+              >
+              <div class="ingredient-badges">
+                <div class="ingredient-badge">Brightening</div>
+                <div class="ingredient-badge">Antioxidant</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <h4 class="ingredient-name">Niacinamide</h4>
+            <p class="ingredient-description">
+              A stable form of Vitamin B3 that improves barrier function, reduces redness, and evens skin tone.
+            </p>
+            <div class="ingredient-image-container">
+              <img
+                src="{{ 'ingredient-niacinamide.jpg' | asset_url }}"
+                alt="Niacinamide"
+                class="ingredient-image"
+                loading="lazy"
+              >
+              <div class="ingredient-badges">
+                <div class="ingredient-badge">Brightening</div>
+                <div class="ingredient-badge">Anti-inflammatory</div>
+                <div class="ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <h4 class="ingredient-name">Centella Asiatica (Cica)</h4>
+            <p class="ingredient-description">
+              Contains asiaticoside and madecassoside, known to accelerate wound healing and soothe inflammation.
+            </p>
+            <div class="ingredient-image-container">
+              <img
+                src="{{ 'ingredient-centela.jpg' | asset_url }}"
+                alt="Centella Asiatica"
+                class="ingredient-image"
+                loading="lazy"
+              >
+              <div class="ingredient-badges">
+                <div class="ingredient-badge">Anti-inflammatory</div>
+                <div class="ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <h4 class="ingredient-name">Rice Water Extract</h4>
+            <p class="ingredient-description">
+              Naturally rich in amino acids, vitamins, and minerals that soften skin and enhance radiance.
+            </p>
+            <div class="ingredient-image-container">
+              <img
+                src="{{ 'ingreient-rice-water.jpg' | asset_url }}"
+                alt="Rice Water Extract"
+                class="ingredient-image"
+                loading="lazy"
+              >
+              <div class="ingredient-badges">
+                <div class="ingredient-badge">Brightening</div>
+                <div class="ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <h4 class="ingredient-name">Panthenol (Pro-Vitamin B5)</h4>
+            <p class="ingredient-description">
+              Converts to pantothenic acid in skin, providing deep hydration and promoting barrier repair.
+            </p>
+            <div class="ingredient-image-container">
+              <img
+                src="{{ 'ingredient-panthenol.jpg' | asset_url }}"
+                alt="Panthenol"
+                class="ingredient-image"
+                loading="lazy"
+              >
+              <div class="ingredient-badges">
+                <div class="ingredient-badge">Hydrating</div>
+                <div class="ingredient-badge">Nourishing</div>
+                <div class="ingredient-badge">Anti-inflammatory</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <h4 class="ingredient-name">Propanediol</h4>
+            <p class="ingredient-description">
+              A plant-derived humectant that enhances penetration of actives while maintaining skin hydration.
+            </p>
+            <div class="ingredient-image-container">
+              <img
+                src="{{ 'ingredient-propanediol.jpg' | asset_url }}"
+                alt="Propanediol"
+                class="ingredient-image"
+                loading="lazy"
+              >
+              <div class="ingredient-badges">
+                <div class="ingredient-badge">Hydrating</div>
+                <div class="ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <h4 class="ingredient-name">Bifida Ferment Lysate</h4>
+            <p class="ingredient-description">
+              A probiotic-derived lysate shown to strengthen the skin barrier and improve resistance to environmental
+              stress.
+            </p>
+            <div class="ingredient-image-container">
+              <img
+                src="{{ 'ingredient-bifida-ferment-lysate.jpg' | asset_url }}"
+                alt="Bifida Ferment Lysate"
+                class="ingredient-image"
+                loading="lazy"
+              >
+              <div class="ingredient-badges">
+                <div class="ingredient-badge">Antioxidant</div>
+                <div class="ingredient-badge">Nourishing</div>
+                <div class="ingredient-badge">Barrier Strengthening</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredient-item">
+            <h4 class="ingredient-name">Hyaluronic Acid</h4>
+            <p class="ingredient-description">
+              Smaller HA molecules penetrate deeper layers to boost hydration, elasticity, and plumpness.
+            </p>
+            <div class="ingredient-image-container">
+              <img
+                src="{{ 'ingredient-hyaluronic-acid.jpg' | asset_url }}"
+                alt="Hyaluronic Acid"
+                class="ingredient-image"
+                loading="lazy"
+              >
+              <div class="ingredient-badges">
+                <div class="ingredient-badge">Hydrating</div>
+                <div class="ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+    .ingredients-2-section {
+      /* height: 85vh; */
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      background-color: #fef9f2 !important;
+    }
+
+    .ingredients-2-container {
+      width: 100%;
+      margin: 0;
+      padding: 2rem;
+      padding-bottom: 0;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .ingredients-2-columns {
+      display: grid;
+      grid-template-columns: 40% 60%;
+      gap: 0rem;
+      width: 100%;
+      height: 100%;
+      /* margin-bottom: 3rem; */
+      margin-top: 2rem;
+    }
+
+    .ingredients-2-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    .ingredients-2-column-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .ingredients-2-row {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0rem;
+    }
+
+    .ingredients-2-row-top {
+      /* Top row specific styles */
+    }
+
+    .ingredients-2-row-bottom {
+      /* Bottom row specific styles */
+    }
+
+    .ingredients-2-text-content {
+      text-align: left;
+      max-width: 100%;
+    }
+
+    .ingredients-2-subheading {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      color: #63001f;
+      margin: 0 0 1rem 0;
+      letter-spacing: 0.1em;
+    }
+
+    .ingredients-2-heading {
+      font-family: 'Instrument Serif', serif;
+      font-size: 48px;
+      font-weight: 200;
+      line-height: 1.2;
+      color: #63001f;
+      margin: 0 0 2rem 0;
+      text-align: left;
+    }
+
+    .ingredients-2-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.5rem;
+      font-size: 0.8rem;
+      text-decoration: none;
+      border-radius: 999px;
+      text-transform: uppercase;
+      transition: background-color 0.3s ease;
+      border: none;
+      gap: 4rem;
+      overflow: hidden;
+      max-width: 300px;
+      margin-top: 2rem;
+      cursor: pointer;
+      border: none;
+    }
+
+    .ingredients-2-button span {
+      margin-right: 1rem;
+      padding-left: 1rem;
+    }
+
+    .ingredients-2-cta-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      border-radius: 100%;
+      height: 2.4rem;
+      width: 2.4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ingredients-2-icon-arrow {
+      width: 15px;
+      height: 10px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scaleX(1);
+      transform-origin: center;
+      transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+    }
+
+    .ingredients-2-cta-arrow .ingredients-2-icon-arrow:last-child {
+      left: 50%;
+      opacity: 0;
+      transform: translate(-300%, -50%) scaleX(2);
+    }
+
+    .ingredients-2-button:hover .ingredients-2-cta-arrow .ingredients-2-icon-arrow:first-child {
+      opacity: 0;
+      transform: translate(200%, -50%) scaleX(2);
+    }
+
+    .ingredients-2-button:hover .ingredients-2-cta-arrow .ingredients-2-icon-arrow:last-child {
+      opacity: 1;
+      transform: translate(-50%, -50%) scaleX(1);
+    }
+
+    .ingredients-2-button:hover {
+      background-color: {{ section.settings.button_text_color }} !important;
+      color: {{ section.settings.button_bg_color }} !important;
+      border: none !important;
+    }
+    .ingredients-2-button:hover span {
+      color: {{ section.settings.button_bg_color }} !important;
+    }
+    .ingredients-2-button:hover .ingredients-2-cta-arrow {
+      background: {{ section.settings.button_bg_color }} !important;
+    }
+    .ingredients-2-button:hover .ingredients-2-icon-arrow {
+      fill: {{ section.settings.button_text_color }} !important;
+    }
+
+    .ingredients-2-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .ingredients-2-modal[aria-hidden='false'] {
+      display: flex;
+    }
+
+    .ingredients-2-modal-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(4px);
+    }
+
+    .ingredients-2-modal-content {
+      position: relative;
+      max-width: min(90vw, 680px);
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+      color: #2a2a2a;
+      z-index: 1;
+      line-height: 1.6;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .ingredients-2-modal-title {
+      margin: 0 0 1rem 0;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #63001f;
+    }
+
+    .ingredients-2-modal-body {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #3f3f3f;
+    }
+
+    .ingredients-2-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background: #63001f;
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .ingredients-2-modal-close:hover {
+      background: #450012;
+    }
+
+    @media screen and (max-width: 768px) {
+      .ingredients-2-modal-content {
+        padding: 1.5rem;
+        border-radius: 18px;
+      }
+
+      .ingredients-2-modal-title {
+        font-size: 1.2rem;
+      }
+
+      .ingredients-2-modal-body {
+        font-size: 0.9rem;
+      }
+    }
+
+    .ingredients-2-column-right {
+      overflow: hidden;
+      max-width: 100%;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 0;
+    }
+
+    .ingredients-2-images-row {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      width: 100%;
+      max-width: 100%;
+      /* padding: 1rem 0; */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      box-sizing: border-box;
+    }
+
+    .ingredients-2-images-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ingredient-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-shrink: 0;
+      width: 420px;
+    }
+
+    .ingredient-name {
+      font-family: 'Instrument Serif', serif;
+      font-size: 40px;
+      font-weight: 400;
+      color: #63001f;
+      margin: 0 0 0.4rem 0;
+      text-align: left;
+    }
+
+    .ingredient-description {
+      font-size: 14px;
+      color: #666;
+      margin: 0 0 1rem 0;
+      text-align: left;
+      line-height: 1.4;
+      text-transform: uppercase;
+    }
+
+    .ingredient-image-container {
+      position: relative;
+      width: 420px;
+      height: 312px;
+      margin-top: 2rem;
+    }
+
+    .ingredient-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      flex-shrink: 0;
+    }
+
+    .ingredient-badges {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: calc(100% - 32px);
+    }
+
+  .ingredient-badge {
+    background: #63001f;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+    @media screen and (max-width: 768px) {
+      .ingredients-2-columns {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .ingredients-2-column {
+        padding: 1rem;
+      }
+
+      .ingredients-2-heading {
+        font-size: 2rem;
+      }
+
+      .ingredients-2-subheading {
+        font-size: 0.9rem;
+      }
+
+      .ingredient-item {
+        width: 300px;
+      }
+
+      .ingredient-name {
+        font-size: 1rem;
+      }
+
+      .ingredient-description {
+        font-size: 0.8rem;
+      }
+
+      .ingredient-image-container {
+        width: 300px;
+        height: 223px;
+      }
+
+      .ingredient-badges {
+        bottom: 12px;
+        left: 12px;
+        gap: 4px;
+      }
+
+      .ingredient-badge {
+        font-size: 9px;
+        padding: 4px 8px;
+      }
+
+      .ingredient-image {
+        width: 100%;
+        height: 100%;
+      }
+
+      .ingredients-2-images-row {
+        gap: 0.8rem;
+      }
+    }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var trigger = document.getElementById('ingredients-2-modal-trigger');
+    var modal = document.getElementById('ingredients-2-modal');
+    if (!trigger || !modal) return;
+
+    var closeBtn = modal.querySelector('.ingredients-2-modal-close');
+    var overlay = modal.querySelector('.ingredients-2-modal-overlay');
+
+    function openModal() {
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      trigger.setAttribute('aria-expanded', 'true');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+        closeModal();
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Ingredients 2 Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#fef9f2"
+    },
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Ingredients 2 Section"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Section Description",
+      "default": "This is the second ingredients section with customizable content."
+    },
+    {
+      "type": "header",
+      "content": "Typography Settings"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Title Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "select",
+      "id": "title_style",
+      "label": "Title Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "description_font",
+      "label": "Description Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "description_style",
+      "label": "Description Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "title_transform",
+      "label": "Title Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "select",
+      "id": "description_transform",
+      "label": "Description Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Color Settings"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description Color",
+      "default": "#63001fd1"
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "View all ingredients"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "select",
+      "id": "button_font",
+      "label": "Button Font",
+      "options": [
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        },
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Inter",
+          "label": "Inter"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Font Style",
+      "options": [
+        {
+          "value": "normal",
+          "label": "Regular"
+        },
+        {
+          "value": "italic",
+          "label": "Italic"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "button_transform",
+      "label": "Button Text Transform",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "capitalize",
+          "label": "Capitalize"
+        },
+        {
+          "value": "uppercase",
+          "label": "Uppercase"
+        },
+        {
+          "value": "lowercase",
+          "label": "Lowercase"
+        }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Button Border Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_bg",
+      "label": "Button Arrow Background",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_color",
+      "label": "Button Arrow Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients 2 Section"
+    }
+  ]
+}
+{% endschema %}

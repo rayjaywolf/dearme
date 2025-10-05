@@ -1,473 +1,68 @@
 {% comment %}
-  Article page following Dear Me brand aesthetic
-  Clean, minimal design with consistent styling
+  This section is used in the article template to render the article page, which
+  displays the full content of the blog post and can optionally include a
+  comments section for customers (not shown in this example).
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/article
 {% endcomment %}
 
-<!-- Article Hero Section -->
-<section class="article-hero">
-  <div class="article-hero__container">
-    <div class="article-hero__meta">
-      <span class="article-hero__date">{{ article.published_at | time_tag: format: 'date' }}</span>
-      {% if article.tags.size > 0 %}
-        <span class="article-hero__tag">{{ article.tags.first }}</span>
-      {% endif %}
-    </div>
-    <h1 class="article-hero__title">{{ article.title }}</h1>
-    {% if article.excerpt != blank %}
-      <p class="article-hero__excerpt">{{ article.excerpt }}</p>
-    {% endif %}
-    {% if article.author != blank %}
-      <div class="article-hero__author">
-        <span class="article-hero__author-label">By</span>
-        <span class="article-hero__author-name">{{ article.author }}</span>
-      </div>
-    {% endif %}
-  </div>
-</section>
+{% if article.image %}
+  {{ article.image | image_url: width: 1000 | image_tag }}
+{% endif %}
 
-<!-- Article Content Section -->
-<section class="article-content">
-  <div class="article-content__container">
-    <!-- Mobile Article Meta -->
-    <div class="article-content__mobile-meta">
-      <div class="article-content__mobile-date">{{ article.published_at | time_tag: format: 'date' }}</div>
-      {% if article.author != blank %}
-        <div class="article-content__mobile-author">By {{ article.author }}</div>
-      {% endif %}
-    </div>
+<h1>{{ article.title }}</h1>
 
-    <div class="article-content__body">
-      {{ article.content }}
-    </div>
+{% assign date = article.published_at | time_tag: format: 'date' %}
+<p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
 
-    {% if article.tags.size > 0 %}
-      <div class="article-content__tags">
-        {% for tag in article.tags %}
-          <span class="article-content__tag">{{ tag }}</span>
-        {% endfor %}
-      </div>
-    {% endif %}
-  </div>
-</section>
+{{ article.content }}
 
-<!-- Related Articles Section -->
-<section class="article-related">
-  <div class="article-related__container">
-    <h2 class="article-related__title">Related Articles</h2>
-    <div class="article-related__grid">
-      {% for related_article in blog.articles limit: 3 %}
-        {% unless related_article.id == article.id %}
-          <article class="article-related__item">
-            <a href="{{ related_article.url }}" class="article-related__link">
-              <div class="article-related__media">
-                {% if related_article.image %}
-                  <img
-                    src="{{ related_article.image | image_url: width: 400 }}"
-                    alt="{{ related_article.title }}"
-                    class="article-related__image"
-                    width="400"
-                    height="250"
-                    loading="lazy"
-                  >
-                {% endif %}
-              </div>
-              <div class="article-related__content">
-                <div class="article-related__meta">
-                  <span class="article-related__date">
-                    {{- related_article.published_at | time_tag: format: 'date' -}}
-                  </span>
-                  {% if related_article.tags.size > 0 %}
-                    <span class="article-related__tag">{{ related_article.tags.first }}</span>
-                  {% endif %}
-                </div>
-                <h3 class="article-related__item-title">{{ related_article.title }}</h3>
-              </div>
-            </a>
-          </article>
-        {% endunless %}
+{% if blog.comments_enabled? %}
+  <h2>{{ 'blog.article_comments' | t }}</h2>
+
+  <div id="comments">
+    {% paginate article.comments by 10 %}
+      {% for comment in article.comments %}
+        <div>
+          <p>{{ comment.author }}</p>
+          <p>
+            {{- comment.created_at | time_tag: format: 'date' -}}
+          </p>
+          <p>{{ comment.content }}</p>
+        </div>
       {% endfor %}
-    </div>
+
+      {{ paginate | default_pagination: anchor: 'comments' }}
+    {% endpaginate %}
   </div>
-</section>
 
-<style>
-  /* Article Hero Section - matches your site's hero pattern */
-  .article-hero {
-    max-width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 45vh;
-    background: #ead1c1 url('{{ "noise.png" | asset_url }}');
-    background-size: 150px 150px;
-    background-repeat: repeat;
-    margin-top: 5rem;
-  }
+  {% form 'new_comment', article %}
+    <h2>{{ 'blog.comment_form_title' | t }}</h2>
 
-  .article-hero__container {
-    text-align: center;
-    max-width: 800px;
-    padding: 0 2rem;
-  }
+    {{ form.errors | default_errors }}
 
-  .article-hero__meta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 0.75rem;
-  }
+    <div>
+      <label for="author">{{ 'blog.comment_form_name' | t }}</label>
+      <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
+    </div>
 
-  .article-hero__date {
-    font-size: 12px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+    <div>
+      <label for="email">{{ 'blog.comment_form_email' | t }}</label>
+      <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
+    </div>
 
-  .article-hero__tag {
-    background: #63001f;
-    color: #fef9f2;
-    padding: 0.25rem 0.75rem;
-    border-radius: 50px;
-    font-size: 12px;
-    font-weight: 400;
-    text-transform: uppercase;
-  }
+    <div>
+      <label for="body">{{ 'blog.comment_form_body' | t }}</label>
+      <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
+    </div>
 
-  .article-hero__title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 48px;
-    font-weight: 300;
-    color: #63001f;
-    line-height: 1.3;
-    margin-bottom: 1rem;
-  }
-
-  .article-hero__excerpt {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
-    color: #63001f;
-    opacity: 0.8;
-    line-height: 1.6;
-    margin: 0 0 1.5rem 0;
-  }
-
-  .article-hero__author {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-  }
-
-  .article-hero__author-label {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    color: #666;
-  }
-
-  .article-hero__author-name {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #63001f;
-  }
-
-  /* Article Content Section */
-  .article-content {
-    background: #fef9f2 url('{{ "noise.png" | asset_url }}');
-    background-size: 150px 150px;
-    background-repeat: repeat;
-    padding: 4rem 0 4rem 0;
-  }
-
-  .article-content__container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 0rem;
-  }
-
-  /* Mobile Article Meta - Hidden on desktop */
-  .article-content__mobile-meta {
-    display: none;
-  }
-
-  .article-content__body {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #63001f;
-    margin-bottom: 3rem;
-  }
-
-  .article-content__body h1,
-  .article-content__body h2,
-  .article-content__body h3,
-  .article-content__body h4,
-  .article-content__body h5,
-  .article-content__body h6 {
-    font-family: 'Instrument Serif', serif;
-    color: #63001f;
-    margin: 2rem 0 1rem 0;
-  }
-
-  .article-content__body h2 {
-    font-size: 2rem;
-    font-weight: 300;
-  }
-
-  .article-content__body h3 {
-    font-size: 1.5rem;
-    font-weight: 300;
-  }
-
-  .article-content__body p {
-    margin-bottom: 1.5rem;
-  }
-
-  .article-content__body img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-    margin: 2rem 0;
-  }
-
-  .article-content__body blockquote {
-    border-left: 4px solid #63001f;
-    padding-left: 2rem;
-    margin: 2rem 0;
-    font-style: italic;
-    color: #666;
-  }
-
-  .article-content__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 2rem;
-    padding-top: 2rem;
-    border-top: 1px solid #e5e5e5;
-  }
-
-  .article-content__tag {
-    background: #63001f;
-    color: #fef9f2;
-    padding: 0.25rem 0.75rem;
-    border-radius: 50px;
-    font-size: 12px;
-    font-weight: 400;
-    text-transform: uppercase;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-  }
-
-  .article-content__tag:hover {
-    background: #4a0017;
-  }
-
-  /* Related Articles Section */
-  .article-related {
-    background: #ffffff;
-    padding: 4rem 0;
-  }
-
-  .article-related__container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  .article-related__title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: #63001f;
-    margin: 0 0 3rem 0;
-    text-align: center;
-  }
-
-  .article-related__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-  }
-
-  .article-related__item {
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .article-related__link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .article-related__media {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .article-related__image {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-
-  .article-related__content {
-    padding: 1.5rem 0;
-  }
-
-  .article-related__meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .article-related__date {
-    font-size: 12px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .article-related__tag {
-    background: #63001f;
-    color: #fef9f2;
-    padding: 0.2rem 0.6rem;
-    border-radius: 50px;
-    font-size: 10px;
-    font-weight: 400;
-    text-transform: uppercase;
-  }
-
-  .article-related__item-title {
-    font-family: 'Instrument Serif', serif;
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: #63001f;
-    line-height: 1.4;
-    margin: 0;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  /* Mobile optimizations */
-  @media screen and (max-width: 768px) {
-    .article-hero {
-      height: 35vh;
-      padding: 1rem;
-      margin-top: 4rem;
-    }
-
-    .article-hero__title {
-      font-size: 2.5rem;
-    }
-
-    .article-content__container {
-      padding: 0 1rem;
-    }
-
-    /* Hide hero meta on mobile */
-    .article-hero__meta {
-      display: none;
-    }
-
-    .article-hero__author {
-      display: none;
-    }
-
-    /* Show mobile meta on mobile */
-    .article-content__mobile-meta {
-      display: block;
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #e5e5e5;
-    }
-
-    .article-content__mobile-date {
-      font-size: 12px;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-
-    .article-content__mobile-author {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #63001f;
-    }
-
-    .article-related__grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .article-content__body {
-      font-size: 1rem;
-    }
-
-    .article-content__body h2 {
-      font-size: 1.5rem;
-    }
-
-    .article-content__body h3 {
-      font-size: 1.25rem;
-    }
-  }
-
-  @media screen and (max-width: 480px) {
-    .article-hero {
-      height: 25vh;
-    }
-
-    .article-hero__title {
-      font-size: 1.75rem;
-      margin-bottom: 0rem;
-    }
-
-    .article-hero__excerpt {
-      font-size: 1rem;
-    }
-
-    .article-content__body {
-      font-size: 0.95rem;
-    }
-
-    .article-related {
-      padding: 3rem 0 1rem;
-    }
-
-    .article-related__container {
-      width: 100%;
-      padding: 0 1rem;
-    }
-
-    .article-content {
-      padding: 2rem 0 1rem;
-    }
-
-    .article-related__title {
-      font-size: 32px;
-    }
-
-    .article-related__grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0rem;
-    }
-  }
-</style>
+    <input type="submit" value="{{ 'blog.comment_form_submit' | t }}">
+  {% endform %}
+{% endif %}
 
 {% schema %}
 {
-  "name": "Article Page",
+  "name": "t:general.article",
   "settings": []
 }
 {% endschema %}
