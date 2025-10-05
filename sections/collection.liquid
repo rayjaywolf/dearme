@@ -1,47 +1,749 @@
 {% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
+  Modern collection/shop page with hero section and product grid
+  Following BEM naming convention and brand aesthetic
 {% endcomment %}
 
-<h1>{{ collection.title }}</h1>
+<!-- Collection Hero Section -->
+<section class="collection-hero">
+  <div class="collection-hero__container">
+    <div class="collection-hero__content">
+      <h1 class="collection-hero__title">{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <p class="collection-hero__description">{{ collection.description }}</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
 
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
+<!-- Single Product Showcase -->
+<section class="collection-product-showcase">
+  <div class="collection-product-showcase__container">
+    {% assign product = collection.products.first %}
+    {% if product %}
+      <a
+        href="{{ product.url }}"
+        class="collection-product-showcase__content collection-product-showcase__content--clickable"
+      >
+        <div class="collection-product-showcase__media">
+          {% if product.featured_image %}
+            <img
+              src="{{ product.featured_image | image_url: width: 800 }}"
+              alt="{{ product.title }}"
+              class="collection-product-showcase__image"
+              width="800"
+              height="600"
+              loading="eager"
+            >
+          {% else %}
+            <div class="collection-product-showcase__placeholder">
+              <svg
+                width="64"
+                height="64"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21,15 16,10 5,21"/>
+              </svg>
+            </div>
+          {% endif %}
         </div>
+
+        <div class="collection-product-showcase__info">
+          <h2 class="collection-product-showcase__title">{{ product.title }}</h2>
+
+          <div class="collection-product-showcase__price">
+            {% if product.compare_at_price > product.price %}
+              <span class="collection-product-showcase__price--sale">{{ product.price | money }}</span>
+              <span class="collection-product-showcase__price--compare">{{ product.compare_at_price | money }}</span>
+            {% else %}
+              <span class="collection-product-showcase__price--regular">{{ product.price | money }}</span>
+            {% endif %}
+          </div>
+
+          <div class="collection-product-showcase__cta">
+            <span class="collection-product-showcase__cta-text">View Product</span>
+            <div class="collection-product-showcase__cta-arrow">
+              <svg
+                class="collection-product-showcase__cta-icon"
+                width="13"
+                height="8"
+                viewBox="0 0 13 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+              </svg>
+              <svg
+                class="collection-product-showcase__cta-icon"
+                width="13"
+                height="8"
+                viewBox="0 0 13 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </a>
+    {% else %}
+      <div class="collection-product-showcase__empty">
+        <h2 class="collection-product-showcase__empty-title">No products found</h2>
+        <p class="collection-product-showcase__empty-description">This collection doesn't have any products yet.</p>
       </div>
-    {% endfor %}
+    {% endif %}
+  </div>
+</section>
 
-    {{ paginate | default_pagination }}
-  {% endpaginate %}
-</div>
-
-{% stylesheet %}
-  .collection-products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+<style>
+  /* Collection Hero Section */
+  .collection-hero {
+    width: 100%;
+    min-height: 45vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: #ead1c1 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
   }
-{% endstylesheet %}
+
+  .collection-hero__container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .collection-hero__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .collection-hero__title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1.1;
+    margin: 0 0 1rem 0;
+    color: #63001f;
+  }
+
+  .collection-hero__description {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+    color: #63001f;
+    opacity: 0.8;
+  }
+
+  /* Collection Products Section */
+  .collection-products {
+    width: 100%;
+    background: #fef9f2 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    padding: 4rem 0;
+  }
+
+  .collection-products__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Products Grid */
+  .collection-products__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .collection-product {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .collection-product:hover {
+  }
+
+  .collection-product__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .collection-product__media {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+  }
+
+  .collection-product__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .collection-product:hover .collection-product__image {
+    transform: scale(1.05);
+  }
+
+  .collection-product__placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+  }
+
+  .collection-product__overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #63001f;
+    opacity: 0;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .collection-product:hover .collection-product__overlay {
+    opacity: 1;
+  }
+
+  .collection-product__content {
+    padding: 1.5rem;
+  }
+
+  .collection-product__title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.3;
+    margin: 0 0 0.75rem 0;
+    color: #63001f;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .collection-product__price {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .collection-product__price--regular {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #63001f;
+  }
+
+  .collection-product__price--sale {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #e74c3c;
+  }
+
+  .collection-product__price--compare {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+    text-decoration: line-through;
+  }
+
+  .collection-product__vendor {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: #666;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Pagination */
+  .collection-products__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .collection-products__pagination-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #e5e5e5;
+    border-radius: 50px;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .collection-products__pagination-link:hover {
+    border-color: #63001f;
+    background: #63001f;
+    color: #ffffff;
+  }
+
+  .collection-products__pagination-numbers {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .collection-products__pagination-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #e5e5e5;
+    border-radius: 50%;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .collection-products__pagination-number:hover {
+    border-color: #63001f;
+    background: #63001f;
+    color: #ffffff;
+  }
+
+  .collection-products__pagination-number--current {
+    border-color: #63001f;
+    background: #63001f;
+    color: #ffffff;
+  }
+
+  /* Empty State */
+  .collection-products__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .collection-products__empty-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: #63001f;
+    margin: 0 0 1rem 0;
+  }
+
+  .collection-products__empty-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+  }
+
+  /* Single Product Showcase Section */
+  .collection-product-showcase {
+    width: 100%;
+    background: #fef9f2 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    padding: 4rem 0;
+  }
+
+  .collection-product-showcase__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .collection-product-showcase__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+  }
+
+  .collection-product-showcase__content--clickable:hover {
+  }
+
+  .collection-product-showcase__media {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 4/4;
+  }
+
+  .collection-product-showcase__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .collection-product-showcase__placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+  }
+
+  .collection-product-showcase__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+
+  .collection-product-showcase__title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+    color: #63001f;
+  }
+
+  .collection-product-showcase__price {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .collection-product-showcase__price--regular {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #63001f;
+  }
+
+  .collection-product-showcase__price--sale {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #e74c3c;
+  }
+
+  .collection-product-showcase__price--compare {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem;
+    color: #666;
+    text-decoration: line-through;
+  }
+
+  .collection-product-showcase__description {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+    color: #666;
+  }
+
+  .collection-product-showcase__actions {
+    margin-top: 1rem;
+  }
+
+  .collection-product-showcase__cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-radius: 999px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    border: none;
+    gap: 4rem;
+    overflow: hidden;
+    background-color: #ffffff;
+    color: #63001f;
+    max-width: 250px;
+    margin-top: 1rem;
+  }
+
+  .collection-product-showcase__cta-text {
+    margin-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .collection-product-showcase__cta-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    border-radius: 100%;
+    height: 2.4rem;
+    width: 2.4rem;
+    position: relative;
+    overflow: hidden;
+    background: #63001f;
+  }
+
+  .collection-product-showcase__cta-icon {
+    width: 15px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+    fill: #ffffff;
+  }
+
+  .collection-product-showcase__cta-arrow .collection-product-showcase__cta-icon:last-child {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
+
+  .collection-product-showcase__cta:hover
+    .collection-product-showcase__cta-arrow
+    .collection-product-showcase__cta-icon:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
+
+  .collection-product-showcase__cta:hover
+    .collection-product-showcase__cta-arrow
+    .collection-product-showcase__cta-icon:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+
+  .collection-product-showcase__cta:hover {
+    background-color: #63001f !important;
+    color: #ffffff !important;
+  }
+
+  .collection-product-showcase__cta:hover .collection-product-showcase__cta-text {
+    color: #ffffff !important;
+  }
+
+  .collection-product-showcase__cta:hover .collection-product-showcase__cta-arrow {
+    background: #ffffff !important;
+  }
+
+  .collection-product-showcase__cta:hover .collection-product-showcase__cta-icon {
+    fill: #63001f !important;
+  }
+
+  /* Empty State */
+  .collection-product-showcase__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .collection-product-showcase__empty-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: #63001f;
+    margin: 0 0 1rem 0;
+  }
+
+  .collection-product-showcase__empty-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .collection-hero__title {
+      font-size: 2.5rem;
+    }
+
+    .collection-hero__description {
+      font-size: 1rem;
+    }
+
+    .collection-products__grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .collection-products__container {
+      padding: 0 1rem;
+    }
+
+    .collection-products__pagination {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .collection-products__pagination-numbers {
+      order: -1;
+    }
+
+    /* Single Product Showcase Mobile */
+    .collection-product-showcase__content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .collection-product-showcase__title {
+      font-size: 2rem;
+    }
+
+    .collection-product-showcase__price--regular,
+    .collection-product-showcase__price--sale {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .collection-hero {
+      min-height: 30vh;
+    }
+
+    .collection-hero__container {
+      padding: 2rem 1rem;
+    }
+
+    .collection-hero__title {
+      font-size: 2rem;
+    }
+
+    .collection-products__grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .collection-product__content {
+      padding: 1rem;
+    }
+
+    .collection-product__title {
+      font-size: 1.1rem;
+    }
+
+    .collection-product-showcase__cta {
+      margin: 0 auto;
+      margin-top: -0.5rem;
+      max-width: 100%;
+    }
+  }
+</style>
 
 {% schema %}
 {
-  "name": "t:general.collection",
-  "settings": []
+  "name": "Collection Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "color",
+      "id": "hero_bg_color",
+      "label": "Hero Background Color",
+      "default": "#ead1c1"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Title Font",
+      "options": [
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "header",
+      "content": "Products"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 6,
+      "max": 24,
+      "step": 6,
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "product_title_font",
+      "label": "Product Title Font",
+      "options": [
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Product Title Color",
+      "default": "#63001f"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Page"
+    }
+  ]
 }
 {% endschema %}

@@ -3,14 +3,14 @@
 {% endcomment %}
 
 <section class="feature-section">
-  <div class="feature-container">
-    <div class="feature-columns">
-      <div class="feature-column feature-column-left">
-        <img src="{{ 'orange.png' | asset_url }}" alt="Orange" class="feature-image">
+  <div class="feature-section__container">
+    <div class="feature-section__columns">
+      <div class="feature-section__column feature-section__column--left">
+        <img src="{{ 'orange.png' | asset_url }}" alt="Orange" class="feature-section__image">
       </div>
-      <div class="feature-column feature-column-right">
-        <h2 class="feature-headline">Lightweight. <em> Silky.</em> Sensitive-Safe.</h2>
-        <p class="feature-subheadline">
+      <div class="feature-section__column feature-section__column--right">
+        <h2 class="feature-section__headline">Lightweight. <em> Silky.</em> Sensitive-Safe.</h2>
+        <p class="feature-section__subheadline">
           A fast-absorbing, fragrance-free serum that melts into your skin, leaving it soft, calm, and luminous.
         </p>
       </div>
@@ -28,27 +28,25 @@
     background-repeat: repeat;
   }
 
-  .feature-container {
+  .feature-section__container {
     max-width: 100%;
     margin: 0 auto;
   }
 
-  .feature-columns {
+  .feature-section__columns {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 1rem;
     width: 100%;
   }
 
-  .feature-column {
-    background-color: #ead1c1;
+  .feature-section__column {
+    background: #ead1c1 url('{{ 'noise.png' | asset_url }}');
+    background-size: 150px 150px;
     border-radius: 16px;
   }
 
-  .feature-column-left {
-  }
-
-  .feature-column-right {
+  .feature-section__column--right {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -56,7 +54,7 @@
     padding: 2rem;
   }
 
-  .feature-headline {
+  .feature-section__headline {
     font-family: 'Instrument Serif', serif;
     font-size: 48px;
     font-weight: 200;
@@ -66,7 +64,7 @@
     text-align: center;
   }
 
-  .feature-subheadline {
+  .feature-section__subheadline {
     font-size: 14px;
     color: #63001f;
     margin: 0;
@@ -77,34 +75,48 @@
     margin: 0 auto;
   }
 
-  .feature-image {
+  .feature-section__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 16px;
   }
 
-  @media (max-width: 768px) {
+  /* Mobile responsive adjustments */
+  @media screen and (max-width: 480px) {
     .feature-section {
-      padding: 3rem 1rem;
+      padding: 0rem 0.5rem 1rem;
     }
 
-    .feature-columns {
+    .feature-section__columns {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
+      gap: 0.5rem;
+      display: flex;
+      flex-direction: column-reverse;
     }
 
-    .feature-column {
-      min-height: 200px;
+    .feature-section__column {
+      min-height: 180px;
+    }
+
+    .feature-section__column--right {
       padding: 1.5rem;
     }
 
-    .feature-headline {
-      font-size: 2rem;
+    .feature-section__column--right h2 {
+      width: 80%;
     }
 
-    .feature-subheadline {
-      font-size: 0.8rem;
+    .feature-section__headline {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .feature-section__subheadline {
+      font-size: 0.75rem;
+      width: 90%;
+      line-height: 1.3;
     }
   }
 </style>

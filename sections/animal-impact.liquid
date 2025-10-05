@@ -1,0 +1,169 @@
+{% comment %}
+  Animal for Animal Impact Section
+{% endcomment %}
+
+<section class="animal-impact-section-container">
+  <section class="animal-impact-section">
+    <div class="animal-impact-section__container">
+      <div class="animal-impact-section__content">
+        <div class="animal-impact-section__image">
+          <img
+            src="{{ 'dog.webp' | asset_url }}"
+            alt="Animal for Animal Impact"
+            loading="lazy"
+            width="400"
+            height="400"
+          >
+        </div>
+
+        <div class="animal-impact-section__text-content">
+          <h2 class="animal-impact-section__title">A portion of our proceeds goes toward animal welfare.</h2>
+
+          <p class="animal-impact-section__description">
+            With every order you place, you are not just buying a product; you're providing nourishment to around 10
+            stray animals. Your purchase becomes their meal, and your compassion is the reason they can find hope amid
+            the challenges of life on the streets. Thank you for making a difference, one order at a time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<style>
+  .animal-impact-section-container {
+    background: #fef9f2 url('{{ 'noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    padding: 1rem;
+  }
+  .animal-impact-section {
+    padding: 0rem 0;
+    position: relative;
+    background: #fe5f78;
+    border-radius: 16px;
+    background-size: 150px 150px;
+    background-repeat: repeat;
+  }
+
+  .animal-impact-section__container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding-right: 4rem;
+  }
+
+  .animal-impact-section__content {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .animal-impact-section__image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .animal-impact-section__image img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+  }
+
+  .animal-impact-section__text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .animal-impact-section__title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    font-weight: 300;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+    color: #fff;
+    text-transform: none;
+    font-style: normal;
+  }
+
+  .animal-impact-section__description {
+    font-family: 'Inter', sans-serif;
+    font-size: 19px;
+    font-weight: 400;
+    margin: 0;
+    color: #fef9f2;
+    line-height: 1.6;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .animal-impact-section {
+      padding: 4rem 0;
+    }
+
+    .animal-impact-section__container {
+      padding: 0 2rem;
+    }
+
+    .animal-impact-section__content {
+      flex-direction: column;
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .animal-impact-section__image {
+      order: 1;
+    }
+
+    .animal-impact-section__text-content {
+      order: 2;
+    }
+
+    .animal-impact-section__title {
+      font-size: 2.5rem !important;
+    }
+
+    .animal-impact-section__description {
+      font-size: 1.1rem !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .animal-impact-section__container {
+      padding: 0 0.5rem;
+      padding-bottom: 1rem;
+    }
+
+    .animal-impact-section {
+      padding: 0.5rem 0;
+    }
+
+    .animal-impact-section__content {
+      gap: 1rem;
+    }
+
+    .animal-impact-section__title {
+      font-size: 2rem !important;
+      margin: 0 auto;
+      margin-bottom: 1rem;
+      width: 95%;
+    }
+
+    .animal-impact-section__description {
+      font-size: 1rem !important;
+      margin: 0 auto;
+      width: 95%;
+    }
+
+    .animal-impact-section__image {
+    }
+
+    .animal-impact-section__image img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>

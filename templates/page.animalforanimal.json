@@ -1,0 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "animal_hero": {
+      "type": "animal-hero",
+      "settings": {}
+    },
+    "animal_mission": {
+      "type": "animal-mission",
+      "settings": {}
+    },
+    "animal_impact": {
+      "type": "animal-impact",
+      "settings": {}
+    },
+    "animal_vision": {
+      "type": "animal-vision",
+      "settings": {}
+    },
+    "animal_contact": {
+      "type": "animal-contact",
+      "settings": {}
+    }
+  },
+  "order": [
+    "animal_hero",
+    "animal_mission",
+    "animal_impact",
+    "animal_vision",
+    "animal_contact"
+  ]
+}
