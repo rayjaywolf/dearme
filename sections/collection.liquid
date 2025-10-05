@@ -6,12 +6,15 @@
 <!-- Collection Hero Section -->
 <section class="collection-hero">
   <div class="collection-hero__container">
-    <div class="collection-hero__content">
-      <h1 class="collection-hero__title">{{ collection.title }}</h1>
-      {% if collection.description != blank %}
-        <p class="collection-hero__description">{{ collection.description }}</p>
-      {% endif %}
-    </div>
+    <h1 class="collection-hero__title">{{ collection.title }}</h1>
+  </div>
+  <div class="collection-hero__content">
+    {% if collection.description != blank %}
+      <div class="collection-hero__info">
+        <h3 class="collection-hero__info-title">About This Collection</h3>
+        <p class="collection-hero__info-text">{{ collection.description }}</p>
+      </div>
+    {% endif %}
   </div>
 </section>
 
@@ -103,45 +106,64 @@
 <style>
   /* Collection Hero Section */
   .collection-hero {
-    width: 100%;
-    min-height: 45vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background: #ead1c1 url('{{ "noise.png" | asset_url }}');
+    padding: 0rem 0rem;
+    background: #fef9f2 url('{{ "noise.png" | asset_url }}');
     background-size: 150px 150px;
     background-repeat: repeat;
   }
 
   .collection-hero__container {
-    max-width: 1200px;
-    width: 100%;
-    padding: 4rem 2rem;
-    text-align: center;
-  }
-
-  .collection-hero__content {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35vh;
+    margin-top: 5rem;
+    background: #ead1c1 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
   }
 
   .collection-hero__title {
     font-family: 'Instrument Serif', serif;
     font-size: 3rem;
     font-weight: 300;
-    line-height: 1.1;
-    margin: 0 0 1rem 0;
     color: #63001f;
+    line-height: 1.3;
+    margin-bottom: 3rem;
+    text-align: center;
   }
 
-  .collection-hero__description {
+  .collection-hero__content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .collection-hero__info {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 16px;
+    background-color: #fff;
+    border: 1px solid #63001f;
+  }
+
+  .collection-hero__info-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #63001f;
+    margin-bottom: 1rem;
+  }
+
+  .collection-hero__info-text {
     font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    color: #63001f;
     line-height: 1.6;
     margin: 0;
-    color: #63001f;
-    opacity: 0.8;
   }
 
   /* Collection Products Section */
@@ -491,7 +513,7 @@
     background-color: #ffffff;
     color: #63001f;
     max-width: 250px;
-    margin-top: 1rem;
+    margin-top: 0rem;
   }
 
   .collection-product-showcase__cta-text {
@@ -544,21 +566,38 @@
     transform: translate(-50%, -50%) scaleX(1);
   }
 
-  .collection-product-showcase__cta:hover {
+  .collection-product-showcase__cta {
     background-color: #63001f !important;
     color: #ffffff !important;
   }
 
-  .collection-product-showcase__cta:hover .collection-product-showcase__cta-text {
+  .collection-product-showcase__cta .collection-product-showcase__cta-text {
     color: #ffffff !important;
   }
 
-  .collection-product-showcase__cta:hover .collection-product-showcase__cta-arrow {
+  .collection-product-showcase__cta .collection-product-showcase__cta-arrow {
     background: #ffffff !important;
   }
 
-  .collection-product-showcase__cta:hover .collection-product-showcase__cta-icon {
+  .collection-product-showcase__cta .collection-product-showcase__cta-icon {
     fill: #63001f !important;
+  }
+
+  .collection-product-showcase__cta:hover {
+    background-color: #ffffff !important;
+    color: #63001f !important;
+  }
+
+  .collection-product-showcase__cta:hover .collection-product-showcase__cta-text {
+    color: #63001f !important;
+  }
+
+  .collection-product-showcase__cta:hover .collection-product-showcase__cta-arrow {
+    background: #63001f !important;
+  }
+
+  .collection-product-showcase__cta:hover .collection-product-showcase__cta-icon {
+    fill: #ffffff !important;
   }
 
   /* Empty State */
@@ -584,12 +623,35 @@
 
   /* Responsive Design */
   @media screen and (max-width: 768px) {
-    .collection-hero__title {
-      font-size: 2.5rem;
+    .collection-hero__container {
+      height: 35vh;
+      padding: 1rem;
     }
 
-    .collection-hero__description {
-      font-size: 1rem;
+    .collection-hero__title {
+      font-size: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .collection-hero__content {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+      max-width: 100%;
+    }
+
+    .collection-hero__info {
+      padding: 1.5rem 1rem;
+    }
+
+    .collection-hero__info-title {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .collection-hero__info-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
 
     .collection-products__grid {
@@ -627,16 +689,37 @@
   }
 
   @media screen and (max-width: 480px) {
-    .collection-hero {
-      min-height: 30vh;
-    }
-
     .collection-hero__container {
-      padding: 2rem 1rem;
+      height: 20vh;
+      margin-top: 4rem;
     }
 
     .collection-hero__title {
-      font-size: 2rem;
+      font-size: 40px;
+      margin-bottom: 1.5rem;
+    }
+
+    .collection-hero__content {
+      padding: 0;
+      gap: 0.5rem;
+    }
+
+    .collection-hero__info {
+      padding: 1.25rem 0.75rem;
+    }
+
+    .collection-hero__info-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .collection-hero__info-text {
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+
+    .collection-product-showcase {
+      padding: 2rem 0;
     }
 
     .collection-products__grid {
@@ -648,8 +731,20 @@
       padding: 1rem;
     }
 
+    .collection-product-showcase__content {
+      gap: 0rem;
+    }
+
     .collection-product__title {
       font-size: 1.1rem;
+    }
+
+    .collection-product-showcase__title {
+      text-align: center;
+    }
+
+    .collection-product-showcase__price {
+      justify-content: center;
     }
 
     .collection-product-showcase__cta {

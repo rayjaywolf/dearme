@@ -218,19 +218,32 @@
     transform: translate(-50%, -50%) scaleX(1);
   }
 
-  .blogs-section__button:hover {
+  .blogs-section__button {
     background-color: {{ section.settings.button_text_color }} !important;
     color: {{ section.settings.button_bg_color }} !important;
+  }
+  .blogs-section__button .blogs-section__button-text {
+    color: {{ section.settings.button_bg_color }} !important;
+  }
+  .blogs-section__button .blogs-section__cta {
+    background: {{ section.settings.button_bg_color }} !important;
+  }
+  .blogs-section__button .blogs-section__cta-icon {
+    fill: {{ section.settings.button_text_color }} !important;
+  }
+  .blogs-section__button:hover {
+    background-color: {{ section.settings.button_bg_color }} !important;
+    color: {{ section.settings.button_text_color }} !important;
     border: none !important;
   }
   .blogs-section__button:hover .blogs-section__button-text {
-    color: {{ section.settings.button_bg_color }} !important;
+    color: {{ section.settings.button_text_color }} !important;
   }
   .blogs-section__button:hover .blogs-section__cta {
-    background: {{ section.settings.button_bg_color }} !important;
+    background: {{ section.settings.button_text_color }} !important;
   }
   .blogs-section__button:hover .blogs-section__cta-icon {
-    fill: {{ section.settings.button_text_color }} !important;
+    fill: {{ section.settings.button_bg_color }} !important;
   }
 
   .blogs-section__column--right {
@@ -337,7 +350,7 @@
 
   @media screen and (max-width: 480px) {
     .blogs-section__container {
-      padding: 0rem 0.5rem;
+      padding: 0rem 1rem;
       padding-right: 0;
     }
 
@@ -351,7 +364,7 @@
     }
 
     .blogs-section__column--left {
-      padding: 0.5rem;
+      padding: 0rem;
     }
 
     .blogs-section__column--right {
@@ -397,18 +410,18 @@
     }
 
     .blogs-section__article:last-child {
-      margin-right: 0.5rem;
+      margin-right: 1rem;
     }
 
     .blogs-section__article-date {
       font-size: 10px;
-      transform: translateX(0.5rem);
+      /* transform: translateX(0.5rem); */
     }
 
     .blogs-section__article-title {
       font-size: 12px;
       line-height: 1.4;
-      transform: translateX(0.5rem);
+      /* transform: translateX(0.5rem); */
     }
 
     .blogs-section__article-media {
@@ -435,7 +448,7 @@
     }
 
     .blogs-section__articles {
-      gap: 0.6rem;
+      gap: 1rem;
     }
   }
 </style>

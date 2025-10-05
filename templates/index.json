@@ -11,31 +11,7 @@
   "sections": {
     "hero": {
       "type": "hero",
-      "settings": {
-        "background_color": "#ead1c1",
-        "overlay_opacity": 40,
-        "subheadline": "An opulent, antioxidant powerhouse, inspired by ancient wisdom and perfected by science, for skin that tells a story of eternal youth.",
-        "heading_font": "Instrument Serif",
-        "heading_style": "normal",
-        "subheading_font": "Inter",
-        "subheading_style": "normal",
-        "button_font": "Inter",
-        "button_style": "normal",
-        "heading_size": 3.5,
-        "subheading_size": 1,
-        "heading_transform": "capitalize",
-        "subheading_transform": "none",
-        "button_transform": "uppercase",
-        "heading_color": "#ffffff",
-        "subheading_color": "#ffffff",
-        "button_label": "Reveal my glow",
-        "button_link": "",
-        "button_bg_color": "#ffffff",
-        "button_text_color": "#63001f",
-        "button_border_color": "#ffffff",
-        "button_arrow_bg": "#63001f",
-        "button_arrow_color": "#ffffff"
-      }
+      "settings": {}
     },
     "marquee": {
       "type": "marquee",
@@ -43,22 +19,7 @@
     },
     "video_hero": {
       "type": "video-hero",
-      "settings": {
-        "subheading": "Authentic Kashmiri Mogra Saffron: <br> GI Tagged, Government Approved, Glow Guaranteed.",
-        "heading": "<p>From the Valleys of Kashmir <br> to Your Skin</p>",
-        "background_color": "#fef9f2",
-        "text_color": "#ffffff",
-        "subheading_font_size": 9,
-        "subheading_font_weight": 400,
-        "subheading_text_transform": "uppercase",
-        "heading_font_size": 48,
-        "heading_font_weight": 200,
-        "heading_text_transform": "none",
-        "autoplay": true,
-        "muted": true,
-        "loop": true,
-        "overlay_opacity": 50
-      }
+      "settings": {}
     },
     "saffron": {
       "type": "saffron",
@@ -66,62 +27,15 @@
     },
     "product_showcase": {
       "type": "product-showcase",
-      "settings": {
-        "background_color": "#fef9f2",
-        "title_font": "Instrument Serif",
-        "title_style": "normal",
-        "title_em_font": "Instrument Serif",
-        "title_em_style": "italic",
-        "title_em_transform": "capitalize",
-        "description_font": "Inter",
-        "description_style": "normal",
-        "title_transform": "capitalize",
-        "description_transform": "none",
-        "title_color": "#63001f",
-        "title_em_color": "#63001f",
-        "description_color": "#63001fd1",
-        "grid_border_color": "#63001fd1"
-      }
+      "settings": {}
     },
     "ingredients": {
       "type": "ingredients",
-      "settings": {
-        "background_color": "#fef9f2",
-        "title": "Ingredients 2 Section",
-        "description": "This is the second ingredients section with customizable content.",
-        "title_font": "Instrument Serif",
-        "title_style": "normal",
-        "description_font": "Inter",
-        "description_style": "normal",
-        "title_transform": "capitalize",
-        "description_transform": "none",
-        "title_color": "#63001f",
-        "description_color": "#63001fd1",
-        "button_label": "View all ingredients",
-        "button_link": "",
-        "button_font": "Inter",
-        "button_style": "normal",
-        "button_transform": "uppercase",
-        "button_bg_color": "#ffffff",
-        "button_text_color": "#63001f",
-        "button_border_color": "#ffffff",
-        "button_arrow_bg": "#63001f",
-        "button_arrow_color": "#ffffff"
-      }
+      "settings": {}
     },
     "feature": {
       "type": "feature",
-      "settings": {
-        "heading": "Feature Heading",
-        "description": "Feature description goes here.",
-        "button_text": "Learn More",
-        "button_link": "",
-        "background_color": "#fef9f2",
-        "heading_color": "#63001f",
-        "description_color": "#666666",
-        "button_bg_color": "#63001f",
-        "button_text_color": "#ffffff"
-      }
+      "settings": {}
     },
     "reviews": {
       "type": "reviews",
@@ -132,38 +46,13 @@
       "blocks": {
         "instafeed_app_block_gXLjTE": {
           "type": "shopify://apps/instafeed/blocks/app-block/c447db20-095d-4a10-9725-b5977662c9d5",
-          "settings": {
-            "title": "",
-            "title_color": "",
-            "title_size_v2": 0,
-            "alignment": "center",
-            "instafeed_margin_top": 0,
-            "instafeed_margin_bottom": 0,
-            "instafeed_margin_sides": 0,
-            "show_instagram_link": false,
-            "link_alignment": "left",
-            "link_color": "#000000",
-            "background_color": "",
-            "feed_id": "",
-            "html_area": ""
-          }
+          "settings": {}
         }
       },
       "block_order": [
         "instafeed_app_block_gXLjTE"
       ],
-      "settings": {
-        "title": "our instagram",
-        "button_label": "Go to our Instagram",
-        "button_link": "",
-        "button_font": "Inter",
-        "button_style": "normal",
-        "button_transform": "uppercase",
-        "button_bg_color": "#ffffff",
-        "button_text_color": "#63001f",
-        "button_arrow_bg": "#63001f",
-        "button_arrow_color": "#ffffff"
-      }
+      "settings": {}
     },
     "founders_note": {
       "type": "founders-note",
@@ -171,65 +60,11 @@
     },
     "animal_for_animal": {
       "type": "animal-for-animal",
-      "settings": {
-        "background_color": "#fe5f78",
-        "image_size": 250,
-        "text_font": "Inter",
-        "text_style": "normal",
-        "text_transform": "none",
-        "text_size": 1.1,
-        "text_color": "#ffffff",
-        "button_label": "Read More",
-        "button_link": "",
-        "button_font": "Inter",
-        "button_style": "normal",
-        "button_transform": "uppercase",
-        "button_bg_color": "#ffffff",
-        "button_text_color": "#aa336a",
-        "button_border_color": "#ffffff",
-        "button_arrow_bg": "#aa336a",
-        "button_arrow_color": "#ffffff"
-      }
+      "settings": {}
     },
     "blogs": {
       "type": "blogs",
-      "settings": {
-        "background_color": "#ead1c1",
-        "subtitle_font": "Work Sans",
-        "subtitle_style": "normal",
-        "subtitle_transform": "uppercase",
-        "title_font": "Instrument Serif",
-        "title_style": "italic",
-        "title_transform": "none",
-        "text_font": "Work Sans",
-        "text_style": "normal",
-        "text_transform": "none",
-        "article_title_font": "Instrument Serif",
-        "article_title_style": "normal",
-        "subtitle_color": "#63001f",
-        "title_color": "#63001f",
-        "text_color": "#63001fd1",
-        "article_title_color": "#000000",
-        "meta_text_color": "#333333",
-        "tag_text_color": "#333333",
-        "tag_border_color": "#333333",
-        "featured_card_bg": "#f9eccc",
-        "second_card_bg": "#ffdad8",
-        "third_card_bg": "#e7a579",
-        "button_font": "Inter",
-        "button_style": "normal",
-        "button_transform": "uppercase",
-        "button_bg_color": "#ffffff",
-        "button_text_color": "#63001f",
-        "button_border_color": "#63001f",
-        "button_arrow_bg": "#63001f",
-        "button_arrow_color": "#ffffff",
-        "button_hover_bg": "#63001f",
-        "button_hover_text": "#ffffff",
-        "button_hover_border": "#63001f",
-        "button_hover_arrow_bg": "#ffffff",
-        "button_hover_arrow_color": "#63001f"
-      }
+      "settings": {}
     }
   },
   "order": [

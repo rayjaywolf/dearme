@@ -422,11 +422,16 @@
     background: #fff;
     margin: 2px 0;
     border-radius: 1px;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, background-color 0.4s ease;
     transform-origin: center;
   }
 
   .header--mobile.header--scrolled .header__menu-line {
+    background: #ead1c1;
+  }
+
+  /* Static header menu icon for non-home pages */
+  .header--mobile:not(.header--home) .header__menu-line {
     background: #ead1c1;
   }
 

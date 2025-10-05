@@ -366,19 +366,32 @@
 {% endstylesheet %}
 
 <style>
-  .hero-section__button:hover {
+  .hero-section__button {
     background-color: {{ section.settings.button_text_color }} !important;
     color: {{ section.settings.button_bg_color }} !important;
+  }
+  .hero-section__button .hero-section__button-text {
+    color: {{ section.settings.button_bg_color }} !important;
+  }
+  .hero-section__button .hero-section__cta {
+    background: {{ section.settings.button_bg_color }} !important;
+  }
+  .hero-section__button .hero-section__cta-icon {
+    fill: {{ section.settings.button_text_color }} !important;
+  }
+  .hero-section__button:hover {
+    background-color: {{ section.settings.button_bg_color }} !important;
+    color: {{ section.settings.button_text_color }} !important;
     border: none !important;
   }
   .hero-section__button:hover .hero-section__button-text {
-    color: {{ section.settings.button_bg_color }} !important;
+    color: {{ section.settings.button_text_color }} !important;
   }
   .hero-section__button:hover .hero-section__cta {
-    background: {{ section.settings.button_bg_color }} !important;
+    background: {{ section.settings.button_text_color }} !important;
   }
   .hero-section__button:hover .hero-section__cta-icon {
-    fill: {{ section.settings.button_text_color }} !important;
+    fill: {{ section.settings.button_bg_color }} !important;
   }
 </style>
 
