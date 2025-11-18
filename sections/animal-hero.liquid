@@ -24,8 +24,9 @@
 
 <style>
   .animal-hero-section {
-    min-height: 100vh;
-    min-height: 100dvh;
+    min-height: calc(100vh - 5rem);
+    min-height: calc(100dvh - 5rem);
+    margin-top: 5rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -55,7 +56,6 @@
     flex-direction: column;
     align-items: center;
     gap: 3rem;
-    margin-top: 3rem;
   }
 
   .animal-hero-section__badge {
@@ -99,6 +99,9 @@
   @media (max-width: 480px) {
     .animal-hero-section {
       padding: 1.5rem 0.75rem;
+      min-height: calc(100vh - 4rem);
+      min-height: calc(100dvh - 4rem);
+      margin-top: 4rem;
     }
 
     .animal-hero-section__headline {

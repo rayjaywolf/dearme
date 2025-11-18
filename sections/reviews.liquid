@@ -155,15 +155,54 @@
 </svg>
 <section
   class="reviews-section"
-  style="background: #fef9f2 url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+  style="
+    --section-bg: {{ section.settings.section_bg }};
+    background: var(--section-bg, #fef9f2) url('{{ 'noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+  "
 >
   <div class="reviews-section__container">
     <div class="reviews-section__header">
-      <p class="reviews-section__subtitle">Testimonials</p>
-      <h2 class="reviews-section__title js-reviews-title">Loved by Skin Like <em>Yours</em></h2>
-      <p class="reviews-section__description js-reviews-text">
-        Here's what early users are saying about Sacred Secret.
-      </p>
+      {%- if section.settings.subtitle_text != blank -%}
+        <p
+          class="reviews-section__subtitle"
+          style="
+            --subtitle-color: {{ section.settings.subtitle_color }};
+            --subtitle-font-size: {{ section.settings.subtitle_font_size }}px;
+            --subtitle-font-weight: {{ section.settings.subtitle_font_weight }};
+            --subtitle-text-transform: {{ section.settings.subtitle_text_transform }};
+          "
+        >
+          {{ section.settings.subtitle_text }}
+        </p>
+      {%- endif -%}
+      {%- if section.settings.title_text != blank -%}
+        <div
+          class="reviews-section__title"
+          style="
+            --title-color: {{ section.settings.title_color }};
+            --title-font-size: {{ section.settings.title_font_size }}px;
+            --title-font-weight: {{ section.settings.title_font_weight }};
+            --title-text-transform: {{ section.settings.title_text_transform }};
+          "
+        >
+          {{ section.settings.title_text }}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.description_text != blank -%}
+        <div
+          class="reviews-section__description"
+          style="
+            --description-color: {{ section.settings.description_color }};
+            --description-font-size: {{ section.settings.description_font_size }}rem;
+            --description-font-weight: {{ section.settings.description_font_weight }};
+            --description-text-transform: {{ section.settings.description_text_transform }};
+          "
+        >
+          {{ section.settings.description_text }}
+        </div>
+      {%- endif -%}
     </div>
 
     <div class="reviews-section__carousel-wrapper">
@@ -178,7 +217,6 @@
 
 <style>
   .reviews-section {
-    background: #fef9f2;
     padding: 4rem 0;
     height: 100%;
   }
@@ -194,28 +232,40 @@
   }
 
   .reviews-section__subtitle {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    color: #63001f;
+    font-size: var(--subtitle-font-size, 14px);
+    font-weight: var(--subtitle-font-weight, 400);
+    text-transform: var(--subtitle-text-transform, uppercase);
+    color: var(--subtitle-color, #63001f);
     margin-bottom: 0.75rem;
     letter-spacing: 0.1em;
   }
 
   .reviews-section__title {
     font-family: 'Instrument Serif', sans-serif;
-    font-size: 3rem;
-    font-weight: 400;
-    color: #63001f;
+    color: var(--title-color, #63001f);
+  }
+
+  .reviews-section__title > * {
+    font-size: var(--title-font-size, 3rem);
+    font-weight: var(--title-font-weight, 400);
+    text-transform: var(--title-text-transform, none);
+    color: inherit;
+    margin: 0;
   }
 
   .reviews-section__description {
-    font-size: 0.9rem;
-    font-weight: 400;
-    text-transform: uppercase;
     width: 45%;
     margin: 1.2rem auto 0;
-    color: #63001f;
+    color: var(--description-color, #63001f);
+  }
+
+  .reviews-section__description > * {
+    font-size: var(--description-font-size, 0.9rem);
+    font-weight: var(--description-font-weight, 400);
+    text-transform: var(--description-text-transform, uppercase);
     letter-spacing: 0.1em;
+    color: inherit;
+    margin: 0;
   }
 
   .reviews-section__carousel-wrapper {
@@ -344,13 +394,20 @@
       margin-bottom: 2rem;
     }
 
-    .reviews-section__title {
+    .reviews-section__subtitle {
+      font-size: var(--subtitle-font-size, 13px);
+    }
+
+    .reviews-section__title > * {
       font-size: 32px;
       line-height: 1.2;
     }
 
     .reviews-section__description {
       width: 95%;
+    }
+
+    .reviews-section__description > * {
       font-size: 12px;
     }
 
@@ -392,3 +449,191 @@
     }
   }
 </style>
+
+{% schema %}
+{
+  "name": "Reviews Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Styling"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Background Color",
+      "default": "#fef9f2"
+    },
+    {
+      "type": "header",
+      "content": "Subtitle Content"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_text",
+      "label": "Subtitle",
+      "default": "Testimonials"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Font Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size",
+      "label": "Font Size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "100", "label": "Thin" },
+        { "value": "200", "label": "Extra Light" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Title Content"
+    },
+    {
+      "type": "richtext",
+      "id": "title_text",
+      "label": "Title",
+      "default": "<h2>Loved by Skin Like <em>Yours</em></h2>"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Font Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font Size",
+      "min": 24,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "100", "label": "Thin" },
+        { "value": "200", "label": "Extra Light" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Description Content"
+    },
+    {
+      "type": "richtext",
+      "id": "description_text",
+      "label": "Description",
+      "default": "<p>Here's what early users are saying about Sacred Secret.</p>"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Font Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "range",
+      "id": "description_font_size",
+      "label": "Font Size",
+      "min": 0.5,
+      "max": 2.0,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 0.9
+    },
+    {
+      "type": "select",
+      "id": "description_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "100", "label": "Thin" },
+        { "value": "200", "label": "Extra Light" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "description_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews Section"
+    }
+  ]
+}
+{% endschema %}

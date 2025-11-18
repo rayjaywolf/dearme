@@ -1,6 +1,25 @@
-<section class="feed-section">
+<section
+  class="feed-section"
+  style="
+    --section-bg: {{ section.settings.section_bg }};
+    background: var(--section-bg, #fef9f2) url('{{ 'noise.png' | asset_url }}');
+    background-size: 150px 150px;
+  "
+>
   <div class="feed-section__container">
-    <h2 class="feed-section__title">Our <em>Instagram</em></h2>
+    {%- if section.settings.title_text != blank -%}
+      <div
+        class="feed-section__title"
+        style="
+          --title-color: {{ section.settings.title_color }};
+          --title-font-size: {{ section.settings.title_font_size }}px;
+          --title-font-weight: {{ section.settings.title_font_weight }};
+          --title-text-transform: {{ section.settings.title_text_transform }};
+        "
+      >
+        {{ section.settings.title_text }}
+      </div>
+    {%- endif -%}
 
     <div class="feed-section__app-slot">
       {% if section.blocks.size > 0 %}
@@ -62,9 +81,7 @@
 <style>
   .feed-section {
     width: 100%;
-    padding: 2rem 1rem 4rem;
-    background: #fef9f2 url('{{ 'noise.png' | asset_url }}');
-    background-size: 150px 150px;
+    padding: 0rem 1rem 4rem;
   }
 
   .feed-section__container {
@@ -78,11 +95,16 @@
 
   .feed-section__title {
     font-family: 'Instrument Serif', serif;
-    font-size: 48px;
-    text-transform: capitalize;
-    font-weight: 400;
     text-align: center;
-    color: #63001f;
+    color: var(--title-color, #63001f);
+  }
+
+  .feed-section__title > * {
+    font-size: var(--title-font-size, 48px);
+    font-weight: var(--title-font-weight, 400);
+    text-transform: var(--title-text-transform, capitalize);
+    color: inherit;
+    margin: 0;
   }
 
   .feed-section__app-slot {
@@ -201,7 +223,7 @@
   /* Mobile responsive adjustments */
   @media screen and (max-width: 480px) {
     .feed-section {
-      padding: 2rem 1rem;
+      padding: 0 1rem 2rem;
     }
 
     .feed-section__container {
@@ -209,8 +231,11 @@
     }
 
     .feed-section__title {
-      font-size: 32px;
       margin-bottom: 0.6rem;
+    }
+
+    .feed-section__title > * {
+      font-size: 32px;
       line-height: 1.05;
     }
 
@@ -248,10 +273,65 @@
   "name": "Feed",
   "settings": [
     {
-      "type": "text",
-      "id": "title",
+      "type": "color",
+      "id": "section_bg",
+      "label": "Background Color",
+      "default": "#fef9f2"
+    },
+    {
+      "type": "header",
+      "content": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "title_text",
       "label": "Heading",
-      "default": "our instagram"
+      "default": "<h2>Our <em>Instagram</em></h2>"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Font Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font Size",
+      "min": 24,
+      "max": 64,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "title_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "100", "label": "Thin" },
+        { "value": "200", "label": "Extra Light" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "title_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "capitalize"
     },
     {
       "type": "header",

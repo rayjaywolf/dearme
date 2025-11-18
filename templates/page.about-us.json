@@ -1,0 +1,45 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "about_hero": {
+      "type": "about-hero",
+      "settings": {}
+    },
+    "about_philosophy": {
+      "type": "about-philosophy",
+      "settings": {}
+    },
+    "about_innovation": {
+      "type": "about-innovation",
+      "settings": {}
+    },
+    "about_ingredients": {
+      "type": "about-ingredients",
+      "settings": {}
+    },
+    "about_promise": {
+      "type": "about-promise",
+      "settings": {}
+    },
+    "about_afa": {
+      "type": "about-afa",
+      "settings": {}
+    }
+  },
+  "order": [
+    "about_hero",
+    "about_philosophy",
+    "about_innovation",
+    "about_ingredients",
+    "about_promise",
+    "about_afa"
+  ]
+}

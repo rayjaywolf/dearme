@@ -1,0 +1,639 @@
+<section class="about-ingredients">
+  <div class="about-ingredients__container">
+    <div class="about-ingredients__header">
+      <p class="section_numbering">03</p>
+      <h2 class="about-ingredients__title">The
+        <em>Ingredients</em>
+      </h2>
+    </div>
+    <div class="about-ingredients__columns">
+      <div class="about-ingredients__column about-ingredients__column--left">
+        <div class="about-ingredients__text">
+          <h1 class="about-ingredients__content-title"><em>Pure. Potent. Proven.</em></h1>
+          <p class="about-ingredients__description">Every ingredient is hand-selected for efficacy, safety, and
+            traceability. No essential oils. No irritants. No unnecessary actives — just what your skin truly needs.</p>
+          <button type="button" id="ingredients-modal-trigger" class="about-ingredients__button" aria-haspopup="dialog"
+            aria-expanded="false">
+            <span class="about-ingredients__button-label">View all ingredients</span>
+            <div class="about-ingredients__cta">
+              <svg class="about-ingredients__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
+                </path>
+              </svg>
+              <svg class="about-ingredients__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
+                </path>
+              </svg>
+            </div>
+          </button>
+          <div class="about-ingredients__modal" id="ingredients-modal" aria-hidden="true" role="dialog"
+            aria-modal="true" aria-labelledby="ingredients-modal-title">
+            <div class="about-ingredients__modal-overlay" role="presentation"></div>
+            <div class="about-ingredients__modal-content" role="document">
+              <button type="button" class="about-ingredients__modal-close" aria-label="Close ingredients list">
+                &times;
+              </button>
+              <h3 class="about-ingredients__modal-title" id="ingredients-modal-title">Full Ingredients List</h3>
+              <p class="about-ingredients__modal-body">
+                Aqua(Water), Glycyrrhiza Glabra (Licorice) Root Extract, Saccharomyces/Rice Ferment Filtrate, Bifida Ferment Lysate, Betula Platyphylla Japonica Juice (Birch Sap), Propylene Glycol, Madecassic Acid, Asiaticoside, Asiatic Acid, Niacinamide, Panthenol, Propanediol, Curcuma Longa (Turmeric) Root Extract, Nelumbo Nucifera (Lotus) Flower Extract, Glycerin, Terminalia Ferdinandiana (Kakadu Plum) Fruit Extract, 3-O-Ethyl Ascorbic Acid, Betaine, Dimethyl Isosorbide, Crocus Sativus (Saffron) Stigma Extract, Sodium Hyaluronate (Hyaluronic Acid), PPG-26-Buteth-26, PEG-40 Hydrogenated Castor Oil, Ethylhexyl Methoxycinnamate, Ethylhexyl Salicylate, Butyl Methoxydibenzoylmethane, Xanthan Gum, Butylene Glycol, Potassium Sorbate, Pentylene Glycol, Polyglyceryl-6 Caprylate, Polyglyceryl-4 Caprate, Disodium EDTA, Phenoxyethanol, Ethylhexylglycerin.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-ingredients__column about-ingredients__column--right">
+        <img src="{{ 'shadow.png' | asset_url }}" class="marquee-shadow">
+        <img src="{{ 'shadow.png' | asset_url }}" class="marquee-shadow-2">
+        <div class="about-ingredients__marquee-wrapper">
+          <div class="about-ingredients__images-row">
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-saffron.png' | asset_url }}" alt="Saffron"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-niacinamide.jpg' | asset_url }}" alt="Niacinamide"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-centela.jpg' | asset_url }}" alt="Centella Asiatica"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingreient-rice-water.jpg' | asset_url }}" alt="Rice Water Extract"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-panthenol.jpg' | asset_url }}" alt="Panthenol"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-propanediol.jpg' | asset_url }}" alt="Propanediol"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-bifida-ferment-lysate.jpg' | asset_url }}" alt="Bifida Ferment Lysate"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-hyaluronic-acid.jpg' | asset_url }}" alt="Hyaluronic Acid"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+          </div>
+          <div class="about-ingredients__images-row" aria-hidden="true">
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-saffron.png' | asset_url }}" alt="Saffron"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-niacinamide.jpg' | asset_url }}" alt="Niacinamide"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-centela.jpg' | asset_url }}" alt="Centella Asiatica"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingreient-rice-water.jpg' | asset_url }}" alt="Rice Water Extract"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-panthenol.jpg' | asset_url }}" alt="Panthenol"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-propanediol.jpg' | asset_url }}" alt="Propanediol"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-bifida-ferment-lysate.jpg' | asset_url }}" alt="Bifida Ferment Lysate"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+            <div class="about-ingredients__ingredient">
+              <div class="about-ingredients__ingredient-image-container">
+                <img src="{{ 'ingredient-hyaluronic-acid.jpg' | asset_url }}" alt="Hyaluronic Acid"
+                  class="about-ingredients__ingredient-image" loading="lazy">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-ingredients {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #fef9f2 !important;
+    background: #fef9f2 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+  }
+
+  .about-ingredients__container {
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
+    padding-top: 4rem;
+    padding-bottom: 0;
+    padding-right: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .about-ingredients__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .section_numbering {
+    color: #63001f;
+    font-size: 10px;
+    font-weight: regular;
+    letter-spacing: 0;
+    line-height: 2;
+  }
+
+  .about-ingredients__title {
+    font-family: "Instrument Serif";
+    color: #63001f;
+    font-size: 36px;
+    font-weight: 200;
+    letter-spacing: 0;
+    line-height: 1.1;
+  }
+
+  .about-ingredients__columns {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  .about-ingredients__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .about-ingredients__column--left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* padding-top: 4rem; */
+    /* padding-bottom: 4rem; */
+  }
+
+  .about-ingredients__text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .about-ingredients__content-title {
+    font-family: "Instrument Serif", serif;
+    font-size: 3rem;
+    font-weight: 200;
+    color: #000;
+    line-height: 1.2;
+    text-align: center;
+    margin: 0;
+  }
+
+  .about-ingredients__description {
+    font-size: 14px;
+    font-weight: regular;
+    color: #444;
+    line-height: 1.7;
+    text-align: center;
+    margin: 0;
+  }
+
+  .about-ingredients__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-radius: 999px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    border: none;
+    gap: 4rem;
+    overflow: hidden;
+    max-width: 300px;
+    margin: 0 auto;
+    cursor: pointer;
+    background-color: #63001f;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+  }
+
+  .about-ingredients__button .about-ingredients__button-label {
+    color: #ffffff;
+  }
+
+  .about-ingredients__button .about-ingredients__cta {
+    background: #ffffff;
+  }
+
+  .about-ingredients__button .about-ingredients__cta-icon {
+    fill: #63001f;
+  }
+
+  .about-ingredients__button:hover {
+    background-color: #ffffff;
+    color: #63001f;
+    border: none;
+  }
+
+  .about-ingredients__button:hover .about-ingredients__button-label {
+    color: #63001f;
+  }
+
+  .about-ingredients__button:hover .about-ingredients__cta {
+    background: #63001f;
+  }
+
+  .about-ingredients__button:hover .about-ingredients__cta-icon {
+    fill: #ffffff;
+  }
+
+  .about-ingredients__button-label {
+    margin-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .about-ingredients__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    border-radius: 100%;
+    height: 2.4rem;
+    width: 2.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-ingredients__cta-icon {
+    width: 15px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+  }
+
+  .about-ingredients__cta .about-ingredients__cta-icon:last-child {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
+
+  .about-ingredients__button:hover .about-ingredients__cta .about-ingredients__cta-icon:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
+
+  .about-ingredients__button:hover .about-ingredients__cta .about-ingredients__cta-icon:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+
+  .about-ingredients__modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .about-ingredients__modal[aria-hidden='false'] {
+    display: flex;
+  }
+
+  .about-ingredients__modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+  }
+
+  .about-ingredients__modal-content {
+    position: relative;
+    max-width: min(90vw, 680px);
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+    color: #2a2a2a;
+    z-index: 1;
+    line-height: 1.6;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .about-ingredients__modal-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #63001f;
+  }
+
+  .about-ingredients__modal-body {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #3f3f3f;
+  }
+
+  .about-ingredients__modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #63001f;
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .about-ingredients__modal-close:hover {
+    background: #450012;
+  }
+
+  .about-ingredients__column--right {
+    position: relative;
+    overflow: hidden;
+    max-width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .about-ingredients__marquee-wrapper {
+    display: flex;
+    flex-shrink: 0;
+    gap: 1rem;
+    animation: ingredients-marquee-scroll 40s linear infinite;
+  }
+
+  .about-ingredients__marquee-wrapper:hover {
+    animation-play-state: paused;
+  }
+
+  .marquee-shadow {
+    position: absolute;
+    bottom: 0;
+    left: -1px;
+    height: 110%;
+    width: 150px;
+    z-index: 10;
+    pointer-events: none;
+    transform: rotate(180deg);
+  }
+
+  .marquee-shadow-2 {
+    position: absolute;
+    bottom: -2px;
+    right: -1px;
+    height: 110%;
+    width: 125px;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .about-ingredients__images-row {
+    display: flex;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .about-ingredients__ingredient {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 420px;
+  }
+
+  .about-ingredients__ingredient-image-container {
+    position: relative;
+    width: 420px;
+    height: 312px;
+  }
+
+  .about-ingredients__ingredient-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    flex-shrink: 0;
+  }
+
+  @keyframes ingredients-marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .about-ingredients__container {
+      padding: 2rem 0rem 1rem;
+      gap: 2rem;
+    }
+
+    .about-ingredients__title {
+      font-size: 30px;
+    }
+
+    .about-ingredients__columns {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .about-ingredients__column {
+      padding: 0rem;
+    }
+
+    .about-ingredients__column--left {
+      order: 2;
+      padding: 0 1rem;
+    }
+
+    .about-ingredients__column--right {
+      order: 1;
+      padding: 0;
+    }
+
+    .about-ingredients__content-title {
+      font-size: 32px;
+    }
+
+    .about-ingredients__description {
+      font-size: 12px;
+    }
+
+    .about-ingredients__button {
+      max-width: 250px;
+      font-size: 0.7rem;
+      padding: 0.4rem 0.4rem;
+      gap: 2rem;
+    }
+
+    .about-ingredients__button-label {
+      margin-right: 0.8rem;
+      padding-left: 0.8rem;
+    }
+
+    .about-ingredients__cta {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .about-ingredients__cta-icon {
+      width: 12px;
+      height: 8px;
+    }
+
+    .marquee-shadow {
+      width: 80px;
+      left: 0;
+    }
+
+    .marquee-shadow-2 {
+      width: 80px;
+      right: 0;
+    }
+
+    .about-ingredients__marquee-wrapper {
+      animation-duration: 30s;
+    }
+
+    .about-ingredients__images-row {
+      gap: 1rem;
+    }
+
+    .about-ingredients__ingredient {
+      width: 280px;
+      flex-shrink: 0;
+    }
+
+    .about-ingredients__ingredient-image-container {
+      width: 100%;
+      height: 200px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var trigger = document.getElementById('ingredients-modal-trigger');
+    var modal = document.getElementById('ingredients-modal');
+    if (!trigger || !modal) return;
+
+    var closeBtn = modal.querySelector('.about-ingredients__modal-close');
+    var overlay = modal.querySelector('.about-ingredients__modal-overlay');
+
+    function openModal() {
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      trigger.setAttribute('aria-expanded', 'true');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+        closeModal();
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+"name": "Ingredients",
+"settings": [],
+"presets": [
+{
+"name": "Ingredients"
+}
+]
+}
+{% endschema %}

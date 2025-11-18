@@ -1,70 +1,920 @@
 {% comment %}
-  This section is used in the search template to render search results for
-  products, articles, and pages.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/search
+  Modern search page with hero section and results grid
+  Following BEM naming convention and brand aesthetic
 {% endcomment %}
 
-<h1>{{ 'search.title' | t }}</h1>
-
-<form action="{{ routes.search_url }}" method="get" role="search">
-  <input
-    type="search"
-    size="50"
-    name="q"
-    value="{{ search.terms | escape }}"
-    placeholder="{{ 'search.placeholder' | t }}"
-  >
-  <button type="submit">{{ 'search.submit' | t }}</button>
-</form>
-
-{% if search.performed %}
-  {% if search.results_count == 0 %}
-    <p>{{ 'search.no_results_html' | t: terms: search.terms }}</p>
-  {% else %}
-    <p>{{ 'search.results_for_html' | t: terms: search.terms, count: search.results_count }}</p>
-
-    <div class="search-results">
-      {% paginate search.results by 20 %}
-        {% # Search result items may be an article, a page, or a product. %}
-        {% for result in search.results %}
-          <div class="search-result">
-            {% assign featured_image = result.featured_image | default: result.image %}
-            {% if featured_image %}
-              {% render 'image', class: 'search-result__image', image: featured_image, url: result.url, width: 400 %}
-            {% endif %}
-            <div class="search-result__content">
-              <p>
-                {{ result.title | link_to: result.url }}
-                {% if result.price %}
-                  {{ result.price | money_with_currency }}
-                {% endif %}
-              </p>
-            </div>
-          </div>
-        {% endfor %}
-
-        {{ paginate | default_pagination }}
-      {% endpaginate %}
+<section
+  class="search-hero"
+  style="background: {{ section.settings.hero_bg_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+>
+  <div class="search-hero__container">
+    <div class="search-hero__content">
+      <h1
+        class="search-hero__title"
+        style="font-family: {{ section.settings.title_font }}, serif; color: {{ section.settings.title_color }};"
+      >
+        {% if search.performed %}
+          Search Results
+        {% else %}
+          Search the site
+        {% endif %}
+      </h1>
+      <p
+        class="search-hero__subtitle"
+        style="font-family: {{ section.settings.subtitle_font }}, sans-serif; color: {{ section.settings.subtitle_color }};"
+      >
+        {% if search.performed %}
+          {% if search.results_count == 0 %}
+            No results found for "{{ search.terms }}"
+          {% else %}
+            {{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %} for "{{ search.terms }}"
+          {% endif %}
+        {% else %}
+          {{ section.settings.hero_description | default: 'Find products, articles, and pages across our site' }}
+        {% endif %}
+      </p>
     </div>
-  {% endif %}
-{% endif %}
+  </div>
+</section>
 
-{% stylesheet %}
-  .search-results {
+<section class="search-content">
+  <div class="search-content__container">
+    <!-- Search Form -->
+    <div class="search-content__form-section">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-content__form">
+        <div class="search-content__form-group">
+          <input
+            type="search"
+            name="q"
+            value="{{ search.terms | escape }}"
+            placeholder="Search for products, articles, or pages..."
+            class="search-content__form-input"
+            autocomplete="off"
+            autofocus
+          >
+          <button type="submit" class="search-content__form-submit">
+            <span class="search-content__form-submit-text">Search</span>
+            <div class="search-content__form-submit-cta">
+              <svg
+                class="search-content__form-submit-cta-icon"
+                width="13"
+                height="8"
+                viewBox="0 0 13 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+              </svg>
+              <svg
+                class="search-content__form-submit-cta-icon"
+                width="13"
+                height="8"
+                viewBox="0 0 13 8"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
+              </svg>
+            </div>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Search Results -->
+    {% if search.performed %}
+      {% if search.results_count == 0 %}
+        <div class="search-content__no-results">
+          <div class="search-content__no-results-icon">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </div>
+          <h3 class="search-content__no-results-title">No results found</h3>
+          <p class="search-content__no-results-text">
+            We couldn't find anything matching "{{ search.terms }}". Try adjusting your search terms or browse our
+            categories.
+          </p>
+        </div>
+      {% else %}
+        <div class="search-content__results">
+          {% paginate search.results by 12 %}
+            <div class="search-content__results-grid">
+              {% for result in search.results %}
+                {% if result.object_type == 'product' %}
+                  <article class="search-content__result">
+                    <a href="{{ result.url }}" class="search-content__result-link">
+                      <div class="search-content__result-media">
+                        {% assign featured_image = result.featured_image | default: result.image %}
+                        {% if featured_image %}
+                          <img
+                            src="{{ featured_image | image_url: width: 600 }}"
+                            alt="{{ result.title }}"
+                            class="search-content__result-image"
+                            width="600"
+                            height="375"
+                            loading="lazy"
+                          >
+                        {% else %}
+                          <div class="search-content__result-placeholder">
+                            <svg
+                              width="48"
+                              height="48"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="1.5"
+                            >
+                              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                              <line x1="3" y1="6" x2="21" y2="6"/>
+                              <path d="M16 10a4 4 0 0 1-8 0"/>
+                            </svg>
+                          </div>
+                        {% endif %}
+                        <div class="search-content__result-overlay">
+                          <svg
+                            class="search-content__result-cta-icon"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                          >
+                            <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="search-content__result-content">
+                        <div class="search-content__result-meta">
+                          <span class="search-content__result-type">{{ result.object_type | capitalize }}</span>
+                          {% if result.price %}
+                            <span class="search-content__result-price">{{ result.price | money_with_currency }}</span>
+                          {% endif %}
+                        </div>
+                        <h3
+                          class="search-content__result-title"
+                          style="font-family: {{ section.settings.result_title_font }}, serif; color: {{ section.settings.result_title_color }};"
+                        >
+                          {{ result.title }}
+                        </h3>
+                        {% if result.excerpt or result.content %}
+                          <p
+                            class="search-content__result-excerpt"
+                            style="font-family: {{ section.settings.result_excerpt_font }}, sans-serif; color: {{ section.settings.result_excerpt_color }};"
+                          >
+                            {{ result.excerpt | default: result.content | strip_html | truncate: 100 }}
+                          </p>
+                        {% endif %}
+                      </div>
+                    </a>
+                  </article>
+                {% endif %}
+              {% endfor %}
+
+              {% for result in search.results %}
+                {% if result.object_type != 'product' %}
+                  <article class="search-content__result">
+                    <a href="{{ result.url }}" class="search-content__result-link">
+                      <div class="search-content__result-media">
+                        {% assign featured_image = result.featured_image | default: result.image %}
+                        {% if featured_image %}
+                          <img
+                            src="{{ featured_image | image_url: width: 600 }}"
+                            alt="{{ result.title }}"
+                            class="search-content__result-image"
+                            width="600"
+                            height="375"
+                            loading="lazy"
+                          >
+                        {% else %}
+                          <div class="search-content__result-placeholder">
+                            {% if result.object_type == 'article' %}
+                              <svg
+                                width="48"
+                                height="48"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                              >
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14,2 14,8 20,8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10,9 9,9 8,9"/>
+                              </svg>
+                            {% else %}
+                              <svg
+                                width="48"
+                                height="48"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                              >
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14,2 14,8 20,8"/>
+                                <line x1="16" y1="13" x2="8" y2="13"/>
+                                <line x1="16" y1="17" x2="8" y2="17"/>
+                                <polyline points="10,9 9,9 8,9"/>
+                              </svg>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+                        <div class="search-content__result-overlay">
+                          <svg
+                            class="search-content__result-cta-icon"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                          >
+                            <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="search-content__result-content">
+                        <div class="search-content__result-meta">
+                          <span class="search-content__result-type">{{ result.object_type | capitalize }}</span>
+                        </div>
+                        <h3
+                          class="search-content__result-title"
+                          style="font-family: {{ section.settings.result_title_font }}, serif; color: {{ section.settings.result_title_color }};"
+                        >
+                          {{ result.title }}
+                        </h3>
+                        {% if result.excerpt or result.content %}
+                          <p
+                            class="search-content__result-excerpt"
+                            style="font-family: {{ section.settings.result_excerpt_font }}, sans-serif; color: {{ section.settings.result_excerpt_color }};"
+                          >
+                            {{ result.excerpt | default: result.content | strip_html | truncate: 100 }}
+                          </p>
+                        {% endif %}
+                      </div>
+                    </a>
+                  </article>
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if paginate.pages > 1 %}
+              <div class="search-content__pagination">
+                {% if paginate.previous %}
+                  <a
+                    href="{{ paginate.previous.url }}"
+                    class="search-content__pagination-link search-content__pagination-link--prev"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Previous
+                  </a>
+                {% endif %}
+
+                <div class="search-content__pagination-numbers">
+                  {% for part in paginate.parts %}
+                    {% if part.is_link %}
+                      <a href="{{ part.url }}" class="search-content__pagination-number">{{ part.title }}</a>
+                    {% else %}
+                      <span class="search-content__pagination-number search-content__pagination-number--current">
+                        {{- part.title -}}
+                      </span>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+
+                {% if paginate.next %}
+                  <a
+                    href="{{ paginate.next.url }}"
+                    class="search-content__pagination-link search-content__pagination-link--next"
+                  >
+                    Next
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </a>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endpaginate %}
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  /* Search Hero Section */
+  .search-hero {
+    width: 100%;
+    min-height: 35vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #ead1c1;
+    margin-top: 5rem;
+  }
+
+  .search-hero__container {
+    max-width: 1200px;
+    width: 100%;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .search-hero__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .search-hero__title {
+    font-size: 48px;
+    font-weight: 200;
+    line-height: 1.1;
+    margin: 0 0 1rem 0;
+    color: #63001f;
+  }
+
+  .search-hero__subtitle {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+    color: #63001f;
+    opacity: 0.8;
+  }
+
+  /* Search Content Section */
+  .search-content {
+    width: 100%;
+    background: #fef9f2 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    padding: 4rem 0;
+  }
+
+  .search-content__container {
+    max-width: 85%;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* Search Form */
+  .search-content__form-section {
+    margin-bottom: 3rem;
+  }
+
+  .search-content__form {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .search-content__form-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .search-content__form-input {
+    flex: 1;
+    padding: 1.2rem 1.5rem;
+    border: 2px solid rgba(99, 0, 31, 0.1);
+    border-radius: 15px;
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    font-family: 'Inter', sans-serif;
+    color: #333;
+  }
+
+  .search-content__form-input:focus {
+    border-color: #63001f;
+    background: rgba(255, 255, 255, 1);
+  }
+
+  .search-content__form-input::placeholder {
+    color: rgba(99, 0, 31, 0.5);
+    font-weight: 400;
+  }
+
+  .search-content__form-submit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-radius: 999px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    border: none;
+    gap: 4rem;
+    overflow: hidden;
+    background-color: #63001f;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    min-width: 200px;
+  }
+
+  .search-content__form-submit-text {
+    margin-right: 1rem;
+    padding-left: 1rem;
+    color: #ffffff;
+  }
+
+  .search-content__form-submit-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    border-radius: 100%;
+    height: 2.4rem;
+    width: 2.4rem;
+    position: relative;
+    overflow: hidden;
+    background: #ffffff;
+  }
+
+  .search-content__form-submit-cta-icon {
+    width: 15px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+    fill: #63001f;
+  }
+
+  .search-content__form-submit-cta .search-content__form-submit-cta-icon:last-child {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
+
+  .search-content__form-submit:hover {
+    background-color: #ffffff;
+    color: #63001f;
+  }
+
+  .search-content__form-submit:hover .search-content__form-submit-text {
+    color: #63001f;
+  }
+
+  .search-content__form-submit:hover .search-content__form-submit-cta {
+    background: #63001f;
+  }
+
+  .search-content__form-submit:hover
+    .search-content__form-submit-cta
+    .search-content__form-submit-cta-icon:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
+
+  .search-content__form-submit:hover .search-content__form-submit-cta .search-content__form-submit-cta-icon:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+
+  .search-content__form-submit:hover .search-content__form-submit-cta-icon {
+    fill: #ffffff;
+  }
+
+  /* No Results */
+  .search-content__no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .search-content__no-results-icon {
+    color: #ccc;
+    margin-bottom: 2rem;
+  }
+
+  .search-content__no-results-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 2rem;
+    font-weight: 200;
+    color: #63001f;
+    margin: 0 0 1rem 0;
+  }
+
+  .search-content__no-results-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Search Results Grid */
+  .search-content__results-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
-  .search-results .prev,
-  .search-results .page,
-  .search-results .next {
-    grid-column: 1 / -1;
+
+  .search-content__result {
+    background: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
   }
-{% endstylesheet %}
+
+  .search-content__result:hover {
+  }
+
+  .search-content__result-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .search-content__result-media {
+    position: relative;
+    aspect-ratio: 16/12;
+    overflow: hidden;
+  }
+
+  .search-content__result-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    transition: opacity 0.3s ease;
+  }
+
+  .search-content__result:hover .search-content__result-image {
+  }
+
+  .search-content__result-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ccc;
+  }
+
+  .search-content__result-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #63001f;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .search-content__result:hover .search-content__result-overlay {
+    opacity: 1;
+  }
+
+  .search-content__result-content {
+    padding: 2rem;
+  }
+
+  .search-content__result-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .search-content__result-type {
+    background: #63001f;
+    color: #fef9f2;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 10px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .search-content__result-price {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #63001f;
+  }
+
+  .search-content__result-title {
+    font-size: 1.5rem;
+    font-weight: 200;
+    line-height: 1.3;
+    margin: 0 0 1rem 0;
+    color: #63001f;
+  }
+
+  .search-content__result-excerpt {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    color: #666;
+  }
+
+  /* Pagination */
+  .search-content__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .search-content__pagination-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #e5e5e5;
+    border-radius: 50px;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .search-content__pagination-link:hover {
+    border-color: #63001f;
+    background: #63001f;
+    color: #ffffff;
+  }
+
+  .search-content__pagination-numbers {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .search-content__pagination-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #e5e5e5;
+    border-radius: 50%;
+    color: #666;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .search-content__pagination-number:hover {
+    border-color: #63001f;
+    background: #63001f;
+    color: #ffffff;
+  }
+
+  .search-content__pagination-number--current {
+    border-color: #63001f;
+    background: #63001f;
+    color: #ffffff;
+  }
+
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .search-hero__title {
+      font-size: 2.5rem;
+    }
+
+    .search-hero__subtitle {
+      font-size: 1.1rem;
+    }
+
+    .search-content__form-group {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .search-content__form-input {
+      width: 100%;
+    }
+
+    .search-content__form-submit {
+      width: auto;
+      min-width: 200px;
+      gap: 2rem;
+      padding: 0.6rem 1rem;
+      font-size: 0.75rem;
+    }
+
+    .search-content__form-submit-text {
+      margin-right: 0;
+      padding-left: 0.5rem;
+    }
+
+    .search-content__form-submit-cta {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+
+    .search-content__form-submit-cta-icon {
+      width: 12px;
+      height: 8px;
+    }
+
+    .search-content__results-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .search-content__pagination {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .search-content__pagination-numbers {
+      order: -1;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .search-hero {
+      min-height: 20vh;
+      margin-top: 4rem;
+    }
+
+    .search-hero__title {
+      font-size: 40px !important;
+      margin: 0 0 1rem 0;
+    }
+
+    .search-hero__subtitle {
+      font-size: 12px;
+      width: 70%;
+      margin: 0 auto;
+    }
+
+    .search-hero__container {
+      padding: 2rem 1rem;
+    }
+
+    .search-content {
+      padding: 3rem 0;
+    }
+
+    .search-content__container {
+      max-width: 100%;
+      padding: 0 1rem;
+    }
+
+    .search-content__result-content {
+      padding: 1.5rem;
+    }
+
+    .search-content__result-title {
+      font-size: 1.25rem;
+    }
+  }
+</style>
 
 {% schema %}
 {
-  "name": "t:general.search",
-  "settings": []
+  "name": "Search Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Section"
+    },
+    {
+      "type": "color",
+      "id": "hero_bg_color",
+      "label": "Hero Background Color",
+      "default": "#ead1c1"
+    },
+    {
+      "type": "text",
+      "id": "hero_description",
+      "label": "Hero Description",
+      "default": "Find products, articles, and pages across our site"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Title Font",
+      "options": [
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font",
+      "label": "Subtitle Font",
+      "options": [
+        {
+          "value": "Inter",
+          "label": "Inter"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "header",
+      "content": "Search Results"
+    },
+    {
+      "type": "select",
+      "id": "result_title_font",
+      "label": "Result Title Font",
+      "options": [
+        {
+          "value": "Instrument Serif",
+          "label": "Instrument Serif"
+        },
+        {
+          "value": "PPEditorial New",
+          "label": "PPEditorial New"
+        },
+        {
+          "value": "Gumani",
+          "label": "Gumani"
+        }
+      ],
+      "default": "Instrument Serif"
+    },
+    {
+      "type": "color",
+      "id": "result_title_color",
+      "label": "Result Title Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "select",
+      "id": "result_excerpt_font",
+      "label": "Result Excerpt Font",
+      "options": [
+        {
+          "value": "Inter",
+          "label": "Inter"
+        },
+        {
+          "value": "Work Sans",
+          "label": "Work Sans"
+        }
+      ],
+      "default": "Inter"
+    },
+    {
+      "type": "color",
+      "id": "result_excerpt_color",
+      "label": "Result Excerpt Color",
+      "default": "#666666"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Search Page"
+    }
+  ]
 }
 {% endschema %}

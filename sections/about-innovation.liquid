@@ -1,0 +1,482 @@
+<section class="innovation">
+  <div class="innovation__container">
+    <div class="innovation__header">
+      <p class="section_numbering">02</p>
+      <h2 class="innovation__title">The
+        <em>Innovation</em>
+      </h2>
+    </div>
+
+    <div class="innovation__grid">
+      <div class="innovation-card innovation-card--saffrux">
+        <div class="innovation-card__row">
+          <div class="innovation-card__media">
+            <img src="{{ 'saffruxsj.jpg' | asset_url }}" alt="Saffron strands in a clear liquid"
+              class="innovation-card__image" width="400" height="400">
+          </div>
+          <div class="innovation-card__intro">
+            <h3 class="innovation-card__heading">Saffrux Brightening Engine™</h3>
+            <p class="innovation-card__description">The radiance of
+              <em>saffron</em>, redefined by
+              <em>science</em>.
+            </p>
+          </div>
+        </div>
+        <div class="innovation-card__row">
+          <div class="innovation-card__details">
+            <p>This next-generation brightening system harnesses the rare potency of GI-tagged Kashmiri Mongra Saffron,
+              revered in Ayurveda for its ability to even out skin tone, fade pigmentation, and enhance natural glow.
+            </p>
+            <p>But saffron alone isn’t enough it needs a delivery system that ensures deeper penetration and sustained
+              action. That’s where modern science steps in.</p>
+            <p>
+              <strong>Saffrux Brightening Engine™</strong>
+              synergizes:
+            </p>
+            <ul class="innovation-card__list">
+              <li>
+                <span>• Stabilized Vitamin C (Ethyl Ascorbic Acid)</span>
+                – to enhance brightness and reduce oxidative damage.
+              </li>
+              <li>
+                <span>• Niacinamide</span>
+                – to refine skin texture, minimize pores, and strengthen the skin barrier.
+              </li>
+              <li>
+                <span>• Licorice & Turmeric Extracts</span>
+                – to inhibit melanin overproduction naturally.
+              </li>
+            </ul>
+          </div>
+          <div class="innovation-card__tagline">
+            <p class="innovation-card__tagline-text">It’s
+              <em>brightness</em>, <br> done
+              <em>consciously</em>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="innovation-card innovation-card--biome">
+        <div class="innovation-card__row">
+          <div class="innovation-card__intro">
+            <h3 class="innovation-card__heading">BarrierBiome Complex™</h3>
+            <p class="innovation-card__description">The new frontier of
+              <em>barrier care.</em>
+            </p>
+          </div>
+          <div class="innovation-card__media">
+            <img src="{{ 'bbcomp.jpg' | asset_url }}" alt="Microscopic view of skin barrier cells"
+              class="innovation-card__image" width="400" height="400">
+          </div>
+        </div>
+        <div class="innovation-card__row">
+          <div class="innovation-card__tagline">
+            <p>BarrierBiome Complex™ doesn’t just repair —</p>
+            <p class="innovation-card__tagline-text">It teaches your skin <br> to
+              <em>defend itself.</em>
+            </p>
+          </div>
+          <div class="innovation-card__details">
+            <p>Modern skin is exposed to constant stress - pollution, UV, actives, and lifestyle.</p>
+            <p>BarrierBiome Complex™ was created to repair what the world takes away. But saffron alone isn’t enough it
+              needs a delivery system that ensures deeper penetration and sustained action. That’s where modern science
+              steps in.</p>
+            <p>It’s a bio-repair network designed to fortify your skin’s microbiome and restore its natural defense.</p>
+            <p>The result:
+              <strong>stronger</strong>,
+              <strong>calmer</strong>,
+              <strong>visibly healthier</strong>
+              skin that feels balanced from within.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="innovation__footer">
+      <h3 class="innovation__footer-title">Together, They Create
+        <em>Balance</em>…
+      </h3>
+      <div class="innovation__footer-text">
+        <p>While
+          <span>Saffrux Brightening Engine™</span>
+          illuminates and evens tone,
+          <span>BarrierBiome Complex™</span>
+          restores and protects, achieving what we call
+        </p>
+        <p class="innovation__footer-conclusion">Conscious Radiance: brightness that’s born from health, not harshness.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .innovation {
+    --color-primary-text: #63001f;
+    --color-body-text: #444;
+    --font-serif: "Instrument Serif"
+      , serif;
+    --background-noise: url('{{ "noise.png" | asset_url }}');
+    --background-main: #FAF0E6;
+    --background-saffrux: #FDD9BE;
+    --background-biome: #E6F0E9;
+    --border-radius-card: 16px;
+    --grid-gap: 1rem;
+
+    background: var(--background-main) var(--background-noise);
+    background-size: 150px 150px;
+    padding: 4rem 1rem;
+  }
+
+  .innovation__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .innovation__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .innovation__title {
+    font-family: var(--font-serif);
+    color: var(--color-primary-text);
+    font-size: 36px;
+    font-weight: 200;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .innovation__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .innovation-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+  }
+
+  .innovation-card__row {
+    display: flex;
+    gap: var(--grid-gap);
+    align-items: stretch;
+  }
+
+  .innovation-card--saffrux {
+    --card-background: var(--background-saffrux);
+  }
+
+  .innovation-card--biome {
+    --card-background: var(--background-biome);
+  }
+
+  .innovation-card__media {
+    width: 400px;
+    flex-shrink: 0;
+    border-radius: var(--border-radius-card);
+    overflow: hidden;
+    height: 400px;
+    position: relative;
+  }
+
+  .innovation-card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .innovation-card__intro,
+  .innovation-card__details,
+  .innovation-card__tagline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: var(--border-radius-card);
+    background: var(--card-background) var(--background-noise);
+    background-size: 150px 150px;
+    flex: 1;
+  }
+
+  .innovation-card__intro {
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .innovation-card__heading {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--color-body-text);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .innovation-card__description {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--color-primary-text);
+    line-height: 1.2;
+    max-width: 400px;
+    margin: 0;
+  }
+
+  .innovation-card__details {
+    text-align: left;
+    font-size: 14px;
+    color: var(--color-body-text);
+    line-height: 1.7;
+    gap: 20px;
+  }
+
+  .innovation-card__details p {
+    margin: 0;
+  }
+
+  .innovation-card__list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .innovation-card__list span {
+    font-weight: 500;
+  }
+
+  .innovation-card__tagline {
+    align-items: center;
+    text-align: center;
+    color: var(--color-primary-text);
+    gap: 24px;
+  }
+
+  .innovation-card__tagline p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .innovation-card__tagline-text {
+    font-family: var(--font-serif);
+    font-size: 48px !important;
+    font-weight: 200;
+    line-height: 1.1;
+  }
+
+  .innovation__footer {
+    padding-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .innovation__footer-title {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    color: var(--color-primary-text);
+    text-align: center;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    font-weight: 200;
+    margin: 0;
+  }
+
+  .innovation__footer-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .innovation__footer-text p {
+    font-size: 16px;
+    color: var(--color-body-text);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .innovation__footer-text span {
+    font-weight: 500;
+  }
+
+  .innovation__footer-conclusion {
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  @media screen and (max-width: 480px) {
+
+    .innovation {
+      padding: 2rem 0.5rem;
+    }
+
+    .innovation__container {
+      gap: 2rem;
+    }
+
+    .innovation__title {
+      font-size: 30px;
+    }
+
+    .innovation-card__heading {
+      font-size: 20px;
+    }
+
+    .innovation-card {
+      gap: 0.5rem;
+    }
+
+    .innovation-card__row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .innovation-card__media {
+      width: 100%;
+      height: 400px;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:first-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:first-child .innovation-card__media {
+      order: 1;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:first-child .innovation-card__intro {
+      order: 2;
+    }
+
+    /* Saffron Brightening Engine - Second Row */
+    .innovation-card--saffrux .innovation-card__row:last-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:last-child .innovation-card__details {
+      order: 1;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:last-child .innovation-card__tagline {
+      order: 2;
+    }
+
+    /* BarrierBiome Complex - First Row */
+    .innovation-card--biome .innovation-card__row:first-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .innovation-card--biome .innovation-card__row:first-child .innovation-card__media {
+      order: 1;
+    }
+
+    .innovation-card--biome .innovation-card__row:first-child .innovation-card__intro {
+      order: 2;
+    }
+
+    /* BarrierBiome Complex - Second Row */
+    .innovation-card--biome .innovation-card__row:last-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .innovation-card--biome .innovation-card__row:last-child .innovation-card__details {
+      order: 1;
+    }
+
+    .innovation-card--biome .innovation-card__row:last-child .innovation-card__tagline {
+      order: 2;
+    }
+
+    .innovation-card__intro,
+    .innovation-card__details,
+    .innovation-card__tagline {
+      padding: 2rem;
+    }
+
+    .innovation-card__tagline {
+      padding: 3rem;
+
+      p {
+        font-size: 12px;
+      }
+    }
+
+    .innovation-card__description {
+      font-size: 18px;
+    }
+
+    .innovation-card__tagline-text {
+      font-size: 40px !important;
+    }
+
+    .innovation-card__details {
+      font-size: 12px;
+    }
+
+    .innovation__footer {
+      padding: 0 2rem;
+    }
+
+    .innovation__footer-title {
+      font-size: 24px;
+    }
+
+    .innovation__footer-text p {
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .innovation__footer-conclusion {
+      font-size: 14px !important;
+      line-height: 1.7 !important;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+
+    .innovation-card__tagline p {
+      font-size: 11px;
+    }
+
+    .innovation-card__tagline-text {
+      font-size: 38px !important;
+    }
+
+    .promise-card__text {
+      font-size: 11px !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+"name": "About Innovation",
+"presets": [
+{
+"name": "About Innovation"
+}
+]
+}
+{% endschema %}

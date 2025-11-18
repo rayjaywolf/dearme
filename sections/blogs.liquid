@@ -13,8 +13,32 @@
       <div class="blogs-section__column blogs-section__column--left">
         <div class="blogs-section__row">
           <div class="blogs-section__text">
-            <h3 class="blogs-section__subheading">our blog</h3>
-            <h2 class="blogs-section__heading">News & Stories</h2>
+            {%- if section.settings.subheading_content != blank -%}
+            <div
+              class="blogs-section__subheading"
+              style="
+                --subheading-color: {{ section.settings.subheading_color }};
+                --subheading-font-size: {{ section.settings.subheading_font_size }}px;
+                --subheading-font-weight: {{ section.settings.subheading_font_weight }};
+                --subheading-transform: {{ section.settings.subheading_transform }};
+              "
+            >
+              {{ section.settings.subheading_content }}
+            </div>
+            {%- endif -%}
+            {%- if section.settings.heading_content != blank -%}
+            <div
+              class="blogs-section__heading"
+              style="
+                --heading-color: {{ section.settings.heading_color }};
+                --heading-font-size: {{ section.settings.heading_font_size }}px;
+                --heading-font-weight: {{ section.settings.heading_font_weight }};
+                --heading-transform: {{ section.settings.heading_transform }};
+              "
+            >
+              {{ section.settings.heading_content }}
+            </div>
+            {%- endif -%}
             <a
               href="{{ blogs['blog-posts'].url }}"
               class="blogs-section__button"
@@ -93,7 +117,7 @@
   .blogs-section__container {
     width: 100%;
     margin: 0;
-    padding: 2rem;
+    padding: 0 2rem;
     height: 100%;
     display: flex;
     align-items: center;
@@ -105,8 +129,7 @@
     gap: 1rem;
     width: 100%;
     height: 100%;
-    margin-bottom: 3rem;
-    margin-top: 3rem;
+    margin: 4rem 0;
   }
 
   .blogs-section__column {
@@ -139,22 +162,39 @@
 
   .blogs-section__subheading {
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    color: #63001f;
+    font-size: var(--subheading-font-size, 14px);
+    font-weight: var(--subheading-font-weight, 400);
+    text-transform: var(--subheading-transform, uppercase);
+    color: var(--subheading-color, #63001f);
     margin: 0 0 1rem 0;
     letter-spacing: 0.1em;
   }
 
+  .blogs-section__subheading * {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
+  }
+
   .blogs-section__heading {
     font-family: 'Instrument Serif', serif;
-    font-size: 48px;
-    font-weight: 200;
+    font-size: var(--heading-font-size, 48px);
+    font-weight: var(--heading-font-weight, 200);
     line-height: 1.2;
-    color: #63001f;
+    color: var(--heading-color, #63001f);
     margin: 0 0 2rem 0;
     text-align: left;
+    text-transform: var(--heading-transform, none);
+  }
+
+  .blogs-section__heading * {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
   }
 
   .blogs-section__button {
@@ -357,6 +397,7 @@
     .blogs-section__columns {
       grid-template-columns: 1fr;
       gap: 2rem;
+      margin: 2rem 0;
     }
 
     .blogs-section__column {
@@ -469,7 +510,125 @@
     },
     {
       "type": "header",
-      "content": "Typography Settings"
+      "content": "Subheading Content"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading_content",
+      "label": "Subheading",
+      "default": "<p>our blog</p>"
+    },
+    {
+      "type": "header",
+      "content": "Subheading Styling"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size",
+      "label": "Subheading Font Size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "subheading_font_weight",
+      "label": "Subheading Font Weight",
+      "options": [
+        { "value": "100", "label": "Thin" },
+        { "value": "200", "label": "Extra Light" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "subheading_transform",
+      "label": "Subheading Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Heading Content"
+    },
+    {
+      "type": "richtext",
+      "id": "heading_content",
+      "label": "Heading",
+      "default": "<p>News & Stories</p>"
+    },
+    {
+      "type": "header",
+      "content": "Heading Styling"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#63001f"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "Heading Font Size",
+      "min": 24,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Heading Font Weight",
+      "options": [
+        { "value": "100", "label": "Thin" },
+        { "value": "200", "label": "Extra Light" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "200"
+    },
+    {
+      "type": "select",
+      "id": "heading_transform",
+      "label": "Heading Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Legacy Typography Settings (Deprecated)"
     },
     {
       "type": "select",
@@ -706,18 +865,6 @@
     {
       "type": "header",
       "content": "Color Settings"
-    },
-    {
-      "type": "color",
-      "id": "subtitle_color",
-      "label": "Subtitle Color",
-      "default": "#63001f"
-    },
-    {
-      "type": "color",
-      "id": "title_color",
-      "label": "Title Color",
-      "default": "#63001f"
     },
     {
       "type": "color",

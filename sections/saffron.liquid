@@ -1,43 +1,99 @@
-{% comment %}
-  Saffron Section
-{% endcomment %}
+{%- liquid
+  assign title_font = section.settings.title_font
+  assign subtitle_font = section.settings.subtitle_font
+-%}
+
+<style>
+  {{ title_font | font_face }}
+  {{ subtitle_font | font_face }}
+
+  #shopify-section-{{ section.id }} .saffron-section {
+    background-color: {{ section.settings.background_color }};
+    {% if section.settings.show_noise_bg %}
+      background-image: url('{{ 'noise.png' | asset_url }}');
+      background-size: 150px 150px;
+      background-repeat: repeat;
+    {% endif %}
+  }
+
+  #shopify-section-{{ section.id }} .saffron-section__title {
+    font-family: {{ title_font.family }}, {{ title_font.fallback_families }};
+    font-weight: {{ title_font.weight }};
+    font-style: {{ title_font.style }};
+    font-size: {{ section.settings.title_font_size }}rem;
+    color: {{ section.settings.title_color }};
+  }
+
+  #shopify-section-{{ section.id }} .saffron-section__subtitle {
+    font-family: {{ subtitle_font.family }}, {{ subtitle_font.fallback_families }};
+    font-weight: 500;
+    font-style: {{ subtitle_font.style }};
+    font-size: 16px;
+    color: {{ section.settings.subtitle_color }};
+  }
+
+  @media screen and (max-width: 480px) {
+    #shopify-section-{{ section.id }} .saffron-section__title {
+      font-size: {{ section.settings.title_font_size_mobile }}px;
+    }
+
+    #shopify-section-{{ section.id }} .saffron-section__subtitle {
+      font-size: {{ section.settings.subtitle_font_size_mobile }}px;
+    }
+  }
+</style>
+
 <section class="saffron-section">
-  <h2 class="saffron-section__title">The Glow of S<em>affron</em></h2>
-  <p class="saffron-section__subtitle">
-    A heritage ingredient revered for centuries, now bottled for your daily ritual.
-  </p>
+  {%- if section.settings.title != blank -%}
+    <h2 class="saffron-section__title">{{ section.settings.title }}</h2>
+  {%- endif -%}
+
+  {%- if section.settings.subtitle != blank -%}
+    <div class="saffron-section__subtitle">{{ section.settings.subtitle }}</div>
+  {%- endif -%}
+
+  {%- liquid
+    assign user_image = section.settings.image
+    if user_image != blank
+      assign image_url = user_image | image_url: width: 800
+      assign image_alt = user_image.alt | escape
+      assign image_width = user_image.width
+      assign image_height = user_image.height
+    else
+      assign image_url = 'saffron-plant.png' | asset_url
+      assign image_alt = 'Saffron plant'
+      assign image_width = 800
+      assign image_height = 600
+    endif
+  -%}
   <img
-    src="{{ 'saffron-plant.png' | asset_url }}"
+    src="{{ image_url }}"
     class="saffron-section__image"
-    alt="Saffron Plant"
-    width="800"
-    height="600"
+    alt="{{ image_alt }}"
+    width="{{ image_width }}"
+    height="{{ image_height }}"
+    loading="lazy"
   >
 </section>
 
 <style>
   .saffron-section {
-    height: 90vh;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #fef9f2 url('{{ 'noise.png' | asset_url }}');
-    background-size: 150px 150px;
-    background-repeat: repeat;
+    padding: 4rem 0 3rem;
   }
   .saffron-section__title {
-    font-family: 'Instrument Serif', serif;
-    font-weight: 200;
-    font-size: 3rem;
     line-height: 1.2;
     overflow: hidden;
     text-align: center;
-    color: #63001f;
     margin-bottom: 1rem;
   }
-  .saffron-section__title em {
+  .saffron-section__title em,
+  .saffron-section__title strong {
     font-style: italic;
   }
   .saffron-section__image {
@@ -45,14 +101,10 @@
     height: auto;
     display: block;
     margin: 0 auto;
-    margin-top: 1.75rem;
+    margin-top: 2rem;
   }
   .saffron-section__subtitle {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.2rem;
-    color: #63001f;
     line-height: 1.6;
-    font-weight: 500;
     margin-bottom: 2rem;
     text-align: center;
     max-width: 600px;
@@ -61,19 +113,18 @@
 
   @media screen and (max-width: 480px) {
     .saffron-section {
-      height: 60vh;
-      padding: 1.5rem 0.75rem;
+      height: 100%;
+      padding: 2rem 0.75rem;
+      padding-bottom: 1.5rem;
     }
 
     .saffron-section__title {
-      font-size: 32px;
       margin-bottom: 0.6rem;
       line-height: 1.05;
     }
 
     .saffron-section__subtitle {
       width: 90%;
-      font-size: 12px;
       margin-bottom: 1.2rem;
       padding: 0 0.5rem;
       line-height: 1.4;
@@ -88,7 +139,118 @@
 
 {% schema %}
 {
-  "name": "Saffron",
-  "presets": [{ "name": "Saffron" }]
+  "name": "Saffron Feature",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "<p>The Glow of S<em>affron</em></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "<p>A heritage ingredient revered for centuries, <br> now bottled for your daily ritual.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "header",
+      "content": "Style & Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#fef9f2"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_noise_bg",
+      "label": "Show noise background pattern",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#63001f"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "title_font",
+      "label": "Title font",
+      "default": "instrument_serif_n4"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 1,
+      "max": 6,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Title font size (Desktop)",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "min": 20,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Title font size (Mobile)",
+      "default": 32
+    },
+    {
+      "type": "font_picker",
+      "id": "subtitle_font",
+      "label": "Subtitle font",
+      "default": "inter_n5"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Subtitle font size (Desktop)",
+      "default": 1.2
+    },
+    {
+      "type": "range",
+      "id": "subtitle_font_size_mobile",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle font size (Mobile)",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Saffron Feature"
+    }
+  ]
 }
 {% endschema %}

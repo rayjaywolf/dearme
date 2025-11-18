@@ -5,9 +5,189 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/page
 {% endcomment %}
 
-<h1>{{ page.title }}</h1>
+<!-- Page Hero Section -->
+<section class="page-hero">
+  <div class="page-hero__container">
+    <h1 class="page-hero__title">{{ page.title }}</h1>
+  </div>
+</section>
 
-{{ page.content }}
+<!-- Page Content Section -->
+<section class="page-content">
+  <div class="page-content__container">
+    <div class="page-content__body">
+      {{ page.content }}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Page Hero Section - matches your site's hero pattern */
+  .page-hero {
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35vh;
+    background: #ead1c1 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    margin-top: 5rem;
+  }
+
+  .page-hero__container {
+    text-align: center;
+    padding: 0 2rem;
+  }
+
+  .page-hero__title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: #63001f;
+    line-height: 1.3;
+    margin: 0;
+    text-align: center;
+  }
+
+  /* Page Content Section */
+  .page-content {
+    background: #fef9f2 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    padding: 4rem 0;
+  }
+
+  .page-content__container {
+    max-width: 60%;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .page-content__body {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #63001f;
+    margin-bottom: 3rem;
+  }
+
+  .page-content__body h1,
+  .page-content__body h2,
+  .page-content__body h3,
+  .page-content__body h4,
+  .page-content__body h5,
+  .page-content__body h6 {
+    font-family: 'Instrument Serif', serif;
+    color: #63001f;
+    margin: 2rem 0 1rem 0;
+  }
+
+  .page-content__body h2 {
+    font-size: 2rem;
+    font-weight: 300;
+  }
+
+  .page-content__body h3 {
+    font-size: 1.5rem;
+    font-weight: 300;
+  }
+
+  .page-content__body p {
+    margin-bottom: 1.5rem;
+  }
+
+  .page-content__body img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 2rem 0;
+  }
+
+  .page-content__body blockquote {
+    border-left: 4px solid #63001f;
+    padding-left: 2rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: #666;
+  }
+
+  .page-content__body ol,
+  .page-content__body ul {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .page-content__body li {
+    margin-bottom: 1rem;
+    text-align: left !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .page-content__body ol li,
+  .page-content__body ul li {
+    list-style-position: outside;
+    padding-left: 0.5rem;
+  }
+
+  /* Mobile responsive */
+  @media screen and (max-width: 768px) {
+    .page-hero {
+      height: 35vh;
+      padding: 1rem;
+    }
+
+    .page-hero__title {
+      font-size: 2.5rem;
+    }
+
+    .page-content {
+      padding: 2rem 0;
+    }
+
+    .page-content__container {
+      padding: 0 1rem;
+      max-width: 100%;
+    }
+
+    .page-content__body {
+      font-size: 1rem;
+    }
+
+    .page-content__body h2 {
+      font-size: 1.5rem;
+    }
+
+    .page-content__body h3 {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .page-hero {
+      height: 20vh;
+      margin-top: 4rem;
+    }
+
+    .page-hero__title {
+      font-size: 2rem;
+    }
+
+    .page-content {
+      padding: 2rem 0;
+    }
+
+    .page-content__container {
+      padding: 0 1rem;
+      max-width: 100%;
+    }
+
+    .page-content__body {
+      font-size: 0.95rem;
+    }
+  }
+</style>
 
 {% schema %}
 {

@@ -137,9 +137,14 @@
                   </div>
                 {% endif %}
                 <div class="blog-content__article-overlay">
-                  <svg class="blog-content__article-cta-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
+                  <img
+                    class="blog-content__article-cta-icon"
+                    src="{{ 'arrow.png' | asset_url }}"
+                    width="10"
+                    height="10"
+                    alt=""
+                    loading="lazy"
+                  />
                 </div>
               </div>
               <div class="blog-content__article-content">
@@ -286,7 +291,7 @@
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    aspect-ratio: 16/10;
+    /* aspect-ratio: 16/10; */
   }
 
   .blog-content__featured-image {
@@ -298,17 +303,17 @@
 
   .blog-content__featured-overlay {
     position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
+    top: 1rem;
+    left: 1rem;
   }
 
   .blog-content__featured-badge {
     background: #63001f;
     color: #ffffff;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 0.75rem;
     border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
@@ -746,8 +751,16 @@
       margin-bottom: 1.5rem;
     }
 
+    .blog-content__featured-excerpt {
+      font-size: 15px;
+    }
+
+    .blog-content__featured-date {
+      font-size: 13px;
+    }
+
     .blog-content__featured-title {
-      font-size: 1.5rem;
+      font-size: 1.25rem;
     }
 
     .blog-content__article-content {

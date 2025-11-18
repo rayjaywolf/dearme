@@ -1,0 +1,183 @@
+<section class="promise">
+  <div class="promise__container">
+    <div class="promise__header">
+      <p class="section_numbering">04</p>
+      <h2 class="promise__title">The
+        <em>Promise</em>
+      </h2>
+    </div>
+    <div class="promise__grid">
+      <div class="promise-card">
+        <span class="promise-card__number">01</span>
+        <div class="promise-card__content">
+          <p class="promise-card__text">Ayurveda backed by <br> clinical science</p>
+          <img class="promise-card__icon" src="{{ 'about-1.png' | asset_url }}"
+            alt="Icon representing science and nature" loading="lazy">
+        </div>
+      </div>
+      <div class="promise-card">
+        <span class="promise-card__number">02</span>
+        <div class="promise-card__content">
+          <p class="promise-card__text">Skin-barrier safe <br> formulations</p>
+          <img class="promise-card__icon" src="{{ 'about-2.png' | asset_url }}"
+            alt="Icon representing a protective shield for skin" loading="lazy">
+        </div>
+      </div>
+      <div class="promise-card">
+        <span class="promise-card__number">03</span>
+        <div class="promise-card__content">
+          <p class="promise-card__text">Cruelty-free, vegan, <br> ethically sourced</p>
+          <img class="promise-card__icon" src="{{ 'about-3.png' | asset_url }}" alt="Icon representing a heart and leaf"
+            loading="lazy">
+        </div>
+      </div>
+      <div class="promise-card">
+        <span class="promise-card__number">04</span>
+        <div class="promise-card__content">
+          <p class="promise-card__text">Proudly researched and <br> Made in India</p>
+          <img class="promise-card__icon" src="{{ 'about-4.png' | asset_url }}" alt="Icon representing the map of India"
+            loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .promise {
+    --color-brand-maroon: #63001f;
+    --color-brand-peach: #EAD1C1;
+    --color-background: #fef9f2;
+    --font-serif: "Instrument Serif"
+      , serif;
+    --border-radius-card: 16px;
+    --grid-gap: 1rem;
+    --background-noise: url('{{ "noise.png" | asset_url }}');
+
+    background: var(--color-background) var(--background-noise);
+    background-size: 150px 150px;
+    padding: 4rem 1rem;
+  }
+
+  .promise__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .promise__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .promise__title {
+    font-family: var(--font-serif);
+    color: var(--color-brand-maroon);
+    font-size: 36px;
+    font-weight: 200;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .promise__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--grid-gap);
+    width: 100%;
+    height: 242px;
+  }
+
+  .promise-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-brand-maroon);
+    border-radius: var(--border-radius-card);
+    padding: 1rem;
+  }
+
+  .promise-card__number {
+    color: var(--color-brand-peach);
+    line-height: 1;
+    font-size: 12px;
+  }
+
+  .promise-card__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .promise-card__text {
+    color: var(--color-brand-peach);
+    line-height: 1.4;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .promise-card__icon {
+    height: 45px;
+    width: auto;
+  }
+
+  @media (max-width: 480px) {
+    .promise {
+      padding: 2rem 0.5rem;
+    }
+
+    .promise__container {
+      gap: 2rem;
+    }
+
+    .promise__title {
+      font-size: 30px;
+    }
+
+    .promise__grid {
+      grid-template-columns: 1fr 1fr;
+      height: 100%;
+      gap: 0.5rem;
+    }
+
+    .promise-card {
+      padding: 2rem 1rem;
+      gap: 2rem;
+    }
+
+    .promise-card__number {
+      font-size: 10px;
+    }
+
+    .promise-card__text {
+      font-size: 12px;
+    }
+
+    .promise-card__icon {
+      height: 36px;
+      width: auto;
+    }
+  }
+</style>
+
+{% schema %}
+{
+"name": "About Promise",
+"presets": [
+{
+"name": "About Promise"
+}
+]
+}
+{% endschema %}

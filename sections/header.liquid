@@ -33,7 +33,7 @@
       <a href="{{ routes.cart_url }}" class="header__icon">
         {{ 'icon-cart.svg' | inline_asset_content }}
         {% if cart.item_count > 0 %}
-          <sup>{{ cart.item_count }}</sup>
+          <sup class="header__cart-count">{{ cart.item_count }}</sup>
         {% endif %}
       </a>
     </div>
@@ -221,7 +221,7 @@
   }
 
   .header.header--scrolled {
-    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05);
+    /* box-shadow: 0 2px 7px rgba(0, 0, 0, 0.05); */
   }
 
   .header__left {
@@ -247,9 +247,8 @@
     text-decoration: none;
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    font-size: 0.85rem;
+    font-size: 14px;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     position: relative;
     transition: color 0.4s ease;
     color: #fff;
@@ -384,11 +383,11 @@
     position: absolute;
     top: -0.5rem;
     right: -0.5rem;
-    background: #63001f;
-    color: #fff;
+    background: #ead1c1;
+    color: #63001f;
     border-radius: 50%;
-    padding: 0 0.4em;
-    font-size: 0.8em;
+    padding: 0 .5em;
+    font-size: 0.7em;
   }
 
   /* Mobile header styles */

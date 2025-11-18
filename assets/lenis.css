@@ -41,9 +41,7 @@ html {
 }
 
 /* Fix for potential layout shifts */
-body {
-  overflow-x: hidden;
-}
+/* body { overflow-x: hidden; } */ /* Removed - breaks position: sticky */
 
 /* Optimize for smooth scrolling performance */
 * {

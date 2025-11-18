@@ -1,50 +1,3877 @@
 {% comment %}
-  This section is used in the product template to render product page with
-  media, content, and add-to-cart form.
+This section is used in the product template to render product page with
+media, content, and add-to-cart form.
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/product
+https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
-<div class="product-images">
-  {% for image in product.images %}
-    {% render 'image', class: 'product-image', image: image %}
-  {% endfor %}
-</div>
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign featured_media = current_variant.featured_media | default: product.featured_media %}
 
-<div class="product-info">
-  <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
-  <p>{{ product.description }}</p>
-</div>
+<section class="product-section">
+  <div class="product-section__body">
+    <div class="product-section__gallery" id="ProductGallery-{{ section.id }}" data-product-gallery>
+      {% if product.media.size > 0 %}
+      <div class="product-gallery">
+        <div class="product-gallery__main" data-gallery-main>
+          {% for media in product.media %}
+          <div
+            class="product-gallery__slide{% if featured_media and media.id == featured_media.id %} product-gallery__slide--active{% elsif featured_media == blank and forloop.first %} product-gallery__slide--active{% endif %}"
+            data-gallery-slide data-media-id="{{ media.id }}">
+            {% case media.media_type %}
+            {% when 'image' %}
+            {{ media | image_url: width: 1600 | image_tag: loading: 'eager', class: 'product-section__media-img', alt:
+            media.alt | default: product.title }}
+            {% when 'video', 'external_video', 'model' %}
+            {{ media | media_tag: class: 'product-section__media-media' }}
+            {% else %}
+            {{ media | media_tag: class: 'product-section__media-media' }}
+            {% endcase %}
+          </div>
+          {% endfor %}
+        </div>
 
-<div class="product-form">
-  {% form 'product', product %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
 
-    <select name="id">
-      {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant == current_variant %}
-            selected="selected"
+        {% if product.media.size > 1 %}
+        <div class="product-gallery__thumbs" role="list" data-gallery-thumbs>
+          {% for media in product.media %}
+          {% assign media_is_active = false %}
+          {% if featured_media and media.id == featured_media.id %}
+          {% assign media_is_active = true %}
+          {% elsif featured_media == blank and forloop.first %}
+          {% assign media_is_active = true %}
           {% endif %}
-        >
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
+          <button type="button"
+            class="product-gallery__thumb{% if media_is_active %} product-gallery__thumb--active{% endif %}"
+            data-gallery-thumb data-target="{{ media.id }}"
+            aria-pressed="{% if media_is_active %}true{% else %}false{% endif %}"
+            aria-label="{{ media.alt | default: product.title }}">
+            {% if media.media_type == 'image' %}
+            {{ media | image_url: width: 220 | image_tag: loading: 'lazy', class: 'product-gallery__thumb-image', alt:
+            media.alt | default: product.title }}
+            {% elsif media.preview_image %}
+            {{ media.preview_image | image_url: width: 220 | image_tag: loading: 'lazy', class:
+            'product-gallery__thumb-image', alt: media.preview_image.alt | default: product.title }}
+            {% endif %}
+          </button>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="product-section__details">
+      <p class="product-section__subtitle">Illuminating Saffron Serum</p>
+      <h1 class="product-section__title">{{ product.title }}</h1>
+      <p class="product-section__tagline">Infused with Dear Me's Innovation: <strong>Saffrux Brightening Engine™
+        </strong> & <strong> BarrierBiome
+          Complex™ </strong> • Suitable for Sensitive & Acne Prone Skin • 11 Ayurvedic Extracts • 5 Clinical Actives</p>
+      <p class="product-section__mission"><strong>To illuminate. To repair. To renew.</strong></p>
+      <p class="product-section__intro">A singular formula that replaces the complexity of layering. Infused with 11
+        ancient botanicals and 5 modern actives, it refines, hydrates, brightens, and renews - restoring skin's natural
+        equilibrium in just one intelligent step.</p>
+
+      {% form 'product', product, class: 'product-section__purchase-form' %}
+      {% if product.has_only_default_variant == false %}
+      {% for option in product.options_with_values %}
+      <div class="product-section__form-field">
+        <label for="Option-{{ section.id }}-{{ forloop.index0 }}" class="product-section__form-label">{{ option.name
+          }}</label>
+        <div class="product-section__select-wrapper">
+          <select id="Option-{{ section.id }}-{{ forloop.index0 }}" name="options[{{ option.name | escape }}]"
+            class="product-section__select" data-option-index="{{ forloop.index0 }}">
+            {% for value in option.values %}
+            <option value="{{ value | escape }}" {% if option.selected_value==value %}selected="selected" {% endif %}>
+              {{ value }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
       {% endfor %}
-    </select>
 
-    <input type="text" name="quantity" min="1" value="1">
+      <select name="id" id="VariantSelector-{{ section.id }}" class="product-section__variant-id"
+        style="display: none;">
+        {% for variant in product.variants %}
+        <option value="{{ variant.id }}" {% if variant.id==current_variant.id %}selected="selected" {% endif %}>
+          {{ variant.title }}
+        </option>
+        {% endfor %}
+      </select>
+      {% else %}
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+      {% endif %}
 
-    <input type="submit" value="Add to cart">
-    {{ form | payment_button }}
-  {% endform %}
-</div>
+      <div class="product-section__price-block">
+        <span class="product-section__price">{{ current_variant.price | money }}</span>
+        {% if current_variant.compare_at_price > current_variant.price %}
+        <span class="product-section__price-compare">{{ current_variant.compare_at_price | money }}</span>
+        {% endif %}
+        {% if current_variant.available %}
+        <span class="product-section__stock product-section__stock--available">In stock</span>
+        {% else %}
+        <span class="product-section__stock product-section__stock--soldout">Sold out</span>
+        {% endif %}
+      </div>
+
+      <input type="hidden" name="quantity" value="1">
+
+      <div class="product-section__buttons">
+        <button type="submit" class="product-section__submit product-section__submit--cart" {% unless
+          current_variant.available %}disabled{% endunless %}>
+          <span class="product-section__button-text">Pre-Book</span>
+          <div class="product-section__cta">
+            <svg class="product-section__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
+              </path>
+            </svg>
+            <svg class="product-section__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
+              </path>
+            </svg>
+          </div>
+        </button>
+
+        {% if section.settings.enable_payment_button %}
+  {{ form | payment_button }}
+{% endif %}
+      </div>
+      {% endform %}
+
+      <div class="product-section__accordion">
+        <div class="product-section__accordion-item">
+          <button type="button" class="product-section__accordion-header">
+            <span class="product-section__accordion-title">GET TO KNOW ME</span>
+            <span class="product-section__accordion-icon">+</span>
+          </button>
+          <div class="product-section__accordion-panel">
+            <p>Dear Me Sacred Secret Serum 2.0 is a next-generation Ayurvedic treatment engineered for modern skin.
+              Powered by the Saffrux Brightening Engine™ and BarrierBiome Complex™, it unites eleven time-honoured
+              botanicals with five clinically validated actives to deliver luminous clarity and deep dermal resilience.
+              Saffron, Licorice, and Turmeric restore brightness from within, while Niacinamide and stabilized Vitamin C
+              refine tone and texture. A network of Centella, Bifida Ferment, and Panthenol rebuilds the barrier,
+              restoring calm to even the most sensitive skin. Crystal-clear, oil-free, and ultra-light, it leaves the
+              complexion balanced, hydrated, and quietly radiant.</p>
+          </div>
+        </div>
+
+        <div class="product-section__accordion-item">
+          <button type="button" class="product-section__accordion-header">
+            <span class="product-section__accordion-title">WHAT TO EXPECT FROM ME</span>
+            <span class="product-section__accordion-icon">+</span>
+          </button>
+          <div class="product-section__accordion-panel">
+            <p><strong>1. Visible Radiance</strong><br>
+              Powered by the Saffrux Brightening Engine™, Saffron, Niacinamide, and Vitamin C work in synergy to visibly
+              even tone and restore a soft, illuminated glow.</p>
+            <p><strong>2. Strengthened Barrier</strong><br>
+              The BarrierBiome Complex™ reinforces the skin's natural defense by restoring microbiome balance, sealing
+              in moisture, and improving resilience against sensitivity.</p>
+            <p><strong>3. Calm, Balanced Skin</strong><br>
+              Centella, Panthenol, and Licorice soothe irritation, reduce redness, and bring lasting equilibrium to
+              reactive skin.</p>
+            <p><strong>4. Deep Hydration</strong><br>
+              Hyaluronic Acid, Rice Water, and Birch Sap deliver multi-layered hydration, keeping the skin dewy, plump,
+              and supple throughout the day.</p>
+            <p><strong>5. Lightweight Clarity</strong><br>
+              Crystal-clear, oil-free, and non-sticky, the serum absorbs instantly - leaving behind only comfort,
+              translucence, and quiet luminosity.</p>
+          </div>
+        </div>
+
+        <div class="product-section__accordion-item">
+          <button type="button" class="product-section__accordion-header">
+            <span class="product-section__accordion-title">HOW TO USE ME</span>
+            <span class="product-section__accordion-icon">+</span>
+          </button>
+          <div class="product-section__accordion-panel">
+            <p>After cleansing, dispense a couple of pumps and spread the serum evenly all over your face and neck.</p>
+            <p>It can be used on a slightly damp face or a dry face.</p>
+            <p>Never skip the sunscreen after using Sacred Secret in your AM routine, as it's packed with antioxidants.
+            </p>
+          </div>
+        </div>
+
+        <div class="product-section__accordion-item">
+          <button type="button" class="product-section__accordion-header">
+            <span class="product-section__accordion-title">MAKE THE MOST OUT OF ME</span>
+            <span class="product-section__accordion-icon">+</span>
+          </button>
+          <div class="product-section__accordion-panel">
+            <p><strong>1. Use as a Spot Treatment</strong><br>
+              Got a stubborn dry patch, peeling skin, or active acne? Dab a half a pump of Sacred Secret directly onto
+              the area after cleansing, and let the calming and repairing actives get to work.</p>
+            <p><strong>2. De-puff and Refresh Under-Eyes</strong><br>
+              Keep Sacred Secret in the fridge overnight. In the morning, apply one pump to your ring finger and gently
+              pat along the orbital bone. You'll notice instantly plumper and de-puffed under-eyes.</p>
+            <p><strong>3. Mix with Makeup</strong><br>
+              Add a drop of Sacred Secret to your foundation, powder blush, or highlighter to create a dewy, skin-loving
+              finish.</p>
+            <p><strong>4. Mix with Moisturiser</strong><br>
+              For an extra hydration boost, mix Sacred Secret with your moisturiser to amplify its benefits. This works
+              especially well at night or during dry seasons!</p>
+          </div>
+        </div>
+
+        <div class="product-section__accordion-item">
+          <button type="button" class="product-section__accordion-header">
+            <span class="product-section__accordion-title">FULL INGREDIENTS LIST</span>
+            <span class="product-section__accordion-icon">+</span>
+          </button>
+          <div class="product-section__accordion-panel">
+            <p>Aqua(Water), Glycyrrhiza Glabra (Licorice) Root Extract, Saccharomyces/Rice Ferment Filtrate, Bifida Ferment Lysate, Betula Platyphylla Japonica Juice (Birch Sap), Propylene Glycol, Madecassic Acid, Asiaticoside, Asiatic Acid, Niacinamide, Panthenol, Propanediol, Curcuma Longa (Turmeric) Root Extract, Nelumbo Nucifera (Lotus) Flower Extract, Glycerin, Terminalia Ferdinandiana (Kakadu Plum) Fruit Extract, 3-O-Ethyl Ascorbic Acid, Betaine, Dimethyl Isosorbide, Crocus Sativus (Saffron) Stigma Extract, Sodium Hyaluronate (Hyaluronic Acid), PPG-26-Buteth-26, PEG-40 Hydrogenated Castor Oil, Ethylhexyl Methoxycinnamate, Ethylhexyl Salicylate, Butyl Methoxydibenzoylmethane, Xanthan Gum, Butylene Glycol, Potassium Sorbate, Pentylene Glycol, Polyglyceryl-6 Caprylate, Polyglyceryl-4 Caprate, Disodium EDTA, Phenoxyethanol, Ethylhexylglycerin.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- capture marquee_items -%}
+<li class="product-marquee__divider" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+    <circle cx="5.5" cy="5" r="5"></circle>
+  </svg>
+</li>
+<li>Vegan</li>
+<li class="product-marquee__divider" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+    <circle cx="5.5" cy="5" r="5"></circle>
+  </svg>
+</li>
+<li>Cruelty Free</li>
+<li class="product-marquee__divider" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+    <circle cx="5.5" cy="5" r="5"></circle>
+  </svg>
+</li>
+<li>Fragrance Free</li>
+<li class="product-marquee__divider" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+    <circle cx="5.5" cy="5" r="5"></circle>
+  </svg>
+</li>
+<li>Made in India</li>
+<li class="product-marquee__divider" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+    <circle cx="5.5" cy="5" r="5"></circle>
+  </svg>
+</li>
+<li>Brightens</li>
+<li class="product-marquee__divider" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+    <circle cx="5.5" cy="5" r="5"></circle>
+  </svg>
+</li>
+<li>Soothes</li>
+<li class="product-marquee__divider" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+    <circle cx="5.5" cy="5" r="5"></circle>
+  </svg>
+</li>
+<li>Strengthens</li>
+<li class="product-marquee__divider" aria-hidden="true">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+    <circle cx="5.5" cy="5" r="5"></circle>
+  </svg>
+</li>
+<li>Protects</li>
+{%- endcapture -%}
+
+<section class="product-marquee">
+  <div class="product-marquee__wrapper">
+    <ul class="product-marquee__content">
+      {{ marquee_items }}
+      {{ marquee_items }}
+    </ul>
+    <ul class="product-marquee__content" aria-hidden="true">
+      {{ marquee_items }}
+      {{ marquee_items }}
+    </ul>
+  </div>
+</section>
+
+<section class="texture-feel-section">
+  <div class="texture-feel-row-1">
+    <h1 class="texture-feel-title">Texture <em>& feel</em></h1>
+    <div class="texture-feel-grid">
+      <div class="texture-feel-column">
+        <div class="texture-feel-box"></div>
+        <div class="texture-feel-text-row">
+          <p class="section_numbering">01</p>
+          <p class="texture-feel-text">Super<em>-light</em></p>
+        </div>
+      </div>
+      <div class="texture-feel-column">
+        <div class="texture-feel-box"></div>
+        <div class="texture-feel-text-row">
+          <p class="section_numbering">02</p>
+          <p class="texture-feel-text">Oil<em>-free</em></p>
+        </div>
+      </div>
+      <div class="texture-feel-column">
+        <div class="texture-feel-box"></div>
+        <div class="texture-feel-text-row">
+          <p class="section_numbering">03</p>
+          <p class="texture-feel-text">Non<em>-sticky</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="texture-feel-row-2">
+    <div class="texture-feel-row-2-col-1">
+    </div>
+    <div class="texture-feel-row-2-col-2">
+      <h2 class="texture-feel-row-2-title"><em>Barely</em> there</h2>
+      <p class="texture-feel-row-2-subtitle">- yet deeply nourishing.</p>
+    </div>
+  </div>
+  <div class="texture-feel-row-3">
+    <div class="texture-feel-row-3-col-1">
+      <h2 class="texture-feel-row-3-title">Absorbs <em>instantly</em></h2>
+      <p class="texture-feel-row-3-subtitle">- leaving a smooth, satin finish that <br> feels like a veil of calm
+        brightness.
+      </p>
+    </div>
+    <div class="texture-feel-row-3-col-2">
+    </div>
+  </div>
+
+</section>
+
+<section class="bv-slider-section">
+  <div class="bv-slider-wrapper">
+    <div class="bv-sliders-stack">
+      <div class="bv-slider-container active" data-bv-slider data-slide-index="0">
+        <img src="{{ 'after1.jpg' | asset_url }}" alt="After" class="bv-slider-image">
+        <img src="{{ 'before1.jpg' | asset_url }}" alt="Before" class="bv-slider-image bv-slider-image--after"
+          data-bv-after>
+        <div class="bv-slider-handle" data-bv-handle>
+          <div class="bv-slider-handle-button">
+            <svg width="10" height="24" viewBox="0 0 10 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 3L2.5 12L7.5 21" stroke="#63001f" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <svg width="10" height="24" viewBox="0 0 10 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 3L7.5 12L2.5 21" stroke="#63001f" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <span class="bv-slider-label bv-slider-label--before">After</span>
+        <span class="bv-slider-label bv-slider-label--after">Before</span>
+      </div>
+      <div class="bv-slider-container" data-bv-slider data-slide-index="1">
+        <img src="{{ 'after-2.png' | asset_url }}" alt="After" class="bv-slider-image">
+        <img src="{{ 'before-2.png' | asset_url }}" alt="Before" class="bv-slider-image bv-slider-image--after"
+          data-bv-after>
+        <div class="bv-slider-handle" data-bv-handle>
+          <div class="bv-slider-handle-button">
+            <svg width="10" height="24" viewBox="0 0 10 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 3L2.5 12L7.5 21" stroke="#63001f" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <svg width="10" height="24" viewBox="0 0 10 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 3L7.5 12L2.5 21" stroke="#63001f" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <span class="bv-slider-label bv-slider-label--before">After</span>
+        <span class="bv-slider-label bv-slider-label--after">Before</span>
+      </div>
+      <div class="bv-slider-container" data-bv-slider data-slide-index="2">
+        <img src="{{ 'after-3.png' | asset_url }}" alt="After" class="bv-slider-image">
+        <img src="{{ 'before-3.png' | asset_url }}" alt="Before" class="bv-slider-image bv-slider-image--after"
+          data-bv-after>
+        <div class="bv-slider-handle" data-bv-handle>
+          <div class="bv-slider-handle-button">
+            <svg width="10" height="24" viewBox="0 0 10 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.5 3L2.5 12L7.5 21" stroke="#63001f" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <svg width="10" height="24" viewBox="0 0 10 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 3L7.5 12L2.5 21" stroke="#63001f" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <span class="bv-slider-label bv-slider-label--before">After</span>
+        <span class="bv-slider-label bv-slider-label--after">Before</span>
+      </div>
+    </div>
+    <div class="bv-slider-content">
+      <h2 class="bv-slider-title">Before <em>& After</em></h2>
+      <p class="bv-slider-description">After 8 weeks of use. <br>(raw unedited images)</p>
+      <div class="bv-slider-nav">
+        <button class="bv-slider-nav-button bv-slider-nav-button--prev" aria-label="Previous">
+          <svg class="bv-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20.001" height="12.766" fill="none"
+            overflow="visible">
+            <path
+              d="M 19.766 6.997 C 19.917 6.834 20.001 6.613 20.001 6.383 C 20.001 6.153 19.917 5.932 19.766 5.77 L 14.675 0.254 C 14.362 -0.085 13.855 -0.085 13.542 0.254 C 13.23 0.593 13.23 1.142 13.542 1.481 L 18.069 6.383 L 13.542 11.285 C 13.23 11.624 13.23 12.173 13.542 12.512 C 13.855 12.851 14.362 12.851 14.675 12.512 Z M 0 7.25 L 19.2 7.25 L 19.2 5.517 L 0 5.517 Z"
+              fill="rgb(99, 0, 31)"></path>
+          </svg>
+          <svg class="bv-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20.001" height="12.766" fill="none"
+            overflow="visible">
+            <path
+              d="M 19.766 6.997 C 19.917 6.834 20.001 6.613 20.001 6.383 C 20.001 6.153 19.917 5.932 19.766 5.77 L 14.675 0.254 C 14.362 -0.085 13.855 -0.085 13.542 0.254 C 13.23 0.593 13.23 1.142 13.542 1.481 L 18.069 6.383 L 13.542 11.285 C 13.23 11.624 13.23 12.173 13.542 12.512 C 13.855 12.851 14.362 12.851 14.675 12.512 Z M 0 7.25 L 19.2 7.25 L 19.2 5.517 L 0 5.517 Z"
+              fill="rgb(255, 255, 255)"></path>
+          </svg>
+        </button>
+        <button class="bv-slider-nav-button bv-slider-nav-button--next" aria-label="Next">
+          <svg class="bv-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20.001" height="12.766" fill="none"
+            overflow="visible">
+            <path
+              d="M 19.766 6.997 C 19.917 6.834 20.001 6.613 20.001 6.383 C 20.001 6.153 19.917 5.932 19.766 5.77 L 14.675 0.254 C 14.362 -0.085 13.855 -0.085 13.542 0.254 C 13.23 0.593 13.23 1.142 13.542 1.481 L 18.069 6.383 L 13.542 11.285 C 13.23 11.624 13.23 12.173 13.542 12.512 C 13.855 12.851 14.362 12.851 14.675 12.512 Z M 0 7.25 L 19.2 7.25 L 19.2 5.517 L 0 5.517 Z"
+              fill="rgb(99, 0, 31)"></path>
+          </svg>
+          <svg class="bv-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20.001" height="12.766" fill="none"
+            overflow="visible">
+            <path
+              d="M 19.766 6.997 C 19.917 6.834 20.001 6.613 20.001 6.383 C 20.001 6.153 19.917 5.932 19.766 5.77 L 14.675 0.254 C 14.362 -0.085 13.855 -0.085 13.542 0.254 C 13.23 0.593 13.23 1.142 13.542 1.481 L 18.069 6.383 L 13.542 11.285 C 13.23 11.624 13.23 12.173 13.542 12.512 C 13.855 12.851 14.362 12.851 14.675 12.512 Z M 0 7.25 L 19.2 7.25 L 19.2 5.517 L 0 5.517 Z"
+              fill="rgb(255, 255, 255)"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="innovation">
+  <div class="innovation__container">
+    <div class="innovation__header">
+      <h2 class="innovation__title">
+        <em style="line-height: 1;">Powered </em>by
+      </h2>
+    </div>
+
+    <div class="innovation__grid">
+      <div class="innovation-card innovation-card--saffrux">
+        <div class="innovation-card__row">
+          <div class="innovation-card__media">
+            <img src="{{ 'saffruxsj.jpg' | asset_url }}" alt="Saffron strands in a clear liquid"
+              class="innovation-card__image" width="400" height="400">
+          </div>
+          <div class="innovation-card__intro">
+            <h3 class="innovation-card__heading">Saffrux Brightening Engine™</h3>
+            <p class="innovation-card__description">The radiance of
+              <em>saffron</em>, redefined by
+              <em>science</em>.
+            </p>
+          </div>
+        </div>
+        <div class="innovation-card__row">
+          <div class="innovation-card__details">
+            <p>This next-generation brightening system harnesses the rare potency of GI-tagged Kashmiri Mongra Saffron,
+              revered in Ayurveda for its ability to even out skin tone, fade pigmentation, and enhance natural glow.
+            </p>
+            <p>But saffron alone isn't enough it needs a delivery system that ensures deeper penetration and sustained
+              action. That's where modern science steps in.</p>
+            <p>
+              <strong>Saffrux Brightening Engine™</strong>
+              synergizes:
+            </p>
+            <ul class="innovation-card__list">
+              <li>
+                <span>• Stabilized Vitamin C (Ethyl Ascorbic Acid)</span>
+                – to enhance brightness and reduce oxidative damage.
+              </li>
+              <li>
+                <span>• Niacinamide</span>
+                – to refine skin texture, minimize pores, and strengthen the skin barrier.
+              </li>
+              <li>
+                <span>• Licorice & Turmeric Extracts</span>
+                – to inhibit melanin overproduction naturally.
+              </li>
+            </ul>
+          </div>
+          <div class="innovation-card__tagline">
+            <p class="innovation-card__tagline-text">It's
+              <em>brightness</em>, <br> done
+              <em>consciously</em>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="innovation-card innovation-card--biome">
+        <div class="innovation-card__row">
+          <div class="innovation-card__intro">
+            <h3 class="innovation-card__heading">BarrierBiome Complex™</h3>
+            <p class="innovation-card__description">The new frontier of
+              <em>barrier care.</em>
+            </p>
+          </div>
+          <div class="innovation-card__media">
+            <img src="{{ 'bbcomp.jpg' | asset_url }}" alt="Microscopic view of skin barrier cells"
+              class="innovation-card__image" width="400" height="400">
+          </div>
+        </div>
+        <div class="innovation-card__row">
+          <div class="innovation-card__tagline">
+            <p>BarrierBiome Complex™ doesn't just repair —</p>
+            <p class="innovation-card__tagline-text">It teaches your skin <br> to
+              <em>defend itself.</em>
+            </p>
+          </div>
+          <div class="innovation-card__details">
+            <p>Modern skin is exposed to constant stress - pollution, UV, actives, and lifestyle.</p>
+            <p>BarrierBiome Complex™ was created to repair what the world takes away. But saffron alone isn't enough it
+              needs a delivery system that ensures deeper penetration and sustained action. That's where modern science
+              steps in.</p>
+            <p>It's a bio-repair network designed to fortify your skin's microbiome and restore its natural defense.</p>
+            <p>The result:
+              <strong>stronger</strong>,
+              <strong>calmer</strong>,
+              <strong>visibly healthier</strong>
+              skin that feels balanced from within.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="innovation__footer">
+      <h3 class="innovation__footer-title">Together, They Create
+        <em>Balance</em>…
+      </h3>
+      <div class="innovation__footer-text">
+        <p>While
+          <span>Saffrux Brightening Engine™</span>
+          illuminates and evens tone,
+          <span>BarrierBiome Complex™</span>
+          restores and protects, achieving what we call
+        </p>
+        <p class="innovation__footer-conclusion">Conscious Radiance: brightness that's born from health, not harshness.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ingredients-section">
+  <div class="ingredients-section__container">
+    <div class="ingredients-section__columns">
+      <div class="ingredients-section__column ingredients-section__column--left">
+        <div class="ingredients-section__row ingredients-section__row--top">
+          <div class="ingredients-section__text">
+            <h3 class="ingredients-section__subheading">all in one multi benefit serum.</h3>
+            <h2 class="ingredients-section__heading">
+              Powerful blend of science-backed actives and heritage botanicals
+            </h2>
+            <button type="button" id="ingredients-modal-trigger" class="ingredients-section__button"
+              aria-haspopup="dialog" aria-expanded="false">
+              <span class="ingredients-section__button-label">View all ingredients</span>
+              <div class="ingredients-section__cta">
+                <svg class="ingredients-section__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
+                  </path>
+                </svg>
+                <svg class="ingredients-section__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
+                  </path>
+                </svg>
+              </div>
+            </button>
+            <div class="ingredients-section__modal" id="ingredients-modal" aria-hidden="true" role="dialog"
+              aria-modal="true" aria-labelledby="ingredients-modal-title">
+              <div class="ingredients-section__modal-overlay" role="presentation"></div>
+              <div class="ingredients-section__modal-content" role="document">
+                <button type="button" class="ingredients-section__modal-close" aria-label="Close ingredients list">
+                  &times;
+                </button>
+                <h3 class="ingredients-section__modal-title" id="ingredients-modal-title">Full Ingredients List</h3>
+                <p class="ingredients-section__modal-body">
+                  Aqua(Water), Glycyrrhiza Glabra (Licorice) Root Extract, Saccharomyces/Rice Ferment Filtrate, Bifida Ferment Lysate, Betula Platyphylla Japonica Juice (Birch Sap), Propylene Glycol, Madecassic Acid, Asiaticoside, Asiatic Acid, Niacinamide, Panthenol, Propanediol, Curcuma Longa (Turmeric) Root Extract, Nelumbo Nucifera (Lotus) Flower Extract, Glycerin, Terminalia Ferdinandiana (Kakadu Plum) Fruit Extract, 3-O-Ethyl Ascorbic Acid, Betaine, Dimethyl Isosorbide, Crocus Sativus (Saffron) Stigma Extract, Sodium Hyaluronate (Hyaluronic Acid), PPG-26-Buteth-26, PEG-40 Hydrogenated Castor Oil, Ethylhexyl Methoxycinnamate, Ethylhexyl Salicylate, Butyl Methoxydibenzoylmethane, Xanthan Gum, Butylene Glycol, Potassium Sorbate, Pentylene Glycol, Polyglyceryl-6 Caprylate, Polyglyceryl-4 Caprate, Disodium EDTA, Phenoxyethanol, Ethylhexylglycerin.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ingredients-section__column ingredients-section__column--right">
+        <div class="ingredients-section__images-row">
+          <div class="ingredients-section__ingredient">
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">Saffron</h4>
+              <p class="ingredients-section__ingredient-description">
+                Rich in antioxidants like crocin and safranal, saffron helps brighten skin tone and reduce pigmentation.
+              </p>
+            </div>
+            <div class="ingredients-section__ingredient-image-container">
+              <img src="{{ 'ingredient-saffron.png' | asset_url }}" alt="Saffron"
+                class="ingredients-section__ingredient-image" loading="lazy">
+              <div class="ingredients-section__ingredient-badges">
+                <div class="ingredients-section__ingredient-badge">Brightening</div>
+                <div class="ingredients-section__ingredient-badge">Antioxidant</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredients-section__ingredient">
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">Niacinamide</h4>
+              <p class="ingredients-section__ingredient-description">
+                A stable form of Vitamin B3 that improves barrier function, reduces redness, and evens skin tone.
+              </p>
+            </div>
+            <div class="ingredients-section__ingredient-image-container">
+              <img src="{{ 'ingredient-niacinamide.jpg' | asset_url }}" alt="Niacinamide"
+                class="ingredients-section__ingredient-image" loading="lazy">
+              <div class="ingredients-section__ingredient-badges">
+                <div class="ingredients-section__ingredient-badge">Brightening</div>
+                <div class="ingredients-section__ingredient-badge">Anti-inflammatory</div>
+                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredients-section__ingredient">
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">Centella Asiatica (Cica)</h4>
+              <p class="ingredients-section__ingredient-description">
+                Contains asiaticoside and madecassoside, known to accelerate wound healing and soothe inflammation.
+              </p>
+            </div>
+            <div class="ingredients-section__ingredient-image-container">
+              <img src="{{ 'ingredient-centela.jpg' | asset_url }}" alt="Centella Asiatica"
+                class="ingredients-section__ingredient-image" loading="lazy">
+              <div class="ingredients-section__ingredient-badges">
+                <div class="ingredients-section__ingredient-badge">Anti-inflammatory</div>
+                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredients-section__ingredient">
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">Rice Water Extract</h4>
+              <p class="ingredients-section__ingredient-description">
+                Naturally rich in amino acids, vitamins, and minerals that soften skin and enhance radiance.
+              </p>
+            </div>
+            <div class="ingredients-section__ingredient-image-container">
+              <img src="{{ 'ingreient-rice-water.jpg' | asset_url }}" alt="Rice Water Extract"
+                class="ingredients-section__ingredient-image" loading="lazy">
+              <div class="ingredients-section__ingredient-badges">
+                <div class="ingredients-section__ingredient-badge">Brightening</div>
+                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredients-section__ingredient">
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">Panthenol (Pro-Vitamin B5)</h4>
+              <p class="ingredients-section__ingredient-description">
+                Converts to pantothenic acid in skin, providing deep hydration and promoting barrier repair.
+              </p>
+            </div>
+            <div class="ingredients-section__ingredient-image-container">
+              <img src="{{ 'ingredient-panthenol.jpg' | asset_url }}" alt="Panthenol"
+                class="ingredients-section__ingredient-image" loading="lazy">
+              <div class="ingredients-section__ingredient-badges">
+                <div class="ingredients-section__ingredient-badge">Hydrating</div>
+                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+                <div class="ingredients-section__ingredient-badge">Anti-inflammatory</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredients-section__ingredient">
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">Propanediol</h4>
+              <p class="ingredients-section__ingredient-description">
+                A plant-derived humectant that enhances penetration of actives while maintaining skin hydration.
+              </p>
+            </div>
+            <div class="ingredients-section__ingredient-image-container">
+              <img src="{{ 'ingredient-propanediol.jpg' | asset_url }}" alt="Propanediol"
+                class="ingredients-section__ingredient-image" loading="lazy">
+              <div class="ingredients-section__ingredient-badges">
+                <div class="ingredients-section__ingredient-badge">Hydrating</div>
+                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredients-section__ingredient">
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">Bifida Ferment Lysate</h4>
+              <p class="ingredients-section__ingredient-description">
+                A probiotic-derived lysate shown to strengthen the skin barrier and improve resistance to environmental
+                stress.
+              </p>
+            </div>
+            <div class="ingredients-section__ingredient-image-container">
+              <img src="{{ 'ingredient-bifida-ferment-lysate.jpg' | asset_url }}" alt="Bifida Ferment Lysate"
+                class="ingredients-section__ingredient-image" loading="lazy">
+              <div class="ingredients-section__ingredient-badges">
+                <div class="ingredients-section__ingredient-badge">Antioxidant</div>
+                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+                <div class="ingredients-section__ingredient-badge">Barrier Strengthening</div>
+              </div>
+            </div>
+          </div>
+          <div class="ingredients-section__ingredient">
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">Hyaluronic Acid</h4>
+              <p class="ingredients-section__ingredient-description">
+                Smaller HA molecules penetrate deeper layers to boost hydration, elasticity, and plumpness.
+              </p>
+            </div>
+            <div class="ingredients-section__ingredient-image-container">
+              <img src="{{ 'ingredient-hyaluronic-acid.jpg' | asset_url }}" alt="Hyaluronic Acid"
+                class="ingredients-section__ingredient-image" loading="lazy">
+              <div class="ingredients-section__ingredient-badges">
+                <div class="ingredients-section__ingredient-badge">Hydrating</div>
+                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ingredients-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #fef9f2 !important;
+    background: #fef9f2 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+  }
+
+  .ingredients-section__container {
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .ingredients-section__columns {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 1rem;
+    width: 100%;
+    height: 100%;
+  }
+
+  .ingredients-section__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .ingredients-section__column--left {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .ingredients-section__row {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0rem;
+  }
+
+  .ingredients-section__text {
+    text-align: left;
+    max-width: 100%;
+  }
+
+  .ingredients-section__subheading {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    color: #63001f;
+    margin: 0 0 1rem 0;
+  }
+
+  .ingredients-section__heading {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    font-weight: 200;
+    line-height: 1.2;
+    color: #63001f;
+    margin: 0 0 2rem 0;
+    text-align: left;
+  }
+
+  .ingredients-section__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-radius: 999px;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
+    border: none;
+    gap: 4rem;
+    overflow: hidden;
+    max-width: 300px;
+    margin-top: 2rem;
+    cursor: pointer;
+    background-color: #63001f;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+  }
+
+  .ingredients-section__button .ingredients-section__button-label {
+    color: #ffffff;
+  }
+
+  .ingredients-section__button .ingredients-section__cta {
+    background: #ffffff;
+  }
+
+  .ingredients-section__button .ingredients-section__cta-icon {
+    fill: #63001f;
+  }
+
+  .ingredients-section__button:hover {
+    background-color: #ffffff;
+    color: #63001f;
+    border: none;
+  }
+
+  .ingredients-section__button:hover .ingredients-section__button-label {
+    color: #63001f;
+  }
+
+  .ingredients-section__button:hover .ingredients-section__cta {
+    background: #63001f;
+  }
+
+  .ingredients-section__button:hover .ingredients-section__cta-icon {
+    fill: #ffffff;
+  }
+
+  .ingredients-section__button-label {
+    margin-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .ingredients-section__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    border-radius: 100%;
+    height: 2.4rem;
+    width: 2.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ingredients-section__cta-icon {
+    width: 15px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+  }
+
+  .ingredients-section__cta .ingredients-section__cta-icon:last-child {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
+
+  .ingredients-section__button:hover .ingredients-section__cta .ingredients-section__cta-icon:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
+
+  .ingredients-section__button:hover .ingredients-section__cta .ingredients-section__cta-icon:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+
+  .ingredients-section__modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .ingredients-section__modal[aria-hidden='false'] {
+    display: flex;
+  }
+
+  .ingredients-section__modal-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+  }
+
+  .ingredients-section__modal-content {
+    position: relative;
+    max-width: min(90vw, 680px);
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+    color: #2a2a2a;
+    z-index: 1;
+    line-height: 1.6;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .ingredients-section__modal-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #63001f;
+  }
+
+  .ingredients-section__modal-body {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #3f3f3f;
+  }
+
+  .ingredients-section__modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #63001f;
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .ingredients-section__modal-close:hover {
+    background: #450012;
+  }
+
+  @media screen and (max-width: 768px) {
+    .ingredients-section__modal-content {
+      padding: 1.5rem;
+      border-radius: 18px;
+    }
+
+    .ingredients-section__modal-title {
+      font-size: 1.2rem;
+    }
+
+    .ingredients-section__modal-body {
+      font-size: 0.9rem;
+    }
+  }
+
+  .ingredients-section__column--right {
+    overflow: hidden;
+    max-width: 100%;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 0;
+  }
+
+  .ingredients-section__images-row {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    max-width: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    box-sizing: border-box;
+  }
+
+  .ingredients-section__images-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ingredients-section__ingredient {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-shrink: 0;
+    width: 420px;
+  }
+
+  .ingredients-section__ingredient-name {
+    font-family: 'Instrument Serif', serif;
+    font-size: 40px;
+    font-weight: 400;
+    color: #63001f;
+    margin: 0 0 1rem 0;
+    text-align: left;
+    line-height: 1;
+  }
+
+  .ingredients-section__ingredient-description {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+    text-align: left;
+    line-height: 1.7;
+  }
+
+  .ingredients-section__ingredient-image-container {
+    position: relative;
+    width: 420px;
+    height: 312px;
+    margin-top: 2rem;
+  }
+
+  .ingredients-section__ingredient-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    flex-shrink: 0;
+  }
+
+  .ingredients-section__ingredient-badges {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: calc(100% - 32px);
+  }
+
+  .ingredients-section__ingredient-badge {
+    background: #63001f;
+    border-radius: 20px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    line-height: 1.2;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 480px) {
+    .ingredients-section__container {
+      padding: 2rem 1rem 1rem 3rem;
+      padding-right: 0;
+    }
+
+    .ingredients-section__columns {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .ingredients-section__column {
+      padding: 0rem;
+    }
+
+    .ingredients-section__column--right {
+      padding: 0;
+    }
+
+    .ingredients-section__heading {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .ingredients-section__subheading {
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .ingredients-section__button {
+      max-width: 250px;
+      font-size: 0.7rem;
+      padding: 0.4rem 0.4rem;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .ingredients-section__button-label {
+      margin-right: 0.8rem;
+      padding-left: 0.8rem;
+    }
+
+    .ingredients-section__cta {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .ingredients-section__cta-icon {
+      width: 12px;
+      height: 8px;
+    }
+
+    .ingredients-section__ingredient {
+      width: 280px;
+    }
+
+    .ingredients-section__ingredient:last-child {
+      margin-right: 0.5rem;
+    }
+
+    .ingredients-section__ingredient-name {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .ingredients-section__ingredient-description {
+      font-size: 12px;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+      text-align: left;
+      width: 95%;
+    }
+
+    .ingredients-section__ingredient-image-container {
+      width: 100%;
+      height: 200px;
+      margin-top: 1rem;
+    }
+
+    .ingredients-section__ingredient-badges {
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      gap: 4px;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .ingredients-section__ingredient-badge {
+      font-size: 8px;
+      padding: 3px 6px;
+    }
+
+    .ingredients-section__images-row {
+      gap: 0rem;
+      flex-direction: column;
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: 100%;
+      padding-right: 1rem;
+    }
+
+    .ingredients-section__ingredient {
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .ingredients-section__ingredient:last-child {
+      margin-right: 0;
+      margin-bottom: 0;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var trigger = document.getElementById('ingredients-modal-trigger');
+    var modal = document.getElementById('ingredients-modal');
+    if (!trigger || !modal) return;
+
+    var closeBtn = modal.querySelector('.ingredients-section__modal-close');
+    var overlay = modal.querySelector('.ingredients-section__modal-overlay');
+
+    function openModal() {
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      trigger.setAttribute('aria-expanded', 'true');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.focus();
+    }
+
+    trigger.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (overlay) overlay.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && modal.getAttribute('aria-hidden') === 'false') {
+        closeModal();
+      }
+    });
+  });
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/keen-slider@6.8.6/keen-slider.min.js" defer></script>
+
+<script>
+  const reviews = [
+    {
+      text: 'Within a week of regular usage everyone around me started complimenting about the glow, freshness on my skin. Awesome product!!!',
+      author: 'Kriti K.',
+    },
+    {
+      text: 'As a person who struggles with sparse acne that leaves dark spots behind, this helped to quickly get rid of those marks. I was shocked at how quickly my skin healed and brightened.',
+      author: 'Tarini',
+    },
+    {
+      text: 'I love Sacred Secret. It has reduced the pigmentation to a very great extent. Also my skin feels so soft and plump. My skin barrier is getting better with each passing day.',
+      author: 'Sandeep R.',
+    },
+    {
+      text: 'My go to night regime serum. This serum changed the texture of my face in just a few uses and it smells amazing.',
+      author: 'Gautami',
+    },
+    {
+      text: 'I have sensitive skin and am always a bit nervous to try new products. Immediately after the first use my skin looked great and I had no reactions. Highly recommend!',
+      author: 'Twinkle',
+    },
+    {
+      text: "It's like magic in a bottle ✨",
+      author: 'Muskan S.',
+    },
+  ];
+
+  function renderReviews() {
+    const container = document.getElementById('reviews-container');
+    if (!container) return;
+
+    const reviewsHTML = reviews
+      .map(
+        (review) => `
+      <div class="keen-slider__slide">
+        <div class="reviews-section__shape-container">
+          <div class="reviews-section__inverted">
+            <div class="reviews-section__quotes"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8.09 11.6314H3.4C3.48 6.96144 4.4 6.19144 7.27 4.49144C7.6 4.29144 7.71 3.87144 7.51 3.53144C7.32 3.20144 6.89 3.09144 6.56 3.29144C3.18 5.29144 2 6.51144 2 12.3214V17.7114C2 19.4214 3.39 20.8014 5.09 20.8014H8.09C9.85 20.8014 11.18 19.4714 11.18 17.7114V14.7114C11.18 12.9614 9.85 11.6314 8.09 11.6314Z" fill="#63001f"></path> <path d="M18.9086 11.6314H14.2186C14.2986 6.96144 15.2186 6.19144 18.0886 4.49144C18.4186 4.29144 18.5286 3.87144 18.3286 3.53144C18.1286 3.20144 17.7086 3.09144 17.3686 3.29144C13.9886 5.29144 12.8086 6.51144 12.8086 12.3314V17.7214C12.8086 19.4314 14.1986 20.8114 15.8986 20.8114H18.8986C20.6586 20.8114 21.9886 19.4814 21.9886 17.7214V14.7214C21.9986 12.9614 20.6686 11.6314 18.9086 11.6314Z" fill="#63001f"></path> </g></svg></div>
+            <div class="reviews-section__stars">★★★★★</div>
+            <span class="reviews-section__shape-text">${review.text}</span>
+          </div>
+          <span class="reviews-section__signature-text">- ${review.author}</span>
+        </div>
+      </div>
+    `
+      )
+      .join('');
+
+    container.innerHTML = reviewsHTML;
+  }
+
+  function initializeSlider() {
+    const sliderElement = document.getElementById('reviews-slider');
+    if (!sliderElement) return;
+
+    const autoplayPlugin = (slider) => {
+      let timeout;
+      let mouseOver = false;
+
+      function clearNextTimeout() {
+        clearTimeout(timeout);
+      }
+
+      function nextTimeout() {
+        clearNextTimeout();
+        if (mouseOver) return;
+        timeout = setTimeout(() => {
+          slider.next();
+        }, 3000);
+      }
+
+      slider.on('created', () => {
+        slider.container.addEventListener('mouseover', () => {
+          mouseOver = true;
+          clearNextTimeout();
+        });
+        slider.container.addEventListener('mouseout', () => {
+          mouseOver = false;
+          nextTimeout();
+        });
+        nextTimeout();
+      });
+      slider.on('dragStarted', clearNextTimeout);
+      slider.on('animationEnded', nextTimeout);
+      slider.on('updated', nextTimeout);
+    };
+
+    const keenSlider = new KeenSlider(
+      sliderElement,
+      {
+        loop: true,
+        mode: 'free-snap',
+        slides: {
+          perView: 3,
+          spacing: 10,
+        },
+        breakpoints: {
+          '(max-width: 1024px)': {
+            slides: {
+              perView: 2,
+              spacing: 15,
+            },
+          },
+          '(max-width: 480px)': {
+            slides: {
+              perView: 1,
+              spacing: 10,
+            },
+          },
+        },
+      },
+      [autoplayPlugin]
+    );
+
+    const dotsContainer = document.getElementById('reviews-dots');
+    if (dotsContainer) {
+      const dots = keenSlider.track.details.slides.map((_, idx) => {
+        const dot = document.createElement('button');
+        dot.className = 'reviews-section__dot';
+        dot.addEventListener('click', () => keenSlider.moveToIdx(idx));
+        return dot;
+      });
+
+      dotsContainer.append(...dots);
+
+      const updateDots = () => {
+        const currentSlide = keenSlider.track.details.rel;
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('reviews-section__dot--active', idx === currentSlide);
+        });
+      };
+
+      keenSlider.on('created', updateDots);
+      keenSlider.on('slideChanged', updateDots);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    renderReviews();
+    setTimeout(initializeSlider, 100);
+  });
+</script>
+
+<section class="faq-section">
+  <div class="faq-section__container">
+    <div class="faq-section__header">
+      <h2 class="faq-section__title">Frequently Asked Questions</h2>
+    </div>
+
+    <div class="faq-section__accordion">
+      <div class="faq-section__accordion-item">
+        <button type="button" class="faq-section__accordion-header">
+          <span class="faq-section__accordion-title">Does Sacred Secret help with acne?</span>
+          <span class="faq-section__accordion-icon">+</span>
+        </button>
+        <div class="faq-section__accordion-panel">
+          <p>Absolutely! The unique blend of active ingredients in Sacred Secret creates an optimal environment for
+            healing active, painful acne bumps on the skin. Applying Sacred Secret directly to these bumps has
+            demonstrated visible results within just 3-4 uses, leading to a reduction in bump size. While it's important
+            to note that Sacred Secret is not intended to replace dermatologist-prescribed acne medications, it serves
+            as an excellent addition to your skincare arsenal for addressing those unexpected pimples.</p>
+          <p>Moreover, Sacred Secret's potent ingredients, such as 2% Niacinamide and Turmeric, play a crucial role in
+            the post-acne healing process. This contributes significantly to minimizing any scarring or pigmentation
+            left behind by acne, enhancing the overall skin recovery experience.</p>
+        </div>
+      </div>
+
+      <div class="faq-section__accordion-item">
+        <button type="button" class="faq-section__accordion-header">
+          <span class="faq-section__accordion-title">Does Sacred Secret help with fine lines & wrinkles?</span>
+          <span class="faq-section__accordion-icon">+</span>
+        </button>
+        <div class="faq-section__accordion-panel">
+          <p>Absolutely! Sacred Secret boasts a blend of exceptional Ayurvedic ingredients, including Kashmiri Saffron,
+            Hyaluronic, Niacinamide, and Manjistha. These superbly healing components work synergistically to stimulate
+            collagen production, promoting a more youthful complexion. This, in turn, diminishes the visibility of
+            wrinkles, refines skin texture, and enhances overall suppleness for a radiant and rejuvenated appearance.
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-section__accordion-item">
+        <button type="button" class="faq-section__accordion-header">
+          <span class="faq-section__accordion-title">Does Sacred Secret help with hyperpigmentation?</span>
+          <span class="faq-section__accordion-icon">+</span>
+        </button>
+        <div class="faq-section__accordion-panel">
+          <p>The most effective approach to combating hyperpigmentation involves combining various ingredients at lower
+            concentrations, rather than relying on a single ingredient in high concentration. This not only enhances
+            efficacy but also minimizes the risk of skin irritation.</p>
+          <p>Sacred Secret excels in harmonizing your skin tone, delivering an overall brightening and radiant effect.
+            This is achieved through the synergistic action of targeted actives such as Saffron, Niacinamide, and
+            Turmeric in Sacred Secret, working in tandem to effectively address pigmentation concerns on the
+            skin.</p>
+          <p>It's important to note that visible results will require a minimum of 6-12 weeks, and the outcomes of
+            hyperpigmentation treatment are highly subjective. They vary from person to person, contingent upon the
+            existing degree of pigmentation on the skin.</p>
+        </div>
+      </div>
+
+      <div class="faq-section__accordion-item">
+        <button type="button" class="faq-section__accordion-header">
+          <span class="faq-section__accordion-title">Can I use Sacred Secret on oily skin?</span>
+          <span class="faq-section__accordion-icon">+</span>
+        </button>
+        <div class="faq-section__accordion-panel">
+          <p>Yes. Sacred Secret is a weightless oil free formulation that is quickly absorbed by the skin without
+            leaving behind any greasy residue.</p>
+        </div>
+      </div>
+
+      <div class="faq-section__accordion-item">
+        <button type="button" class="faq-section__accordion-header">
+          <span class="faq-section__accordion-title">Can I apply makeup on top of Sacred Secret?</span>
+          <span class="faq-section__accordion-icon">+</span>
+        </button>
+        <div class="faq-section__accordion-panel">
+          <p>Yes. Apply a few drops of Sacred Secret and allow it to completely absorb into your skin before applying
+            your makeup.</p>
+        </div>
+      </div>
+
+      <div class="faq-section__accordion-item">
+        <button type="button" class="faq-section__accordion-header">
+          <span class="faq-section__accordion-title">Can I combine Sacred Secret with other active ingredients?</span>
+          <span class="faq-section__accordion-icon">+</span>
+        </button>
+        <div class="faq-section__accordion-panel">
+          <p>When incorporating other actives alongside Sacred Secret, it's crucial to consider the compatibility of
+            these actives. Some pair well, while others are advised against. Here are some key layering tips:</p>
+
+          <p><strong>Actives to Avoid with Sacred Secret:</strong></p>
+          <ul>
+            <li><strong>Niacinamide (over 5%):</strong> Sacred Secret already includes 2% Niacinamide. While some
+              individuals can tolerate up to 10%, exceeding this may lead to skin flushing and irritation. If combining
+              with another Niacinamide product, ensure the total percentage doesn't exceed 10%, and always conduct a
+              patch test.</li>
+            <li><strong>L-Ascorbic Acid (Vitamin C):</strong> Sacred Secret contains Vitamin C derivatives. Since very
+              high concentrations of Vitamin C can be tolerated by few, it's advisable not to introduce additional
+              Vitamin C derivatives or L-ascorbic acid in the same routine. A patch test is recommended when in doubt.
+            </li>
+            <li><strong>Facial Oils:</strong> Sacred Secret already includes a significant percentage of botanical
+              ingredients. Additional oils may not always layer well. While some may tolerate this combination, many
+              won't. It's generally advised not to layer essential or concentrated oils on top of Sacred Secret. Always
+              perform a patch test if unsure.</li>
+          </ul>
+
+          <p><strong>Actives that Work Well with Sacred Secret:</strong></p>
+          <ul>
+            <li><strong>Retinoids:</strong> Sacred Secret, with ingredients like 2% Niacinamide, Priyangu, Hyaluronic
+              Acid, Blue Lotus, and Padmak, helps minimize irritation or dryness often associated with Retinol.</li>
+            <li><strong>Exfoliating Acids (AHAs & BHA):</strong> These acids lower skin pH. Following up with Sacred
+              Secret helps rebalance the skin pH to its natural state.</li>
+            <li><strong>Azelaic Acid:</strong> Azelaic Acid works well with Sacred Secret. It acts as a mild exfoliant
+              and a potent antioxidant. Sacred Secret minimizes irritation and enhances its antioxidant properties.</li>
+            <li><strong>Prescription Acne Medications:</strong> Sacred Secret, being a nourishing serum, pairs well with
+              harsh prescription ointments, providing relief from potential dryness.</li>
+          </ul>
+
+          <p>Carefully selecting and combining these actives ensures a harmonious skincare routine with Sacred Secret.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    background: #EAD1C1 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    padding: 4rem 1rem;
+  }
+
+  .faq-section__container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .faq-section__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .faq-section__title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 3rem;
+    font-weight: 200;
+    color: #63001f;
+    margin: 0;
+  }
+
+  .faq-section__title em {
+    font-style: italic;
+  }
+
+  .faq-section__accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .faq-section__accordion-item {
+    border-bottom: 1px solid rgba(99, 0, 31, 0.2);
+  }
+
+  .faq-section__accordion-item:first-child {
+    border-top: 1px solid rgba(99, 0, 31, 0.2);
+  }
+
+  .faq-section__accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.5rem 0;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+  }
+
+  .faq-section__accordion-header:hover {
+    opacity: 0.9;
+  }
+
+  .faq-section__accordion-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #63001f;
+    padding-right: 1rem;
+  }
+
+  .faq-section__accordion-icon {
+    font-size: 1.5rem;
+    color: #63001f;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .faq-section__accordion-header.active .faq-section__accordion-icon {
+    transform: rotate(45deg);
+  }
+
+  .faq-section__accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.83, 0, 0.17, 1);
+  }
+
+  .faq-section__accordion-panel p {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+    margin: 0 0 1rem 0;
+    padding: 0 0 0 0;
+  }
+
+  .faq-section__accordion-panel p:last-child {
+    margin-bottom: 1.5rem;
+  }
+
+  .faq-section__accordion-panel ul {
+    margin: 0.5rem 0 1rem 1.5rem;
+    padding: 0;
+  }
+
+  .faq-section__accordion-panel li {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 0.75rem;
+  }
+
+  .faq-section__accordion-panel strong {
+    color: #63001f;
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .faq-section {
+      padding: 3rem 1rem;
+    }
+
+    .faq-section__title {
+      font-size: 2.5rem;
+    }
+
+    .faq-section__accordion-title {
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .faq-section {
+      padding: 2rem 1rem;
+    }
+
+    .faq-section__header {
+      margin-bottom: 2rem;
+    }
+
+    .faq-section__title {
+      font-size: 32px;
+    }
+
+    .faq-section__accordion-header {
+      padding: 1.25rem 0;
+    }
+
+    .faq-section__accordion-title {
+      font-size: 0.95rem;
+    }
+
+    .faq-section__accordion-panel p,
+    .faq-section__accordion-panel li {
+      font-size: 13px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const faqHeaders = document.querySelectorAll('.faq-section__accordion-header');
+
+    faqHeaders.forEach((header) => {
+      header.addEventListener('click', () => {
+        const panel = header.nextElementSibling;
+        const isActive = header.classList.contains('active');
+
+        // Close all other panels
+        faqHeaders.forEach((otherHeader) => {
+          if (otherHeader !== header) {
+            otherHeader.classList.remove('active');
+            otherHeader.nextElementSibling.style.maxHeight = null;
+          }
+        });
+
+        // Toggle current panel
+        header.classList.toggle('active');
+
+        if (isActive) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+    });
+  });
+</script>
+
+<svg width="0" height="0" style="position: absolute;">
+  <defs>
+    <clipPath id="clip" clipPathUnits="objectBoundingBox">
+      <path
+        d="M0.042,0 H0.958 A0.042,0.053,0,0,1,1,0.053 V0.947 A0.042,0.053,0,0,1,0.958,1 H0.381 A0.032,0.04,0,0,1,0.348,0.96 V0.91 A0.027,0.034,0,0,0,0.321,0.876 H0.032 A0.032,0.04,0,0,1,0,0.835 V0.053 A0.042,0.053,0,0,1,0.042,0 Z">
+      </path>
+    </clipPath>
+  </defs>
+</svg>
+<section class="reviews-section" style="background: #fef9f2 url('{{ " noise.png" | asset_url }}'); background-size:
+  150px 150px; background-repeat: repeat;">
+  <div class="reviews-section__container">
+    <div class="reviews-section__header">
+      <h2 class="reviews-section__title js-reviews-title">Loved by Skin Like <em>Yours</em></h2>
+      <p class="reviews-section__description js-reviews-text">
+        Here's what early users are saying about Sacred Secret.
+      </p>
+    </div>
+
+    <div class="reviews-section__carousel-wrapper">
+      <div class="keen-slider" id="reviews-slider">
+        <div class="keen-slider__track" id="reviews-container"></div>
+      </div>
+
+      <div class="reviews-section__dots" id="reviews-dots"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews-section {
+    background: #fef9f2;
+    padding: 4rem 0;
+    height: 100%;
+  }
+
+  .reviews-section__container {
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .reviews-section__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .reviews-section__subtitle {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #63001f;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+
+  .reviews-section__title {
+    font-family: 'Instrument Serif', sans-serif;
+    font-size: 3rem;
+    font-weight: 400;
+    color: #63001f;
+    line-height: 1;
+  }
+
+  .reviews-section__description {
+    font-size: 0.9rem;
+    font-weight: 400;
+    width: 45%;
+    margin: 1.2rem auto 0;
+    color: #63001f;
+  }
+
+  .reviews-section__carousel-wrapper {
+    position: relative;
+    margin-top: 2rem;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .keen-slider {
+    overflow: hidden;
+    border-radius: 20px;
+    cursor: grab;
+  }
+
+  .keen-slider:active {
+    cursor: grabbing;
+  }
+
+  .keen-slider__track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .reviews-section__dots {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-top: 3rem;
+  }
+
+  .reviews-section__dot {
+    width: 12px;
+    height: 6px;
+    background-color: #adaeb3;
+    opacity: 1;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin: 0 2px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .reviews-section__dot--active {
+    width: 45px;
+    border-radius: 10px;
+    background-color: #63001f;
+  }
+
+  .reviews-section__shape-container {
+    width: 402px;
+    height: 322px;
+    position: relative;
+  }
+
+  .reviews-section__inverted {
+    clip-path: url('#clip');
+    width: 402px;
+    height: 322px;
+    background-image: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20402%20322%22%3E%3Cpath%20d%3D%22M17%2C1H385A16%2C16%200%2C0%2C1%20401%2C17V305A16%2C16%200%2C0%2C1%20385%2C321H153A12%2C12%200%2C0%2C1%20141%2C309V293A12%2C12%200%2C0%2C0%20129%2C281H13A12%2C12%200%2C0%2C1%201%2C269V17A16%2C16%200%2C0%2C1%2017%2C1Z%22%20fill%3D%22%23ffffff%22%20%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 2rem 0rem;
+    position: relative;
+  }
+
+  .reviews-section__quotes {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    opacity: 0.1;
+    z-index: 1;
+  }
+
+  .reviews-section__stars {
+    color: #ff6b35;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 0rem;
+    margin-top: 0rem;
+  }
+
+  .reviews-section__shape-text {
+    color: #63001f;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.7;
+    padding-top: 1rem;
+  }
+
+  .reviews-section__signature-text {
+    width: 140px;
+    height: 40px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #63001f;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 10;
+  }
+
+  @media (max-width: 480px) {
+    .reviews-section {
+      padding: 2.5rem 0;
+    }
+
+    .reviews-section__container {
+      padding: 0 1rem;
+    }
+
+    .reviews-section__header {
+      margin-bottom: 2rem;
+    }
+
+    .reviews-section__subtitle {
+      font-size: 13px;
+    }
+
+    .reviews-section__title {
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .reviews-section__description {
+      width: 95%;
+      font-size: 12px;
+    }
+
+    .reviews-section__carousel-wrapper {
+      width: 100%;
+    }
+
+    .reviews-section__shape-container {
+      width: 100%;
+      height: auto;
+    }
+
+    .reviews-section__inverted {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 402 / 322;
+      padding: 1.5rem 1.5rem 0;
+    }
+
+    .reviews-section__quotes {
+      width: 2rem;
+      height: 2rem;
+      top: 1rem;
+      left: 1rem;
+    }
+
+    .reviews-section__shape-text {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .reviews-section__dots {
+      margin-top: 2rem;
+    }
+
+    .reviews-section__signature-text {
+      width: 34.8%;
+      height: 12.4%;
+    }
+  }
+</style>
+
+<style>
+  .innovation {
+    --color-primary-text: #63001f;
+    --color-body-text: #444;
+    --font-serif: "Instrument Serif"
+      , serif;
+    --background-noise: url('{{ "noise.png" | asset_url }}');
+    --background-main: #FAF0E6;
+    --background-saffrux: #FDD9BE;
+    --background-biome: #E6F0E9;
+    --border-radius-card: 16px;
+    --grid-gap: 1rem;
+
+    background: var(--background-main) var(--background-noise);
+    background-size: 150px 150px;
+    padding: 4rem 1rem;
+  }
+
+  .innovation__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .innovation__header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .innovation__title {
+    font-family: var(--font-serif);
+    color: var(--color-primary-text);
+    font-size: 48px;
+    font-weight: 200;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .innovation__grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .innovation-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--grid-gap);
+  }
+
+  .innovation-card__row {
+    display: flex;
+    gap: var(--grid-gap);
+    align-items: stretch;
+  }
+
+  .innovation-card--saffrux {
+    --card-background: var(--background-saffrux);
+  }
+
+  .innovation-card--biome {
+    --card-background: var(--background-biome);
+  }
+
+  .innovation-card__media {
+    width: 400px;
+    flex-shrink: 0;
+    border-radius: var(--border-radius-card);
+    overflow: hidden;
+    height: 400px;
+    position: relative;
+  }
+
+  .innovation-card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .innovation-card__intro,
+  .innovation-card__details,
+  .innovation-card__tagline {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: var(--border-radius-card);
+    background: var(--card-background) var(--background-noise);
+    background-size: 150px 150px;
+    flex: 1;
+  }
+
+  .innovation-card__intro {
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .innovation-card__heading {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--color-body-text);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .innovation-card__description {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--color-primary-text);
+    line-height: 1.2;
+    max-width: 400px;
+    margin: 0;
+  }
+
+  .innovation-card__details {
+    text-align: left;
+    font-size: 14px;
+    color: var(--color-body-text);
+    line-height: 1.7;
+    gap: 20px;
+  }
+
+  .innovation-card__details p {
+    margin: 0;
+  }
+
+  .innovation-card__list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .innovation-card__list span {
+    font-weight: 500;
+  }
+
+  .innovation-card__tagline {
+    align-items: center;
+    text-align: center;
+    color: var(--color-primary-text);
+    gap: 24px;
+  }
+
+  .innovation-card__tagline p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .innovation-card__tagline-text {
+    font-family: var(--font-serif);
+    font-size: 48px !important;
+    font-weight: 200;
+    line-height: 1.1;
+  }
+
+  .innovation__footer {
+    padding-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .innovation__footer-title {
+    font-family: var(--font-serif);
+    font-size: 32px;
+    color: var(--color-primary-text);
+    text-align: center;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    font-weight: 200;
+    margin: 0;
+  }
+
+  .innovation__footer-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .innovation__footer-text p {
+    font-size: 16px;
+    color: var(--color-body-text);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .innovation__footer-text span {
+    font-weight: 500;
+  }
+
+  .innovation__footer-conclusion {
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .product-section {
+    background: #fef9f2 url('{{ ' noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    color: #63001f;
+    padding: 5rem 0 0rem;
+  }
+
+  .product-section__body {
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 1rem 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .product-section__gallery {
+    display: grid;
+    gap: 2rem;
+    position: sticky;
+    top: 1rem;
+    align-self: start;
+  }
+
+  .product-gallery {
+    display: grid;
+    grid-template-columns: auto 2fr;
+    gap: 1rem;
+    border-radius: 16px;
+    align-items: start;
+  }
+
+  .product-gallery__main {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.25rem;
+    aspect-ratio: 1 / 1;
+    background: #f5f5f5;
+  }
+
+  .product-gallery__slide {
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  .product-gallery__slide--active {
+    display: block;
+    animation: product-gallery-fade 0.4s ease-in-out;
+  }
+
+  @keyframes product-gallery-fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .product-section__media-img,
+  .product-section__media-media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1.25rem;
+    display: block;
+  }
+
+  /* When Keen Slider is active on mobile, all slides must be visible.
+     Keen handles their positioning/visibility, not the active class. */
+  .product-gallery__main.keen-slider .product-gallery__slide {
+    display: block;
+    animation: none;
+  }
+
+  .product-gallery__thumbs {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    order: -1;
+    overflow-y: auto;
+    max-height: 600px;
+    -webkit-overflow-scrolling: touch;
+    /* Hide scrollbar but keep scroll functionality */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .product-gallery__thumbs::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  /* WebKit track/thumb hidden due to display:none above */
+
+  .product-gallery__thumb {
+    position: relative;
+    padding: 0;
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    isolation: isolate;
+    background: transparent;
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+  }
+
+  .product-gallery__thumb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .product-gallery__thumb:hover {}
+
+  .product-gallery__thumb--active::after {
+    border-color: #63001f;
+  }
+
+  .product-gallery__thumb-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    aspect-ratio: 1 / 1;
+  }
+
+  .product-section__details {
+    display: grid;
+    gap: 1.5rem;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+  }
+
+  .product-section__subtitle {
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Inter", "Inter Placeholder", sans-serif;
+    color: #444444;
+    font-size: 14px;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .product-section__title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 40px;
+    font-weight: 200;
+    line-height: 1;
+    color: #63001f;
+    margin: 0;
+    margin-top: -.5rem;
+  }
+
+  .product-section__tagline {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+
+    strong {
+      font-weight: 500;
+    }
+  }
+
+  .product-section__mission {
+    font-size: 18px;
+    text-transform: uppercase;
+    line-height: 1.7;
+    color: #63001f;
+  }
+
+  .product-section__mission strong {
+    font-weight: bold;
+  }
+
+  .product-section__intro {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+  }
+
+  .product-section__price-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .product-section__price {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .product-section__price-compare {
+    font-size: 1.1rem;
+    text-decoration: line-through;
+    color: rgba(99, 0, 31, 0.4);
+  }
+
+  .product-section__stock {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .product-section__stock--available {
+    color: #006064;
+  }
+
+  .product-section__stock--soldout {
+    color: #a82929;
+  }
+
+  .product-section__purchase-form {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .product-section__form-field {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .product-section__form-label {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #444;
+  }
+
+  .product-section__select-wrapper {
+    position: relative;
+  }
+
+  .product-section__select {
+    width: 100%;
+    appearance: none;
+    border: 2px solid #63001f;
+    padding: 4px 16px;
+    text-transform: uppercase;
+    border-radius: 999px;
+    width: fit-content;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    background: #fff;
+    color: #63001f;
+  }
+
+  .product-section__select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .product-section__buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .product-section__submit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    border: none;
+    border-radius: 999px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    background: #63001f;
+    color: #fef9f2;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    gap: 4rem;
+    overflow: hidden;
+  }
+
+  .product-section__button-text {
+    margin-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .product-section__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    border-radius: 100%;
+    height: 2.4rem;
+    width: 2.4rem;
+    position: relative;
+    overflow: hidden;
+    background: #fef9f2;
+  }
+
+  .product-section__cta-icon {
+    width: 15px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+    fill: #63001f;
+  }
+
+  .product-section__cta .product-section__cta-icon:last-child {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
+
+  .product-section__submit:hover {
+    background: #fef9f2;
+    border: none;
+  }
+
+  .product-section__submit:hover .product-section__button-text {
+    color: #63001f;
+  }
+
+  .product-section__submit:hover .product-section__cta {
+    background: #63001f;
+  }
+
+  .product-section__submit:hover .product-section__cta .product-section__cta-icon:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
+
+  .product-section__submit:hover .product-section__cta .product-section__cta-icon:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+
+  .product-section__submit:hover .product-section__cta-icon {
+    fill: #fef9f2;
+  }
+
+  .product-section__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .product-section__submit--buy {
+    background: #fff;
+    color: #63001f;
+  }
+
+  .product-section__submit--buy .product-section__button-text {
+    color: #63001f;
+  }
+
+  .product-section__submit--buy .product-section__cta {
+    background: #63001f;
+  }
+
+  .product-section__submit--buy .product-section__cta-icon {
+    fill: #fff;
+  }
+
+  .product-section__submit--buy:hover {
+    background: #63001f;
+  }
+
+  .product-section__submit--buy:hover .product-section__button-text {
+    color: #fff;
+  }
+
+  .product-section__submit--buy:hover .product-section__cta {
+    background: #fff;
+  }
+
+  .product-section__submit--buy:hover .product-section__cta-icon {
+    fill: #63001f;
+  }
+
+  .product-section__accordion {
+    margin-top: 2rem;
+    border-top: 1px solid rgba(99, 0, 31, 0.2);
+  }
+
+  .product-section__accordion-item {
+    border-bottom: 1px solid rgba(99, 0, 31, 0.2);
+  }
+
+  .product-section__accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.5rem;
+    cursor: pointer;
+    text-align: left;
+    transition: opacity 0.2s ease;
+    font-size: 18px;
+    letter-spacing: -0.04em;
+    line-height: 140%;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #63001f;
+  }
+
+  .product-section__accordion-header:hover {}
+
+  .product-section__accordion-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #63001f;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .product-section__accordion-icon {
+    font-size: 24px;
+    color: #63001f;
+    transition: transform 0.3s ease;
+    line-height: 1;
+  }
+
+  .product-section__accordion-header.active .product-section__accordion-icon {
+    transform: rotate(45deg);
+  }
+
+  .product-section__accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.83, 0, 0.17, 1);
+  }
+
+  .product-section__accordion-panel p {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .product-marquee {
+    width: 100%;
+    padding: 1.5rem 0;
+    overflow: hidden;
+    background: #fef9f2 url('{{ ' noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+  }
+
+  .product-marquee__wrapper {
+    display: flex;
+    flex-shrink: 0;
+    animation: product-marquee-scroll 30s linear infinite;
+  }
+
+  .product-marquee__wrapper:hover {
+    animation-play-state: paused;
+  }
+
+  .product-marquee__content {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 0.75rem;
+    padding: 0 0.75rem;
+    margin: 0;
+    list-style: none;
+    white-space: nowrap;
+  }
+
+  .product-marquee__content li {
+    font-family: 'Inter', serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    text-transform: capitalize;
+    margin: 0;
+    color: #63001f;
+  }
+
+  .product-marquee__divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0.25rem;
+  }
+
+  .product-marquee__divider svg {
+    width: 50px;
+    height: 8px;
+    flex-shrink: 0;
+  }
+
+  .product-marquee__divider svg circle {
+    fill: #63001f;
+  }
+
+  @keyframes product-marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+
+  .texture-feel-section {
+    background: #fef9f2 url('{{ ' noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    padding: 0 1rem 4rem;
+    color: #63001f;
+  }
+
+  .texture-feel-row-1 {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    border-radius: 16px;
+    padding: 2rem 1rem 1rem;
+  }
+
+  .texture-feel-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    font-weight: 200;
+    line-height: 1.2;
+    color: #63001f;
+    margin: 0 0 2rem 0;
+  }
+
+  .texture-feel-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 2rem;
+  }
+
+  .texture-feel-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .texture-feel-box {
+    width: 100%;
+    height: 300px;
+    background-color: #ccc;
+    border-radius: 16px;
+  }
+
+  .texture-feel-text-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    justify-content: center;
+  }
+
+  .section_numbering {
+    color: #63001f;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 2;
+    margin: 0;
+  }
+
+  .texture-feel-text {
+    font-family: 'Instrument Serif', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.1;
+    color: #63001f;
+    margin: 0;
+    text-align: center;
+  }
+
+  .texture-feel-row-2 {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+    height: 300px;
+  }
+
+  .texture-feel-row-2-col-1 {
+    background-color: #ccc;
+    border-radius: 16px;
+    padding: 2rem;
+    height: 100%;
+  }
+
+  .texture-feel-row-2-col-2 {
+    background: #FFDDA6 url('{{ ' noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    border-radius: 16px;
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .texture-feel-row-2-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    font-weight: 200;
+    line-height: 1.2;
+    color: #63001f;
+    margin: 0;
+    text-align: center;
+  }
+
+  .texture-feel-row-2-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #63001f;
+    margin: 0;
+    text-align: center;
+  }
+
+  .texture-feel-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 1rem;
+    margin-top: 1rem;
+    height: 300px;
+  }
+
+  .texture-feel-row-3-col-1 {
+    background: #EFF6FE url('{{ ' noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    border-radius: 16px;
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .texture-feel-row-3-col-2 {
+    background: #ccc url('{{ ' noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    border-radius: 16px;
+    padding: 2rem;
+    height: 100%;
+  }
+
+  .texture-feel-row-3-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    font-weight: 200;
+    line-height: 1.2;
+    color: #63001f;
+    margin: 0;
+    text-align: center;
+  }
+
+  .texture-feel-row-3-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #63001f;
+    margin: 0;
+    text-align: center;
+  }
+
+  .bv-slider-section {
+    background: #EAD1C1 url('{{ ' noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    padding: 4rem 1rem;
+    color: #63001f;
+    width: 100%;
+  }
+
+  .bv-slider-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 0rem;
+    margin: 0 auto;
+  }
+
+  .bv-sliders-stack {
+    position: relative;
+    width: 715px;
+    height: 515px;
+  }
+
+  .bv-slider-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .bv-slider-nav {
+    display: flex;
+    gap: 1rem;
+    margin-top: 32px;
+  }
+
+  .bv-slider-nav-button {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bv-slider-nav-icon {
+    width: 20px;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+  }
+
+  .bv-slider-nav-button .bv-slider-nav-icon:last-child {
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
+
+  .bv-slider-nav-button--prev .bv-slider-nav-icon {
+    transform: translate(-50%, -50%) scaleX(1) rotate(180deg);
+  }
+
+  .bv-slider-nav-button--prev .bv-slider-nav-icon:last-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2) rotate(180deg);
+  }
+
+  .bv-slider-nav-button:hover {
+    background-color: #63001f;
+  }
+
+  .bv-slider-nav-button:hover .bv-slider-nav-icon:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
+
+  .bv-slider-nav-button:hover .bv-slider-nav-icon:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
+
+  .bv-slider-nav-button--prev:hover .bv-slider-nav-icon:first-child {
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2) rotate(180deg);
+  }
+
+  .bv-slider-nav-button--prev:hover .bv-slider-nav-icon:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1) rotate(180deg);
+  }
+
+  .bv-slider-title {
+    font-family: 'Instrument Serif', serif;
+    font-size: 48px;
+    font-weight: 200;
+    line-height: 1;
+    color: #63001f;
+    margin: 0;
+    text-align: center;
+  }
+
+  .bv-slider-description {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #444;
+    margin: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .bv-slider-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 715px;
+    height: 515px;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+
+  .bv-slider-container.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .bv-slider-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
+
+  .bv-slider-image--after {
+    clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+    will-change: clip-path;
+  }
+
+  .bv-slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    background: rgba(255, 255, 255, 0.7);
+    cursor: ew-resize;
+    will-change: left;
+  }
+
+  .bv-slider-handle-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    background: #fef9f2;
+    border: 2px solid #63001f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(99, 0, 31, 0.15);
+  }
+
+  .bv-slider-handle-button svg {
+    flex-shrink: 0;
+  }
+
+  .bv-slider-label {
+    position: absolute;
+    top: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    background: rgba(254, 249, 242, 0.8);
+    color: #63001f;
+    border-radius: 99px;
+    pointer-events: none;
+  }
+
+  .bv-slider-label--before {
+    right: 1rem;
+  }
+
+  .bv-slider-label--after {
+    left: 1rem;
+  }
+
+  @media (max-width: 480px) {
+
+    /* --- Product Section --- */
+    .product-section {
+      padding-top: 4rem;
+    }
+
+    .product-section__body {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+      gap: 1rem;
+    }
+
+    .product-section__gallery {
+      position: relative;
+      top: 0;
+    }
+
+    .product-gallery {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .product-gallery__thumbs {
+      order: 0;
+      flex-direction: row;
+      overflow-x: auto;
+      max-height: none;
+      padding-bottom: 0.5rem;
+      scrollbar-width: none;
+    }
+
+    .product-gallery__thumbs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .product-gallery__thumb {
+      width: 70px;
+      height: 70px;
+      flex-shrink: 0;
+    }
+
+    .product-section__details {
+      padding: 1rem;
+      gap: 1.25rem;
+    }
+
+    .product-section__title {
+      font-size: 32px;
+    }
+
+    .product-section__mission {
+      font-size: 16px;
+    }
+
+    .product-section__price {
+      font-size: 22px;
+    }
+
+    .product-section__buttons {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .product-section__accordion {
+      margin-top: 1rem;
+    }
+
+    .product-section__accordion-header {
+      padding: 1.25rem 1rem;
+    }
+
+    .product-section__accordion-panel p {
+      padding: 0 1rem 1.25rem;
+    }
+
+    /* --- Marquee Section --- */
+    .product-marquee {
+      padding: 0 0 1rem;
+    }
+
+    .product-marquee__content li {
+      font-size: 0.8rem;
+    }
+
+    .product-marquee__divider svg {
+      width: 30px;
+    }
+
+    /* --- Texture & Feel Section --- */
+    .texture-feel-section {
+      padding: 0 1rem 2rem;
+    }
+
+    .texture-feel-row-1 {
+      padding: 1.5rem 1rem;
+    }
+
+    .texture-feel-title {
+      font-size: 32px;
+      margin-bottom: 1.5rem;
+    }
+
+    .texture-feel-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .texture-feel-box {
+      height: 250px;
+    }
+
+    .texture-feel-text {
+      font-size: 28px;
+    }
+
+    .texture-feel-row-2 {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+
+    .texture-feel-row-2-col-1,
+    .texture-feel-row-3-col-2 {
+      height: 250px;
+    }
+
+    .texture-feel-row-2-col-2 {
+      padding: 2.5rem 1.5rem;
+      height: auto;
+    }
+
+    .texture-feel-row-2-title,
+    .texture-feel-row-3-title {
+      font-size: 32px;
+    }
+
+    .texture-feel-row-3-subtitle br {
+      display: none;
+    }
+
+    /* Updated styles for texture-feel-row-3 */
+    .texture-feel-row-3 {
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      gap: 1rem;
+    }
+
+    .texture-feel-row-3-col-1 {
+      order: 2;
+      padding: 2.5rem 1.5rem;
+      height: auto;
+      min-height: auto;
+    }
+
+    .texture-feel-row-3-col-2 {
+      order: 1;
+    }
+
+    /* --- Before/After Slider Section --- */
+    .bv-slider-section {
+      padding: 2rem 1rem;
+    }
+
+    .bv-slider-wrapper {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .bv-sliders-stack {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 715 / 515;
+    }
+
+    .bv-slider-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .bv-slider-title {
+      font-size: 32px;
+    }
+
+    .bv-slider-description br {
+      display: none;
+    }
+
+    .bv-slider-nav {
+      margin-top: 1rem;
+    }
+
+    .bv-slider-nav-button {
+      width: 50px;
+      height: 50px;
+    }
+
+    /* --- Innovation Section --- */
+    .innovation {
+      padding: 2rem 0.5rem;
+    }
+
+    .innovation__container {
+      gap: 2rem;
+    }
+
+    .innovation__title {
+      font-size: 30px;
+    }
+
+    .innovation-card__heading {
+      font-size: 20px;
+    }
+
+    .innovation-card {
+      gap: 0.5rem;
+    }
+
+    .innovation-card__row {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .innovation-card__media {
+      width: 100%;
+      height: 400px;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:first-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:first-child .innovation-card__media {
+      order: 1;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:first-child .innovation-card__intro {
+      order: 2;
+    }
+
+    /* Saffron Brightening Engine - Second Row */
+    .innovation-card--saffrux .innovation-card__row:last-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:last-child .innovation-card__details {
+      order: 1;
+    }
+
+    .innovation-card--saffrux .innovation-card__row:last-child .innovation-card__tagline {
+      order: 2;
+    }
+
+    /* BarrierBiome Complex - First Row */
+    .innovation-card--biome .innovation-card__row:first-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .innovation-card--biome .innovation-card__row:first-child .innovation-card__media {
+      order: 1;
+    }
+
+    .innovation-card--biome .innovation-card__row:first-child .innovation-card__intro {
+      order: 2;
+    }
+
+    /* BarrierBiome Complex - Second Row */
+    .innovation-card--biome .innovation-card__row:last-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .innovation-card--biome .innovation-card__row:last-child .innovation-card__details {
+      order: 1;
+    }
+
+    .innovation-card--biome .innovation-card__row:last-child .innovation-card__tagline {
+      order: 2;
+    }
+
+    .innovation-card__intro,
+    .innovation-card__details,
+    .innovation-card__tagline {
+      padding: 2rem;
+    }
+
+    .innovation-card__tagline {
+      padding: 3rem;
+
+      p {
+        font-size: 12px;
+      }
+    }
+
+    .innovation-card__description {
+      font-size: 18px;
+    }
+
+    .innovation-card__tagline-text {
+      font-size: 40px !important;
+    }
+
+    .innovation-card__details {
+      font-size: 12px;
+    }
+
+    .innovation__footer {
+      padding: 0 2rem;
+    }
+
+    .innovation__footer-title {
+      font-size: 24px;
+    }
+
+    .innovation__footer-text p {
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .innovation__footer-conclusion {
+      font-size: 14px !important;
+      line-height: 1.7 !important;
+    }
+
+
+    .ingredients-section__container {
+      padding: 2rem 1rem 1rem;
+      padding-right: 0;
+    }
+
+    .ingredients-section__columns {
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    .ingredients-section__column {
+      padding: 0rem;
+    }
+
+    .ingredients-section__column--right {
+      padding: 0;
+    }
+
+    .ingredients-section__heading {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .ingredients-section__subheading {
+      font-size: 0.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .ingredients-section__button {
+      max-width: 250px;
+      font-size: 0.7rem;
+      padding: 0.4rem 0.4rem;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .ingredients-section__button-label {
+      margin-right: 0.8rem;
+      padding-left: 0.8rem;
+    }
+
+    .ingredients-section__cta {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .ingredients-section__cta-icon {
+      width: 12px;
+      height: 8px;
+    }
+
+    .ingredients-section__ingredient-name {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+
+    .ingredients-section__ingredient-description {
+      font-size: 12px;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+      text-align: left;
+      width: 95%;
+    }
+
+    .ingredients-section__ingredient-image-container {
+      width: 100%;
+      height: 200px;
+      margin-top: 1rem;
+    }
+
+    .ingredients-section__ingredient-badges {
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      gap: 4px;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    .ingredients-section__ingredient-badge {
+      font-size: 8px;
+      padding: 3px 6px;
+    }
+
+    .ingredients-section__images-row {
+      gap: 0rem;
+      flex-direction: column;
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: 100%;
+      padding-right: 1rem;
+    }
+
+    .ingredients-section__ingredient {
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+
+    .ingredients-section__ingredient:last-child {
+      margin-right: 0;
+      margin-bottom: 0;
+    }
+
+    /* --- Reviews Section (Existing) --- */
+    .reviews-section {
+      padding: 2rem 0;
+    }
+
+    .reviews-section__container {
+      padding: 0 1rem;
+    }
+
+    .reviews-section__header {
+      margin-bottom: 2rem;
+    }
+
+    .reviews-section__subtitle {
+      font-size: 13px;
+    }
+
+    .reviews-section__title {
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    .reviews-section__description {
+      width: 95%;
+      font-size: 12px;
+    }
+
+    .reviews-section__carousel-wrapper {
+      width: 100%;
+    }
+
+    .reviews-section__shape-container {
+      width: 100%;
+      height: auto;
+    }
+
+    .reviews-section__inverted {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 402 / 322;
+      padding: 1.5rem 1.5rem 0;
+    }
+
+    .reviews-section__quotes {
+      width: 2rem;
+      height: 2rem;
+      top: 1rem;
+      left: 1rem;
+    }
+
+    .reviews-section__shape-text {
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .reviews-section__dots {
+      margin-top: 2rem;
+    }
+
+    .reviews-section__signature-text {
+      width: 34.8%;
+      height: 12.4%;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+
+    .innovation-card__tagline p {
+      font-size: 11px;
+    }
+
+    .innovation-card__tagline-text {
+      font-size: 38px !important;
+    }
+
+    .promise-card__text {
+      font-size: 11px !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const gallery = document.querySelector('#ProductGallery-{{ section.id }}');
+    if (!gallery) return;
+
+    const main = gallery.querySelector('[data-gallery-main]');
+    const thumbsContainer = gallery.querySelector('[data-gallery-thumbs]');
+    const slides = [...gallery.querySelectorAll('[data-gallery-slide]')];
+    const thumbs = [...gallery.querySelectorAll('[data-gallery-thumb]')];
+
+    if (!slides.length) return;
+
+    let activeIndex = slides.findIndex((slide) => slide.classList.contains('product-gallery__slide--active'));
+    if (activeIndex < 0) activeIndex = 0;
+
+    // Mobile slider instance (Keen Slider)
+    let mobileSlider = null;
+
+    const syncHeights = () => {
+      if (main && thumbsContainer) {
+        const mainHeight = main.offsetHeight;
+        if (mainHeight > 0) {
+          thumbsContainer.style.maxHeight = mainHeight + 'px';
+        }
+      }
+    };
+
+    syncHeights();
+    window.addEventListener('resize', syncHeights);
+
+    const activeSlide = slides[activeIndex];
+    if (activeSlide) {
+      const img = activeSlide.querySelector('img');
+      if (img) {
+        if (img.complete) {
+          syncHeights();
+        } else {
+          img.addEventListener('load', syncHeights);
+        }
+      }
+    }
+
+    const setActiveSlide = (index) => {
+      const normalized = (index + slides.length) % slides.length;
+      slides.forEach((slide, idx) => {
+        slide.classList.toggle('product-gallery__slide--active', idx === normalized);
+      });
+      thumbs.forEach((thumb, idx) => {
+        const isActive = idx === normalized;
+        thumb.classList.toggle('product-gallery__thumb--active', isActive);
+        thumb.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      activeIndex = normalized;
+
+      setTimeout(syncHeights, 50);
+    };
+
+    thumbs.forEach((thumb, idx) => {
+      thumb.addEventListener('click', () => {
+        if (mobileSlider) {
+          mobileSlider.moveToIdx(idx);
+          // Reset mobile autoplay after manual navigation
+          stopMobileAutoPlay();
+          startMobileAutoPlay();
+        } else {
+          setActiveSlide(idx);
+          resetAutoPlay();
+        }
+      });
+    });
+
+    // Auto-play functionality - switch image every 5 seconds (desktop only)
+    let autoPlayInterval;
+    
+    const startAutoPlay = () => {
+      autoPlayInterval = setInterval(() => {
+        const nextIndex = (activeIndex + 1) % slides.length;
+        setActiveSlide(nextIndex);
+      }, 5000);
+    };
+
+    const stopAutoPlay = () => {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+      }
+    };
+
+    const resetAutoPlay = () => {
+      stopAutoPlay();
+      startAutoPlay();
+    };
+
+    // Auto-play for mobile Keen Slider (every 5 seconds)
+    let mobileAutoPlayInterval;
+
+    const startMobileAutoPlay = () => {
+      if (!mobileSlider) return;
+      stopMobileAutoPlay();
+      mobileAutoPlayInterval = setInterval(() => {
+        if (!mobileSlider || !mobileSlider.track || !mobileSlider.track.details) return;
+        const rel = mobileSlider.track.details.rel;
+        mobileSlider.moveToIdx(rel + 1);
+      }, 5000);
+    };
+
+    const stopMobileAutoPlay = () => {
+      if (mobileAutoPlayInterval) {
+        clearInterval(mobileAutoPlayInterval);
+        mobileAutoPlayInterval = undefined;
+      }
+    };
+
+    // Initialize Keen Slider on mobile (<= 480px)
+    const initMobileSliderIfNeeded = () => {
+      const isMobile = window.matchMedia('(max-width: 480px)').matches;
+      if (isMobile && !mobileSlider && main) {
+        // Add keen classes
+        main.classList.add('keen-slider');
+        slides.forEach((slide) => slide.classList.add('keen-slider__slide'));
+
+        mobileSlider = new KeenSlider(main, {
+          loop: true,
+          slides: {
+            perView: 1,
+            spacing: 0,
+          },
+          drag: true,
+        });
+
+        mobileSlider.on('slideChanged', (s) => {
+          const rel = s.track.details.rel;
+          setActiveSlide(rel);
+        });
+
+        // Pause/resume autoplay on user interaction
+        mobileSlider.on('dragStarted', () => {
+          stopMobileAutoPlay();
+        });
+        mobileSlider.on('dragEnded', () => {
+          startMobileAutoPlay();
+        });
+
+        // Start mobile autoplay when slider is active
+        startMobileAutoPlay();
+
+        // Stop desktop autoplay when mobile slider is active
+        stopAutoPlay();
+      } else if (!isMobile && mobileSlider) {
+        // Destroy mobile slider when leaving mobile
+        try { mobileSlider.destroy(); } catch(e) {}
+        mobileSlider = null;
+        // Stop mobile autoplay when destroying
+        stopMobileAutoPlay();
+        main.classList.remove('keen-slider');
+        slides.forEach((slide) => slide.classList.remove('keen-slider__slide'));
+        // Resume desktop autoplay
+        startAutoPlay();
+      }
+    };
+
+    // Start on load based on viewport
+    if (!window.matchMedia('(max-width: 480px)').matches) {
+      startAutoPlay();
+    }
+    initMobileSliderIfNeeded();
+    window.addEventListener('resize', initMobileSliderIfNeeded);
+
+    // Pause auto-play on hover
+    if (main) {
+      main.addEventListener('mouseenter', stopAutoPlay);
+      main.addEventListener('mouseleave', startAutoPlay);
+    }
+
+    const optionSelects = document.querySelectorAll('[data-option-index]');
+    const variantIdSelect = document.getElementById('VariantSelector-{{ section.id }}');
+
+    if (optionSelects.length > 0 && variantIdSelect) {
+      const updateVariant = () => {
+        const selectedOptions = Array.from(optionSelects).map(select => select.value);
+        const matchingVariant = Array.from(variantIdSelect.options).find(option => {
+          const variantTitle = option.text;
+          return selectedOptions.every(selectedOption => variantTitle.includes(selectedOption));
+        });
+
+        if (matchingVariant) {
+          variantIdSelect.value = matchingVariant.value;
+        }
+      };
+
+      optionSelects.forEach(select => {
+        select.addEventListener('change', updateVariant);
+      });
+    }
+
+    const accordionHeaders = document.querySelectorAll('.product-section__accordion-header');
+    accordionHeaders.forEach((header) => {
+      header.addEventListener('click', () => {
+        const panel = header.nextElementSibling;
+        header.classList.toggle('active');
+
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + 'px';
+        }
+      });
+    });
+
+    const initBeforeAfterSlider = (slider) => {
+      const afterImage = slider.querySelector('[data-bv-after]');
+      const handle = slider.querySelector('[data-bv-handle]');
+      if (!afterImage || !handle) return;
+
+      let isDragging = false;
+
+      const updateSlider = (x) => {
+        const rect = slider.getBoundingClientRect();
+        let percentage = (x - rect.left) / rect.width;
+        percentage = Math.max(0, Math.min(1, percentage));
+
+        handle.style.left = (percentage * 100) + '%';
+        afterImage.style.clipPath = `polygon(0 0, ${percentage * 100}% 0, ${percentage * 100}% 100%, 0 100%)`;
+      };
+
+      const onDragStart = (e) => {
+        e.preventDefault();
+        isDragging = true;
+        window.addEventListener('mousemove', onDragMove);
+        window.addEventListener('touchmove', onDragMove);
+        window.addEventListener('mouseup', onDragEnd);
+        window.addEventListener('touchend', onDragEnd);
+      };
+
+      const onDragMove = (e) => {
+        if (!isDragging) return;
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        updateSlider(clientX);
+      };
+
+      const onDragEnd = () => {
+        isDragging = false;
+        window.removeEventListener('mousemove', onDragMove);
+        window.removeEventListener('touchmove', onDragMove);
+        window.removeEventListener('mouseup', onDragEnd);
+        window.removeEventListener('touchend', onDragEnd);
+      };
+
+      handle.addEventListener('mousedown', onDragStart);
+      handle.addEventListener('touchstart', onDragStart, { passive: false });
+    };
+
+    document.querySelectorAll('[data-bv-slider]').forEach(initBeforeAfterSlider);
+
+    // Slider navigation
+    const sliderContainers = document.querySelectorAll('[data-bv-slider]');
+    const prevButton = document.querySelector('.bv-slider-nav-button--prev');
+    const nextButton = document.querySelector('.bv-slider-nav-button--next');
+    let currentSlideIndex = 0;
+
+    const updateActiveSlide = (newIndex) => {
+      sliderContainers.forEach((container, index) => {
+        container.classList.toggle('active', index === newIndex);
+      });
+      currentSlideIndex = newIndex;
+    };
+
+    if (prevButton && nextButton) {
+      prevButton.addEventListener('click', () => {
+        const newIndex = currentSlideIndex === 0 ? sliderContainers.length - 1 : currentSlideIndex - 1;
+        updateActiveSlide(newIndex);
+      });
+
+      nextButton.addEventListener('click', () => {
+        const newIndex = (currentSlideIndex + 1) % sliderContainers.length;
+        updateActiveSlide(newIndex);
+      });
+    }
+  });
+</script>
 
 {% schema %}
 {
   "name": "t:general.product",
-  "settings": [],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_payment_button",
+      "label": "Show dynamic checkout buttons",
+      "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+      "default": true
+    }
+  ],
   "disabled_on": {
     "groups": ["header", "footer"]
   }

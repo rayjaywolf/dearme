@@ -1,5 +1,5 @@
 <style>
-  #shopify-section-{{ section.id }} .marquee-section {
+  #shopify-section-{{ section.id }} .product-marquee-section {
     background-color: {{ section.settings.background_color }};
     {% if section.settings.show_noise_bg %}
       background-image: url('{{ 'noise.png' | asset_url }}');
@@ -8,35 +8,59 @@
     {% endif %}
   }
 
-  #shopify-section-{{ section.id }} .marquee-section__content li {
+  #shopify-section-{{ section.id }} .product-marquee-section__content li {
     color: {{ section.settings.text_color }};
   }
 
-  #shopify-section-{{ section.id }} .marquee-section__divider svg circle {
+  #shopify-section-{{ section.id }} .product-marquee-section__divider svg circle {
     fill: {{ section.settings.divider_color }};
   }
 </style>
 
 {%- capture marquee_items -%}
-  <li class="marquee-section__divider" aria-hidden="true">
+  <li class="product-marquee-section__divider" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+      <circle cx="5.5" cy="5" r="5"></circle>
+    </svg>
+  </li>
+  <li>Vegan</li>
+  <li class="product-marquee-section__divider" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+      <circle cx="5.5" cy="5" r="5"></circle>
+    </svg>
+  </li>
+  <li>Cruelty Free</li>
+  <li class="product-marquee-section__divider" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+      <circle cx="5.5" cy="5" r="5"></circle>
+    </svg>
+  </li>
+  <li>Fragrance Free</li>
+  <li class="product-marquee-section__divider" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
+      <circle cx="5.5" cy="5" r="5"></circle>
+    </svg>
+  </li>
+  <li>Made in India</li>
+  <li class="product-marquee-section__divider" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
       <circle cx="5.5" cy="5" r="5"></circle>
     </svg>
   </li>
   <li>Brightens</li>
-  <li class="marquee-section__divider" aria-hidden="true">
+  <li class="product-marquee-section__divider" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
       <circle cx="5.5" cy="5" r="5"></circle>
     </svg>
   </li>
   <li>Soothes</li>
-  <li class="marquee-section__divider" aria-hidden="true">
+  <li class="product-marquee-section__divider" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
       <circle cx="5.5" cy="5" r="5"></circle>
     </svg>
   </li>
   <li>Strengthens</li>
-  <li class="marquee-section__divider" aria-hidden="true">
+  <li class="product-marquee-section__divider" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 10" fill="none">
       <circle cx="5.5" cy="5" r="5"></circle>
     </svg>
@@ -44,13 +68,13 @@
   <li>Protects</li>
 {%- endcapture -%}
 
-<section class="marquee-section">
-  <div class="marquee-section__wrapper">
-    <ul class="marquee-section__content">
+<section class="product-marquee-section">
+  <div class="product-marquee-section__wrapper">
+    <ul class="product-marquee-section__content">
       {{ marquee_items }}
       {{ marquee_items }}
     </ul>
-    <ul class="marquee-section__content" aria-hidden="true">
+    <ul class="product-marquee-section__content" aria-hidden="true">
       {{ marquee_items }}
       {{ marquee_items }}
     </ul>
@@ -58,23 +82,23 @@
 </section>
 
 {% stylesheet %}
-  .marquee-section {
+  .product-marquee-section {
     width: 100%;
     padding: 0.7rem 0;
     overflow: hidden;
   }
 
-  .marquee-section__wrapper {
+  .product-marquee-section__wrapper {
     display: flex;
     flex-shrink: 0;
-    animation: scroll 30s linear infinite;
+    animation: product-marquee-scroll 30s linear infinite;
   }
 
-  .marquee-section__wrapper:hover {
+  .product-marquee-section__wrapper:hover {
     animation-play-state: paused;
   }
 
-  .marquee-section__content {
+  .product-marquee-section__content {
     display: flex;
     align-items: center;
     flex-shrink: 0;
@@ -85,7 +109,7 @@
     white-space: nowrap;
   }
 
-  .marquee-section__content li {
+  .product-marquee-section__content li {
     font-family: 'Inter', serif;
     font-size: 0.9rem;
     font-weight: 400;
@@ -93,20 +117,20 @@
     margin: 0;
   }
 
-  .marquee-section__divider {
+  .product-marquee-section__divider {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 0.25rem;
   }
 
-  .marquee-section__divider svg {
+  .product-marquee-section__divider svg {
     width: 50px;
     height: 8px;
     flex-shrink: 0;
   }
 
-  @keyframes scroll {
+  @keyframes product-marquee-scroll {
     from {
       transform: translateX(0);
     }
@@ -116,20 +140,20 @@
   }
 
   @media (max-width: 480px) {
-    .marquee-section {
+    .product-marquee-section {
       padding: 1rem 0;
     }
 
-    .marquee-section__content li {
+    .product-marquee-section__content li {
       font-size: 12px;
     }
 
-    .marquee-section__divider svg {
+    .product-marquee-section__divider svg {
       width: 30px;
       height: 5px;
     }
 
-    .marquee-section__wrapper {
+    .product-marquee-section__wrapper {
       animation-duration: 10s;
     }
   }
@@ -137,7 +161,7 @@
 
 {% schema %}
 {
-  "name": "Marquee",
+  "name": "Product Marquee",
   "settings": [
     {
       "type": "header",
@@ -170,7 +194,7 @@
   ],
   "presets": [
     {
-      "name": "Marquee"
+      "name": "Product Marquee"
     }
   ]
 }

@@ -1,32 +1,47 @@
-{% comment %}
-  Ingredients section
-{% endcomment %}
-
 <section
   class="ingredients-section"
-  style="background: {{ section.settings.background_color }} url('{{ "noise.png" | asset_url }}'); background-size: 150px 150px; background-repeat: repeat;"
+  style="--section-bg: {{ section.settings.section_bg }};"
 >
   <div class="ingredients-section__container">
     <div class="ingredients-section__columns">
       <div class="ingredients-section__column ingredients-section__column--left">
         <div class="ingredients-section__row ingredients-section__row--top">
           <div class="ingredients-section__text">
-            <h3 class="ingredients-section__subheading">all in one multi benefit serum.</h3>
-            <h2 class="ingredients-section__heading">
-              Powerful blend of science-backed actives and heritage botanicals
-            </h2>
+            {%- if section.settings.subheading != blank -%}
+              <h3
+                class="ingredients-section__subheading"
+                style="
+                  --text-color: {{ section.settings.text_color }};
+                  --subheading-font-size: {{ section.settings.subheading_font_size }}rem;
+                  --subheading-font-weight: {{ section.settings.subheading_font_weight }};
+                  --subheading-text-transform: {{ section.settings.subheading_text_transform }};
+                "
+              >
+                {{ section.settings.subheading | escape }}
+              </h3>
+            {%- endif -%}
+            {%- if section.settings.heading != blank -%}
+              <div
+                class="ingredients-section__heading"
+                style="
+                  --text-color: {{ section.settings.text_color }};
+                  --heading-font-size: {{ section.settings.heading_font_size }}px;
+                  --heading-font-weight: {{ section.settings.heading_font_weight }};
+                  --heading-text-transform: {{ section.settings.heading_text_transform }};
+                "
+              >
+                {{ section.settings.heading }}
+              </div>
+            {%- endif -%}
             <button
               type="button"
               id="ingredients-modal-trigger"
               class="ingredients-section__button"
               aria-haspopup="dialog"
               aria-expanded="false"
-              style="background-color: {{ section.settings.button_bg_color }}; color: {{ section.settings.button_text_color }}; border-color: {{ section.settings.button_border_color }}; font-family: {{ section.settings.button_font }}, sans-serif; text-transform: {{ section.settings.button_transform }}; font-style: {{ section.settings.button_style }};"
             >
-              <span class="ingredients-section__button-label" style="color: {{ section.settings.button_text_color }};"
-                >View all ingredients</span
-              >
-              <div class="ingredients-section__cta" style="background: {{ section.settings.button_arrow_bg }};">
+              <span class="ingredients-section__button-label">{{ section.settings.button_text }}</span>
+              <div class="ingredients-section__cta">
                 <svg
                   class="ingredients-section__cta-icon"
                   width="13"
@@ -34,7 +49,6 @@
                   viewBox="0 0 13 8"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  style="fill: {{ section.settings.button_arrow_color }};"
                 >
                   <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
                 </svg>
@@ -45,7 +59,6 @@
                   viewBox="0 0 13 8"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  style="fill: {{ section.settings.button_arrow_color }};"
                 >
                   <path d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z"></path>
                 </svg>
@@ -64,14 +77,9 @@
                 <button type="button" class="ingredients-section__modal-close" aria-label="Close ingredients list">
                   &times;
                 </button>
-                <h3 class="ingredients-section__modal-title" id="ingredients-modal-title">Full Ingredients List</h3>
+                <h3 class="ingredients-section__modal-title" id="ingredients-modal-title">{{ section.settings.modal_title }}</h3>
                 <p class="ingredients-section__modal-body">
-                  Aqua (Water), Propylene Glycol, Niacinamide, Centella Asiatica Extract, Panthenol, Glycyrrhiza Glabra
-                  (Licorice) Root Extract, Betula Alba (Birch) Sap, Oryza Sativa (Rice) Extract, Bifida Ferment Lysate,
-                  Xanthan Gum, Sodium Hyaluronate, Crocus Sativus (Saffron) Stigma Extract, 3-O-Ethyl Ascorbic Acid,
-                  Betaine, Propanediol, Dimethyl Isosorbide, Nelumbo Nucifera (Lotus) Flower Extract, Curcuma Longa
-                  (Turmeric) Root Extract, Terminalia Ferdinandiana (Kakadu Plum) Fruit Extract, Phenoxyethanol,
-                  Ethylhexylglycerin, Disodium EDTA.
+                  {{ section.settings.modal_body }}
                 </p>
               </div>
             </div>
@@ -81,150 +89,203 @@
       <div class="ingredients-section__column ingredients-section__column--right">
         <div class="ingredients-section__images-row">
           <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Saffron</h4>
-            <p class="ingredients-section__ingredient-description">
-              Rich in antioxidants like crocin and safranal, saffron helps brighten skin tone and reduce pigmentation.
-            </p>
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">{{ section.settings.ingredient_1_name }}</h4>
+              <p class="ingredients-section__ingredient-description">
+                {{ section.settings.ingredient_1_description }}
+              </p>
+            </div>
             <div class="ingredients-section__ingredient-image-container">
               <img
                 src="{{ 'ingredient-saffron.png' | asset_url }}"
-                alt="Saffron"
+                alt="{{ section.settings.ingredient_1_alt }}"
                 class="ingredients-section__ingredient-image"
                 loading="lazy"
               >
               <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Brightening</div>
-                <div class="ingredients-section__ingredient-badge">Antioxidant</div>
+                {%- if section.settings.ingredient_1_badge_1 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_1_badge_1 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_1_badge_2 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_1_badge_2 }}</div>
+                {%- endif -%}
               </div>
             </div>
           </div>
           <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Niacinamide</h4>
-            <p class="ingredients-section__ingredient-description">
-              A stable form of Vitamin B3 that improves barrier function, reduces redness, and evens skin tone.
-            </p>
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">{{ section.settings.ingredient_2_name }}</h4>
+              <p class="ingredients-section__ingredient-description">
+                {{ section.settings.ingredient_2_description }}
+              </p>
+            </div>
             <div class="ingredients-section__ingredient-image-container">
               <img
                 src="{{ 'ingredient-niacinamide.jpg' | asset_url }}"
-                alt="Niacinamide"
+                alt="{{ section.settings.ingredient_2_alt }}"
                 class="ingredients-section__ingredient-image"
                 loading="lazy"
               >
               <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Brightening</div>
-                <div class="ingredients-section__ingredient-badge">Anti-inflammatory</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+                {%- if section.settings.ingredient_2_badge_1 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_2_badge_1 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_2_badge_2 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_2_badge_2 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_2_badge_3 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_2_badge_3 }}</div>
+                {%- endif -%}
               </div>
             </div>
           </div>
           <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Centella Asiatica (Cica)</h4>
-            <p class="ingredients-section__ingredient-description">
-              Contains asiaticoside and madecassoside, known to accelerate wound healing and soothe inflammation.
-            </p>
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">{{ section.settings.ingredient_3_name }}</h4>
+              <p class="ingredients-section__ingredient-description">
+                {{ section.settings.ingredient_3_description }}
+              </p>
+            </div>
             <div class="ingredients-section__ingredient-image-container">
               <img
                 src="{{ 'ingredient-centela.jpg' | asset_url }}"
-                alt="Centella Asiatica"
+                alt="{{ section.settings.ingredient_3_alt }}"
                 class="ingredients-section__ingredient-image"
                 loading="lazy"
               >
               <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Anti-inflammatory</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+                {%- if section.settings.ingredient_3_badge_1 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_3_badge_1 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_3_badge_2 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_3_badge_2 }}</div>
+                {%- endif -%}
               </div>
             </div>
           </div>
           <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Rice Water Extract</h4>
-            <p class="ingredients-section__ingredient-description">
-              Naturally rich in amino acids, vitamins, and minerals that soften skin and enhance radiance.
-            </p>
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">{{ section.settings.ingredient_4_name }}</h4>
+              <p class="ingredients-section__ingredient-description">
+                {{ section.settings.ingredient_4_description }}
+              </p>
+            </div>
             <div class="ingredients-section__ingredient-image-container">
               <img
                 src="{{ 'ingreient-rice-water.jpg' | asset_url }}"
-                alt="Rice Water Extract"
+                alt="{{ section.settings.ingredient_4_alt }}"
                 class="ingredients-section__ingredient-image"
                 loading="lazy"
               >
               <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Brightening</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+                {%- if section.settings.ingredient_4_badge_1 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_4_badge_1 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_4_badge_2 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_4_badge_2 }}</div>
+                {%- endif -%}
               </div>
             </div>
           </div>
           <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Panthenol (Pro-Vitamin B5)</h4>
-            <p class="ingredients-section__ingredient-description">
-              Converts to pantothenic acid in skin, providing deep hydration and promoting barrier repair.
-            </p>
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">{{ section.settings.ingredient_5_name }}</h4>
+              <p class="ingredients-section__ingredient-description">
+                {{ section.settings.ingredient_5_description }}
+              </p>
+            </div>
             <div class="ingredients-section__ingredient-image-container">
               <img
                 src="{{ 'ingredient-panthenol.jpg' | asset_url }}"
-                alt="Panthenol"
+                alt="{{ section.settings.ingredient_5_alt }}"
                 class="ingredients-section__ingredient-image"
                 loading="lazy"
               >
               <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Hydrating</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
-                <div class="ingredients-section__ingredient-badge">Anti-inflammatory</div>
+                {%- if section.settings.ingredient_5_badge_1 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_5_badge_1 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_5_badge_2 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_5_badge_2 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_5_badge_3 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_5_badge_3 }}</div>
+                {%- endif -%}
               </div>
             </div>
           </div>
           <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Propanediol</h4>
-            <p class="ingredients-section__ingredient-description">
-              A plant-derived humectant that enhances penetration of actives while maintaining skin hydration.
-            </p>
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">{{ section.settings.ingredient_6_name }}</h4>
+              <p class="ingredients-section__ingredient-description">
+                {{ section.settings.ingredient_6_description }}
+              </p>
+            </div>
             <div class="ingredients-section__ingredient-image-container">
               <img
                 src="{{ 'ingredient-propanediol.jpg' | asset_url }}"
-                alt="Propanediol"
+                alt="{{ section.settings.ingredient_6_alt }}"
                 class="ingredients-section__ingredient-image"
                 loading="lazy"
               >
               <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Hydrating</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+                {%- if section.settings.ingredient_6_badge_1 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_6_badge_1 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_6_badge_2 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_6_badge_2 }}</div>
+                {%- endif -%}
               </div>
             </div>
           </div>
           <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Bifida Ferment Lysate</h4>
-            <p class="ingredients-section__ingredient-description">
-              A probiotic-derived lysate shown to strengthen the skin barrier and improve resistance to environmental
-              stress.
-            </p>
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">{{ section.settings.ingredient_7_name }}</h4>
+              <p class="ingredients-section__ingredient-description">
+                {{ section.settings.ingredient_7_description }}
+              </p>
+            </div>
             <div class="ingredients-section__ingredient-image-container">
               <img
                 src="{{ 'ingredient-bifida-ferment-lysate.jpg' | asset_url }}"
-                alt="Bifida Ferment Lysate"
+                alt="{{ section.settings.ingredient_7_alt }}"
                 class="ingredients-section__ingredient-image"
                 loading="lazy"
               >
               <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Antioxidant</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
-                <div class="ingredients-section__ingredient-badge">Barrier Strengthening</div>
+                {%- if section.settings.ingredient_7_badge_1 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_7_badge_1 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_7_badge_2 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_7_badge_2 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_7_badge_3 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_7_badge_3 }}</div>
+                {%- endif -%}
               </div>
             </div>
           </div>
           <div class="ingredients-section__ingredient">
-            <h4 class="ingredients-section__ingredient-name">Hyaluronic Acid</h4>
-            <p class="ingredients-section__ingredient-description">
-              Smaller HA molecules penetrate deeper layers to boost hydration, elasticity, and plumpness.
-            </p>
+            <div class="ingredients-section__ingredient-details">
+              <h4 class="ingredients-section__ingredient-name">{{ section.settings.ingredient_8_name }}</h4>
+              <p class="ingredients-section__ingredient-description">
+                {{ section.settings.ingredient_8_description }}
+              </p>
+            </div>
             <div class="ingredients-section__ingredient-image-container">
               <img
                 src="{{ 'ingredient-hyaluronic-acid.jpg' | asset_url }}"
-                alt="Hyaluronic Acid"
+                alt="{{ section.settings.ingredient_8_alt }}"
                 class="ingredients-section__ingredient-image"
                 loading="lazy"
               >
               <div class="ingredients-section__ingredient-badges">
-                <div class="ingredients-section__ingredient-badge">Hydrating</div>
-                <div class="ingredients-section__ingredient-badge">Nourishing</div>
+                {%- if section.settings.ingredient_8_badge_1 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_8_badge_1 }}</div>
+                {%- endif -%}
+                {%- if section.settings.ingredient_8_badge_2 != blank -%}
+                  <div class="ingredients-section__ingredient-badge">{{ section.settings.ingredient_8_badge_2 }}</div>
+                {%- endif -%}
               </div>
             </div>
           </div>
@@ -236,19 +297,22 @@
 
 <style>
   .ingredients-section {
-    /* height: 85vh; */
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    background-color: #fef9f2 !important;
+    background-color: var(--section-bg, #fef9f2) !important;
+    background: var(--section-bg, #fef9f2) url('{{ 'noise.png' | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
   }
 
   .ingredients-section__container {
     width: 100%;
     margin: 0;
     padding: 2rem;
+    padding-top: 4rem;
     padding-bottom: 0;
     height: 100%;
     display: flex;
@@ -261,8 +325,6 @@
     gap: 1rem;
     width: 100%;
     height: 100%;
-    /* margin-bottom: 3rem; */
-    margin-top: 2rem;
   }
 
   .ingredients-section__column {
@@ -289,14 +351,6 @@
     padding: 0rem;
   }
 
-  .ingredients-section__row--top {
-    /* Top row specific styles */
-  }
-
-  .ingredients-section__row--bottom {
-    /* Bottom row specific styles */
-  }
-
   .ingredients-section__text {
     text-align: left;
     max-width: 100%;
@@ -304,22 +358,27 @@
 
   .ingredients-section__subheading {
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    color: #63001f;
+    font-size: var(--subheading-font-size, 0.9rem);
+    font-weight: var(--subheading-font-weight, 400);
+    text-transform: var(--subheading-text-transform, uppercase);
+    color: var(--text-color, #63001f);
     margin: 0 0 1rem 0;
     letter-spacing: 0.1em;
   }
 
   .ingredients-section__heading {
     font-family: 'Instrument Serif', serif;
-    font-size: 48px;
-    font-weight: 200;
+    font-size: var(--heading-font-size, 48px);
+    font-weight: var(--heading-font-weight, 200);
     line-height: 1.2;
-    color: #63001f;
+    color: var(--text-color, #63001f);
     margin: 0 0 2rem 0;
     text-align: left;
+    text-transform: var(--heading-text-transform, none);
+  }
+
+  .ingredients-section__heading p {
+    margin: 0;
   }
 
   .ingredients-section__button {
@@ -338,7 +397,34 @@
     max-width: 300px;
     margin-top: 2rem;
     cursor: pointer;
+    background-color: #63001f;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+  }
+
+  .ingredients-section__button .ingredients-section__button-label {
+    color: #ffffff;
+  }
+  .ingredients-section__button .ingredients-section__cta {
+    background: #ffffff;
+  }
+  .ingredients-section__button .ingredients-section__cta-icon {
+    fill: #63001f;
+  }
+  .ingredients-section__button:hover {
+    background-color: #ffffff;
+    color: #63001f;
     border: none;
+  }
+  .ingredients-section__button:hover .ingredients-section__button-label {
+    color: #63001f;
+  }
+  .ingredients-section__button:hover .ingredients-section__cta {
+    background: #63001f;
+  }
+  .ingredients-section__button:hover .ingredients-section__cta-icon {
+    fill: #ffffff;
   }
 
   .ingredients-section__button-label {
@@ -383,34 +469,6 @@
   .ingredients-section__button:hover .ingredients-section__cta .ingredients-section__cta-icon:last-child {
     opacity: 1;
     transform: translate(-50%, -50%) scaleX(1);
-  }
-
-  .ingredients-section__button {
-    background-color: {{ section.settings.button_text_color }} !important;
-    color: {{ section.settings.button_bg_color }} !important;
-  }
-  .ingredients-section__button .ingredients-section__button-label {
-    color: {{ section.settings.button_bg_color }} !important;
-  }
-  .ingredients-section__button .ingredients-section__cta {
-    background: {{ section.settings.button_bg_color }} !important;
-  }
-  .ingredients-section__button .ingredients-section__cta-icon {
-    fill: {{ section.settings.button_text_color }} !important;
-  }
-  .ingredients-section__button:hover {
-    background-color: {{ section.settings.button_bg_color }} !important;
-    color: {{ section.settings.button_text_color }} !important;
-    border: none !important;
-  }
-  .ingredients-section__button:hover .ingredients-section__button-label {
-    color: {{ section.settings.button_text_color }} !important;
-  }
-  .ingredients-section__button:hover .ingredients-section__cta {
-    background: {{ section.settings.button_text_color }} !important;
-  }
-  .ingredients-section__button:hover .ingredients-section__cta-icon {
-    fill: {{ section.settings.button_bg_color }} !important;
   }
 
   .ingredients-section__modal {
@@ -512,7 +570,6 @@
     overflow-y: hidden;
     width: 100%;
     max-width: 100%;
-    /* padding: 1rem 0; */
     scrollbar-width: none;
     -ms-overflow-style: none;
     box-sizing: border-box;
@@ -535,14 +592,15 @@
     font-size: 40px;
     font-weight: 400;
     color: #63001f;
-    margin: 0 0 0.4rem 0;
+    margin: 0 0 1rem 0;
     text-align: left;
+    line-height: 1;
   }
 
   .ingredients-section__ingredient-description {
     font-size: 14px;
     color: #666;
-    margin: 0 0 1rem 0;
+    margin: 0;
     text-align: left;
     line-height: 1.4;
     text-transform: uppercase;
@@ -575,21 +633,20 @@
 
   .ingredients-section__ingredient-badge {
     background: #63001f;
-    border: 1px solid rgba(255, 255, 255, 0.95);
     border-radius: 20px;
     padding: 6px 12px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
     line-height: 1.2;
     white-space: nowrap;
+    text-align: center;
   }
 
-  /* Mobile responsive adjustments */
   @media screen and (max-width: 480px) {
     .ingredients-section__container {
-      padding: 1rem 1rem 1rem;
+      padding: 2rem 1rem 1rem;
       padding-right: 0;
     }
 
@@ -607,12 +664,11 @@
     }
 
     .ingredients-section__heading {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
+      font-size: var(--heading-font-size, 1.8rem);
     }
 
     .ingredients-section__subheading {
-      font-size: 0.8rem;
+      font-size: var(--subheading-font-size, 0.8rem);
       margin-bottom: 0.8rem;
     }
 
@@ -649,30 +705,33 @@
 
     .ingredients-section__ingredient-name {
       font-size: 1.2rem;
-      margin-bottom: 0.3rem;
+      margin-bottom: 1rem;
       text-align: left;
-      /* transform: translateX(0.5rem); */
     }
 
     .ingredients-section__ingredient-description {
       font-size: 12px;
-      margin-bottom: 0.8rem;
+      margin-bottom: 1rem;
       line-height: 1.3;
       text-align: left;
-      /* transform: translateX(0.5rem); */
       width: 95%;
     }
 
     .ingredients-section__ingredient-image-container {
       width: 100%;
       height: 200px;
-      margin-top: 0.25rem;
+      margin-top: 1rem;
     }
 
     .ingredients-section__ingredient-badges {
       bottom: 10px;
-      left: 10px;
-      gap: 3px;
+      left: 0;
+      right: 0;
+      gap: 4px;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      max-width: 100%;
     }
 
     .ingredients-section__ingredient-badge {
@@ -742,286 +801,429 @@
   "settings": [
     {
       "type": "header",
-      "content": "Background Settings"
+      "content": "Section Styling"
     },
     {
       "type": "color",
-      "id": "background_color",
+      "id": "section_bg",
       "label": "Background Color",
       "default": "#fef9f2"
     },
     {
-      "type": "header",
-      "content": "Content Settings"
-    },
-    {
-      "type": "text",
-      "id": "title",
-      "label": "Section Title",
-      "default": "Ingredients 2 Section"
-    },
-    {
-      "type": "textarea",
-      "id": "description",
-      "label": "Section Description",
-      "default": "This is the second ingredients section with customizable content."
-    },
-    {
-      "type": "header",
-      "content": "Typography Settings"
-    },
-    {
-      "type": "select",
-      "id": "title_font",
-      "label": "Title Font",
-      "options": [
-        {
-          "value": "Gumani",
-          "label": "Gumani"
-        },
-        {
-          "value": "Instrument Serif",
-          "label": "Instrument Serif"
-        },
-        {
-          "value": "PPEditorial New",
-          "label": "PPEditorial New"
-        },
-        {
-          "value": "Inter",
-          "label": "Inter"
-        }
-      ],
-      "default": "Instrument Serif"
-    },
-    {
-      "type": "select",
-      "id": "title_style",
-      "label": "Title Font Style",
-      "options": [
-        {
-          "value": "normal",
-          "label": "Regular"
-        },
-        {
-          "value": "italic",
-          "label": "Italic"
-        }
-      ],
-      "default": "normal"
-    },
-    {
-      "type": "select",
-      "id": "description_font",
-      "label": "Description Font",
-      "options": [
-        {
-          "value": "Gumani",
-          "label": "Gumani"
-        },
-        {
-          "value": "Inter",
-          "label": "Inter"
-        },
-        {
-          "value": "Instrument Serif",
-          "label": "Instrument Serif"
-        },
-        {
-          "value": "PPEditorial New",
-          "label": "PPEditorial New"
-        }
-      ],
-      "default": "Inter"
-    },
-    {
-      "type": "select",
-      "id": "description_style",
-      "label": "Description Font Style",
-      "options": [
-        {
-          "value": "normal",
-          "label": "Regular"
-        },
-        {
-          "value": "italic",
-          "label": "Italic"
-        }
-      ],
-      "default": "normal"
-    },
-    {
-      "type": "select",
-      "id": "title_transform",
-      "label": "Title Text Transform",
-      "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "capitalize",
-          "label": "Capitalize"
-        },
-        {
-          "value": "uppercase",
-          "label": "Uppercase"
-        },
-        {
-          "value": "lowercase",
-          "label": "Lowercase"
-        }
-      ],
-      "default": "capitalize"
-    },
-    {
-      "type": "select",
-      "id": "description_transform",
-      "label": "Description Text Transform",
-      "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "capitalize",
-          "label": "Capitalize"
-        },
-        {
-          "value": "uppercase",
-          "label": "Uppercase"
-        },
-        {
-          "value": "lowercase",
-          "label": "Lowercase"
-        }
-      ],
-      "default": "none"
-    },
-    {
-      "type": "header",
-      "content": "Color Settings"
-    },
-    {
       "type": "color",
-      "id": "title_color",
-      "label": "Title Color",
+      "id": "text_color",
+      "label": "Text Color",
       "default": "#63001f"
     },
     {
-      "type": "color",
-      "id": "description_color",
-      "label": "Description Color",
-      "default": "#63001fd1"
-    },
-    {
       "type": "header",
-      "content": "Button Settings"
+      "content": "Text Content"
     },
     {
       "type": "text",
-      "id": "button_label",
-      "label": "Button Label",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "all in one multi benefit serum."
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Powerful blend of science-backed actives and heritage botanicals</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
       "default": "View all ingredients"
     },
     {
-      "type": "url",
-      "id": "button_link",
-      "label": "Button Link"
+      "type": "text",
+      "id": "modal_title",
+      "label": "Modal Title",
+      "default": "Full Ingredients List"
+    },
+    {
+      "type": "textarea",
+      "id": "modal_body",
+      "label": "Modal Body (Full Ingredients List)",
+      "default": "Aqua(Water), Glycyrrhiza Glabra (Licorice) Root Extract, Saccharomyces/Rice Ferment Filtrate, Bifida Ferment Lysate, Betula Platyphylla Japonica Juice (Birch Sap), Propylene Glycol, Madecassic Acid, Asiaticoside, Asiatic Acid, Niacinamide, Panthenol, Propanediol, Curcuma Longa (Turmeric) Root Extract, Nelumbo Nucifera (Lotus) Flower Extract, Glycerin, Terminalia Ferdinandiana (Kakadu Plum) Fruit Extract, 3-O-Ethyl Ascorbic Acid, Betaine, Dimethyl Isosorbide, Crocus Sativus (Saffron) Stigma Extract, Sodium Hyaluronate (Hyaluronic Acid), PPG-26-Buteth-26, PEG-40 Hydrogenated Castor Oil, Ethylhexyl Methoxycinnamate, Ethylhexyl Salicylate, Butyl Methoxydibenzoylmethane, Xanthan Gum, Butylene Glycol, Potassium Sorbate, Pentylene Glycol, Polyglyceryl-6 Caprylate, Polyglyceryl-4 Caprate, Disodium EDTA, Phenoxyethanol, Ethylhexylglycerin."
+    },
+    {
+      "type": "header",
+      "content": "Ingredient 1"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_1_name",
+      "label": "Name",
+      "default": "Saffron"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredient_1_description",
+      "label": "Description",
+      "default": "Rich in antioxidants like crocin and safranal, saffron helps brighten skin tone and reduce pigmentation."
+    },
+    {
+      "type": "text",
+      "id": "ingredient_1_alt",
+      "label": "Image Alt Text",
+      "default": "Saffron"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_1_badge_1",
+      "label": "Badge 1",
+      "default": "Brightening"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_1_badge_2",
+      "label": "Badge 2",
+      "default": "Antioxidant"
+    },
+    {
+      "type": "header",
+      "content": "Ingredient 2"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_2_name",
+      "label": "Name",
+      "default": "Niacinamide"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredient_2_description",
+      "label": "Description",
+      "default": "A stable form of Vitamin B3 that improves barrier function, reduces redness, and evens skin tone."
+    },
+    {
+      "type": "text",
+      "id": "ingredient_2_alt",
+      "label": "Image Alt Text",
+      "default": "Niacinamide"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_2_badge_1",
+      "label": "Badge 1",
+      "default": "Brightening"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_2_badge_2",
+      "label": "Badge 2",
+      "default": "Anti-inflammatory"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_2_badge_3",
+      "label": "Badge 3",
+      "default": "Nourishing"
+    },
+    {
+      "type": "header",
+      "content": "Ingredient 3"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_3_name",
+      "label": "Name",
+      "default": "Centella Asiatica (Cica)"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredient_3_description",
+      "label": "Description",
+      "default": "Contains asiaticoside and madecassoside, known to accelerate wound healing and soothe inflammation."
+    },
+    {
+      "type": "text",
+      "id": "ingredient_3_alt",
+      "label": "Image Alt Text",
+      "default": "Centella Asiatica"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_3_badge_1",
+      "label": "Badge 1",
+      "default": "Anti-inflammatory"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_3_badge_2",
+      "label": "Badge 2",
+      "default": "Nourishing"
+    },
+    {
+      "type": "header",
+      "content": "Ingredient 4"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_4_name",
+      "label": "Name",
+      "default": "Rice Water Extract"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredient_4_description",
+      "label": "Description",
+      "default": "Naturally rich in amino acids, vitamins, and minerals that soften skin and enhance radiance."
+    },
+    {
+      "type": "text",
+      "id": "ingredient_4_alt",
+      "label": "Image Alt Text",
+      "default": "Rice Water Extract"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_4_badge_1",
+      "label": "Badge 1",
+      "default": "Brightening"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_4_badge_2",
+      "label": "Badge 2",
+      "default": "Nourishing"
+    },
+    {
+      "type": "header",
+      "content": "Ingredient 5"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_5_name",
+      "label": "Name",
+      "default": "Panthenol (Pro-Vitamin B5)"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredient_5_description",
+      "label": "Description",
+      "default": "Converts to pantothenic acid in skin, providing deep hydration and promoting barrier repair."
+    },
+    {
+      "type": "text",
+      "id": "ingredient_5_alt",
+      "label": "Image Alt Text",
+      "default": "Panthenol"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_5_badge_1",
+      "label": "Badge 1",
+      "default": "Hydrating"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_5_badge_2",
+      "label": "Badge 2",
+      "default": "Nourishing"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_5_badge_3",
+      "label": "Badge 3",
+      "default": "Anti-inflammatory"
+    },
+    {
+      "type": "header",
+      "content": "Ingredient 6"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_6_name",
+      "label": "Name",
+      "default": "Propanediol"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredient_6_description",
+      "label": "Description",
+      "default": "A plant-derived humectant that enhances penetration of actives while maintaining skin hydration."
+    },
+    {
+      "type": "text",
+      "id": "ingredient_6_alt",
+      "label": "Image Alt Text",
+      "default": "Propanediol"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_6_badge_1",
+      "label": "Badge 1",
+      "default": "Hydrating"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_6_badge_2",
+      "label": "Badge 2",
+      "default": "Nourishing"
+    },
+    {
+      "type": "header",
+      "content": "Ingredient 7"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_7_name",
+      "label": "Name",
+      "default": "Bifida Ferment Lysate"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredient_7_description",
+      "label": "Description",
+      "default": "A probiotic-derived lysate shown to strengthen the skin barrier and improve resistance to environmental stress."
+    },
+    {
+      "type": "text",
+      "id": "ingredient_7_alt",
+      "label": "Image Alt Text",
+      "default": "Bifida Ferment Lysate"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_7_badge_1",
+      "label": "Badge 1",
+      "default": "Antioxidant"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_7_badge_2",
+      "label": "Badge 2",
+      "default": "Nourishing"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_7_badge_3",
+      "label": "Badge 3",
+      "default": "Barrier Strengthening"
+    },
+    {
+      "type": "header",
+      "content": "Ingredient 8"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_8_name",
+      "label": "Name",
+      "default": "Hyaluronic Acid"
+    },
+    {
+      "type": "textarea",
+      "id": "ingredient_8_description",
+      "label": "Description",
+      "default": "Smaller HA molecules penetrate deeper layers to boost hydration, elasticity, and plumpness."
+    },
+    {
+      "type": "text",
+      "id": "ingredient_8_alt",
+      "label": "Image Alt Text",
+      "default": "Hyaluronic Acid"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_8_badge_1",
+      "label": "Badge 1",
+      "default": "Hydrating"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_8_badge_2",
+      "label": "Badge 2",
+      "default": "Nourishing"
+    },
+    {
+      "type": "header",
+      "content": "Subheading Styling"
+    },
+    {
+      "type": "range",
+      "id": "subheading_font_size",
+      "label": "Font Size",
+      "min": 0.5,
+      "max": 2,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 0.9
     },
     {
       "type": "select",
-      "id": "button_font",
-      "label": "Button Font",
+      "id": "subheading_font_weight",
+      "label": "Font Weight",
       "options": [
-        {
-          "value": "Gumani",
-          "label": "Gumani"
-        },
-        {
-          "value": "Instrument Serif",
-          "label": "Instrument Serif"
-        },
-        {
-          "value": "PPEditorial New",
-          "label": "PPEditorial New"
-        },
-        {
-          "value": "Inter",
-          "label": "Inter"
-        }
+        { "value": "100", "label": "Thin" },
+        { "value": "200", "label": "Extra Light" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
       ],
-      "default": "Inter"
+      "default": "400"
     },
     {
       "type": "select",
-      "id": "button_style",
-      "label": "Button Font Style",
+      "id": "subheading_text_transform",
+      "label": "Text Transform",
       "options": [
-        {
-          "value": "normal",
-          "label": "Regular"
-        },
-        {
-          "value": "italic",
-          "label": "Italic"
-        }
-      ],
-      "default": "normal"
-    },
-    {
-      "type": "select",
-      "id": "button_transform",
-      "label": "Button Text Transform",
-      "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "capitalize",
-          "label": "Capitalize"
-        },
-        {
-          "value": "uppercase",
-          "label": "Uppercase"
-        },
-        {
-          "value": "lowercase",
-          "label": "Lowercase"
-        }
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
       ],
       "default": "uppercase"
     },
     {
-      "type": "color",
-      "id": "button_bg_color",
-      "label": "Button Background Color",
-      "default": "#ffffff"
+      "type": "header",
+      "content": "Heading Styling"
     },
     {
-      "type": "color",
-      "id": "button_text_color",
-      "label": "Button Text Color",
-      "default": "#63001f"
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "Font Size",
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "default": 48
     },
     {
-      "type": "color",
-      "id": "button_border_color",
-      "label": "Button Border Color",
-      "default": "#ffffff"
+      "type": "select",
+      "id": "heading_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "100", "label": "Thin" },
+        { "value": "200", "label": "Extra Light" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "200"
     },
     {
-      "type": "color",
-      "id": "button_arrow_bg",
-      "label": "Button Arrow Background",
-      "default": "#63001f"
-    },
-    {
-      "type": "color",
-      "id": "button_arrow_color",
-      "label": "Button Arrow Color",
-      "default": "#ffffff"
+      "type": "select",
+      "id": "heading_text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
     }
   ],
   "presets": [

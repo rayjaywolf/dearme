@@ -10,31 +10,32 @@
     <div class="product-showcase-section__grid">
       <!-- Left Column: Skin Concerns -->
       <div class="product-showcase-section__column product-showcase-section__column--left">
-        <h3 class="product-showcase-section__concerns-subheading">
-          From redness to dullness, Sacred Secret is designed to address sensitive skin's top struggles without
-          irritation.
-        </h3>
+        {%- if section.settings.concerns_subheading != blank -%}
+          <h3 class="product-showcase-section__concerns-subheading">
+            {{ section.settings.concerns_subheading }}
+          </h3>
+        {%- endif -%}
         <div class="product-showcase-section__concerns-list">
           <div class="product-showcase-section__concern">
-            <div class="product-showcase-section__concern-problem">Dullness</div>
+            <div class="product-showcase-section__concern-problem">{{ section.settings.concern_1_problem }}</div>
             <div class="product-showcase-section__concern-arrow" aria-hidden="true">↓</div>
-            <div class="product-showcase-section__concern-solution">Brightened with Saffron + Rice Water</div>
+            <div class="product-showcase-section__concern-solution">{{ section.settings.concern_1_solution }}</div>
           </div>
           <div class="product-showcase-section__concern">
-            <div class="product-showcase-section__concern-problem">Redness/Irritation</div>
+            <div class="product-showcase-section__concern-problem">{{ section.settings.concern_2_problem }}</div>
             <div class="product-showcase-section__concern-arrow" aria-hidden="true">↓</div>
-            <div class="product-showcase-section__concern-solution">Calmed with Centella + Panthenol</div>
+            <div class="product-showcase-section__concern-solution">{{ section.settings.concern_2_solution }}</div>
           </div>
           <div class="product-showcase-section__concern">
-            <div class="product-showcase-section__concern-problem">Weak Barrier</div>
+            <div class="product-showcase-section__concern-problem">{{ section.settings.concern_3_problem }}</div>
             <div class="product-showcase-section__concern-arrow" aria-hidden="true">↓</div>
-            <div class="product-showcase-section__concern-solution">Strengthened with Niacinamide + Bifida Ferment</div>
+            <div class="product-showcase-section__concern-solution">{{ section.settings.concern_3_solution }}</div>
           </div>
           <div class="product-showcase-section__concern">
-            <div class="product-showcase-section__concern-problem">Dehydration</div>
+            <div class="product-showcase-section__concern-problem">{{ section.settings.concern_4_problem }}</div>
             <div class="product-showcase-section__concern-arrow" aria-hidden="true">↓</div>
             <div class="product-showcase-section__concern-solution">
-              Plumped with Low-MW Hyaluronic Acid + Propanediol
+              {{ section.settings.concern_4_solution }}
             </div>
           </div>
         </div>
@@ -44,7 +45,7 @@
       <div class="product-showcase-section__column product-showcase-section__column--center">
         <img
           src="{{ 'bottle.png' | asset_url }}"
-          alt="Sacred Secret Bottle"
+          alt="{{ section.settings.product_image_alt }}"
           class="product-showcase-section__image"
           loading="lazy"
           width="300"
@@ -54,19 +55,22 @@
 
       <!-- Right Column: Product Info -->
       <div class="product-showcase-section__column product-showcase-section__column--right">
-        <h2 class="product-showcase__title">Sacred <span>Secret</span></h2>
-        <h3 class="product-showcase__subtitle">Age Defying Illuminating Saffron Weightless Face Serum</h3>
-        <p class="product-showcase__description">
-          Your Pathway to Timeless Beauty. Immerse in the Elixir of Kashmiri Saffron, Crafted for Royalty. Embrace
-          Radiance.
-        </p>
+        <h2 class="product-showcase__title">{{ section.settings.product_title }}</h2>
+        {%- if section.settings.product_subtitle != blank -%}
+          <h3 class="product-showcase__subtitle">{{ section.settings.product_subtitle }}</h3>
+        {%- endif -%}
+        {%- if section.settings.product_description != blank -%}
+          <p class="product-showcase__description">
+            {{ section.settings.product_description }}
+          </p>
+        {%- endif -%}
         <div class="product-showcase__actions">
           <a
-            href=""
+            href="{{ section.settings.button_url }}"
             class="product-showcase__button"
             style=""
           >
-            <span class="product-showcase__button-text" style="">Buy Now</span>
+            <span class="product-showcase__button-text" style="">{{ section.settings.button_text }}</span>
             <div class="product-showcase__cta" style="">
               <svg
                 class="product-showcase__cta-icon"
@@ -107,7 +111,7 @@
     align-items: center;
     position: relative;
     background-color: #ead1c1 !important;
-    padding: 4rem 3rem 4rem;
+    padding: 4rem 3rem;
   }
 
   .product-showcase-section__container {
@@ -470,6 +474,100 @@
 {
   "name": "Product Showcase",
   "settings": [
+    {
+      "type": "header",
+      "content": "Content Settings"
+    },
+    {
+      "type": "text",
+      "id": "concerns_subheading",
+      "label": "Concerns Subheading",
+      "default": "From redness to dullness, Sacred Secret is designed to address sensitive skin's top struggles without irritation."
+    },
+    {
+      "type": "text",
+      "id": "concern_1_problem",
+      "label": "Concern 1 - Problem",
+      "default": "Dullness"
+    },
+    {
+      "type": "text",
+      "id": "concern_1_solution",
+      "label": "Concern 1 - Solution",
+      "default": "Brightened with Saffron + Rice Water"
+    },
+    {
+      "type": "text",
+      "id": "concern_2_problem",
+      "label": "Concern 2 - Problem",
+      "default": "Redness/Irritation"
+    },
+    {
+      "type": "text",
+      "id": "concern_2_solution",
+      "label": "Concern 2 - Solution",
+      "default": "Calmed with Centella + Panthenol"
+    },
+    {
+      "type": "text",
+      "id": "concern_3_problem",
+      "label": "Concern 3 - Problem",
+      "default": "Weak Barrier"
+    },
+    {
+      "type": "text",
+      "id": "concern_3_solution",
+      "label": "Concern 3 - Solution",
+      "default": "Strengthened with Niacinamide + Bifida Ferment"
+    },
+    {
+      "type": "text",
+      "id": "concern_4_problem",
+      "label": "Concern 4 - Problem",
+      "default": "Dehydration"
+    },
+    {
+      "type": "text",
+      "id": "concern_4_solution",
+      "label": "Concern 4 - Solution",
+      "default": "Plumped with Low-MW Hyaluronic Acid + Propanediol"
+    },
+    {
+      "type": "html",
+      "id": "product_title",
+      "label": "Product Title (use <span> for italic text)",
+      "default": "Sacred <span>Secret</span>"
+    },
+    {
+      "type": "text",
+      "id": "product_subtitle",
+      "label": "Product Subtitle",
+      "default": "Age Defying Illuminating Saffron Weightless Face Serum"
+    },
+    {
+      "type": "textarea",
+      "id": "product_description",
+      "label": "Product Description",
+      "default": "Your Pathway to Timeless Beauty. Immerse in the Elixir of Kashmiri Saffron, Crafted for Royalty. Embrace Radiance."
+    },
+    {
+      "type": "text",
+      "id": "product_image_alt",
+      "label": "Product Image Alt Text",
+      "default": "Sacred Secret Bottle"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Buy Now"
+    },
+    {
+      "type": "text",
+      "id": "button_url",
+      "label": "Button URL",
+      "default": "/products/sacredsecret"
+    },
     {
       "type": "header",
       "content": "Background Settings"

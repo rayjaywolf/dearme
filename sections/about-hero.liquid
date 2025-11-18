@@ -1,0 +1,100 @@
+{% comment %}
+About Hero Section
+{% endcomment %}
+
+<section class="about-hero">
+  <div class="about-hero__container">
+    <p class="about-hero__subtitle">Our Essence</p>
+    <h1 class="about-hero__title">Clinically
+      <em>Ayurvedic</em>
+    </h1>
+    <p class="about-hero__description">
+      Dear Me reimagines ancient Ayurvedic wisdom through a modern, scientific lens — <br>
+      creating high-performance skincare that feels pure, conscious, and deeply effective.
+    </p>
+  </div>
+</section>
+
+<style>
+  .about-hero__container {
+    height: 70vh;
+    margin-top: 5rem;
+    background: #ead1c1 url('{{ "noise.png" | asset_url }}');
+    background-size: 150px 150px;
+    background-repeat: repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .about-hero__subtitle {
+    font-size: 14px;
+    color: #63001f;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .about-hero__title {
+    font-family: 'Instrument Serif'
+      , serif;
+    font-size: 56px;
+    font-weight: 400;
+    color: #444;
+    text-align: center;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .about-hero__description {
+    font-family: 'Inter'
+      , sans-serif;
+    font-size: 14px;
+    color: #444;
+    text-align: center;
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  @media screen and (max-width: 480px) {
+    .about-hero__container {
+      height: 50vh;
+      gap: 2rem;
+      margin-top: 4rem;
+      padding: 0 1rem;
+    }
+
+    .about-hero__subtitle {
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    .about-hero__title {
+      font-size: 32px;
+    }
+
+    .about-hero__description {
+      font-size: 12px;
+    }
+
+    .about-hero__description br {
+      display: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+"name": "About Hero",
+"settings": [],
+"presets": [
+{
+"name": "About Hero"
+}
+]
+}
+{% endschema %}

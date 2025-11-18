@@ -15,15 +15,19 @@
         >
       </div>
       <div class="animal-for-animal__content">
-        <p
+        {%- if section.settings.text_content != blank -%}
+        <div
           class="animal-for-animal__text js-animated-title"
-          style=""
+          style="
+            --text-color: {{ section.settings.text_color }};
+            --text-font-size: {{ section.settings.text_font_size }}px;
+            --text-font-weight: {{ section.settings.text_font_weight }};
+            --text-transform: {{ section.settings.text_transform }};
+          "
         >
-          Our 'Animal for Animal' promise is simple: every purchase you make helps an animal in need. We believe in the
-          deep connection between all living beings, which is why a portion of every Dear Me order goes directly towards
-          nourishing stray animals. Your choice becomes an act of kindness, helping us build a world where compassion is
-          extended to every corner of the animal kingdom.
-        </p>
+          {{ section.settings.text_content }}
+        </div>
+        {%- endif -%}
         {% if section.settings.button_label != blank %}
           <a
             href="{{ section.settings.button_link | default: '/pages/animal-for-animal' }}"
@@ -68,7 +72,7 @@
   .animal-for-animal {
     background: #fef9f2 url('{{ 'noise.png' | asset_url }}');
     background-repeat: repeat;
-    background-size: auto;
+    background-size: 150px 150px;
     padding: 1rem;
     padding-top: 0;
   }
@@ -112,9 +116,19 @@
   }
   .animal-for-animal__text {
     width: 100%;
-    line-height: 1.7;
-    color: #fff;
-    font-size: 18px
+    line-height: 1.4;
+    color: var(--text-color, #fff);
+    font-size: var(--text-font-size, 18px);
+    font-weight: var(--text-font-weight, 400);
+    text-transform: var(--text-transform, none);
+  }
+
+  .animal-for-animal__text p {
+    margin: 0;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
   }
   .animal-for-animal__button {
     display: flex;
@@ -127,7 +141,7 @@
     text-transform: uppercase;
     transition: background-color 0.3s ease;
     border: none;
-    margin-top: 3rem;
+    margin-top: 2.5rem;
     gap: 4rem;
     overflow: hidden;
   }
@@ -200,6 +214,7 @@
   @media screen and (max-width: 480px) {
     .animal-for-animal {
       padding: 1rem;
+      padding-top: 0;
     }
 
     .animal-for-animal__section {
@@ -289,7 +304,66 @@
     },
     {
       "type": "header",
-      "content": "Typography Settings"
+      "content": "Text Content"
+    },
+    {
+      "type": "richtext",
+      "id": "text_content",
+      "label": "Text",
+      "default": "<p>Our 'Animal for Animal' promise is simple: every purchase you make helps an animal in need. We believe in the deep connection between all living beings, which is why a portion of every Dear Me order goes directly towards nourishing stray animals. Your choice becomes an act of kindness, helping us build a world where compassion is extended to every corner of the animal kingdom.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Text Styling"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Font Size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "text_font_weight",
+      "label": "Font Weight",
+      "options": [
+        { "value": "100", "label": "Thin" },
+        { "value": "200", "label": "Extra Light" },
+        { "value": "300", "label": "Light" },
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" },
+        { "value": "800", "label": "Extra Bold" },
+        { "value": "900", "label": "Black" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text Transform",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Legacy Typography Settings (Deprecated)"
     },
     {
       "type": "select",
@@ -332,30 +406,6 @@
       "default": "normal"
     },
     {
-      "type": "select",
-      "id": "text_transform",
-      "label": "Text Transform",
-      "options": [
-        {
-          "value": "none",
-          "label": "None"
-        },
-        {
-          "value": "capitalize",
-          "label": "Capitalize"
-        },
-        {
-          "value": "uppercase",
-          "label": "Uppercase"
-        },
-        {
-          "value": "lowercase",
-          "label": "Lowercase"
-        }
-      ],
-      "default": "none"
-    },
-    {
       "type": "range",
       "id": "text_size",
       "min": 0.6,
@@ -364,12 +414,6 @@
       "unit": "rem",
       "label": "Text Size",
       "default": 1.1
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#fff"
     },
     {
       "type": "header",

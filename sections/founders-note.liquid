@@ -1,46 +1,64 @@
 {% comment %}
-  Founder's Note Section
+Founder's Note Section
 {% endcomment %}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
   href="https://fonts.googleapis.com/css2?family=Playwrite+IN:wght@100..400&family=Playwrite+US+Trad:wght@100..400&display=swap"
-  rel="stylesheet"
->
+  rel="stylesheet">
 
-<section class="founders-note-section">
+{%- liquid
+assign texture_url = 'paper-texture.jpg' | asset_url
+if section.settings.texture_image != blank
+assign texture_url = section.settings.texture_image | image_url: width: 1920
+endif
+-%}
+
+<section class="founders-note-section" style="
+    --section-bg: {{ section.settings.section_bg }};
+    --texture-image-url: url('{{ texture_url }}');
+  ">
   <div class="founders-note-section__container">
     <div class="founders-note-section__header">
-      <h2 class="founders-note-section__title">A Note from the <em>Founder...</em></h2>
+      {%- if section.settings.title_text != blank -%}
+      <div class="founders-note-section__title" style="
+            --title-color: {{ section.settings.title_color }};
+            --title-font-size: {{ section.settings.title_font_size }}px;
+            --title-font-weight: {{ section.settings.title_font_weight }};
+            --title-text-transform: {{ section.settings.title_text_transform }};
+          ">
+        {{ section.settings.title_text }}
+      </div>
+      {%- endif -%}
     </div>
 
     <div class="founders-note-section__content">
-      <p class="founders-note-section__text">
-        When we launched <span class="founders-note-section__highlight">Sacred Secret</span>, it quickly became more
-        than a serum it became a part of people's routines, and for many, it worked like magic. But not everyone had the
-        same experience. Some found the texture heavy, some felt it sticky, and the pump design itself caused
-        frustration. As a founder, it was the hardest decision to stop, pause everything, and go back to the lab, even
-        with marketing already running.
-      </p>
-
-      <p class="founders-note-section__text">
-        For nine months, we dedicated ourselves to reformulation. We sourced the purest ingredients from Korea, Africa,
-        and India, and tested more than forty iterations until we found the one that felt truly complete. The result is
-        <span class="founders-note-section__highlight">Sacred Secret 2.0</span> - a serum that is super light,
-        ultra-luxurious, and weightless on the skin. It absorbs effortlessly, leaving behind only comfort, radiance, and
-        results.
-      </p>
-
-      <p class="founders-note-section__text">
-        <span class="founders-note-section__highlight">Sacred Secret 2.0</span> is not just a reformulation; it is our
-        promise that when something can be made better, we will never settle.
-      </p>
+      {%- if section.settings.body_text != blank -%}
+      <div class="founders-note-section__text" style="
+            --text-color: {{ section.settings.text_color }};
+            --text-font-size: {{ section.settings.text_font_size }}px;
+            --text-font-weight: {{ section.settings.text_font_weight }};
+            --text-text-transform: {{ section.settings.text_text_transform }};
+          ">
+        {{ section.settings.body_text }}
+      </div>
+      {%- endif -%}
 
       <div class="founders-note-section__signature">
         <div class="founders-note-section__signature-container">
-          <img src="{{ 'sign.png' | asset_url }}" alt="Suysh Signature" class="founders-note-section__signature-image">
-          <div class="founders-note-section__signature-text">- Suysh, Founder</div>
+          {%- if section.settings.signature_image != blank -%}
+          <img src="{{ section.settings.signature_image | image_url: width: 120 }}" alt="Founder Signature"
+            class="founders-note-section__signature-image" width="60"
+            height="{{ 60 | divided_by: section.settings.signature_image.aspect_ratio | round }}" loading="lazy">
+          {%- else -%}
+          <img src="{{ 'sign.png' | asset_url }}" alt="Suysh Signature" class="founders-note-section__signature-image"
+            width="60">
+          {%- endif -%}
+          <div class="founders-note-section__signature-text"
+            style="--signature-color: {{ section.settings.signature_color }};">
+            - Suysh, Founder
+          </div>
         </div>
       </div>
     </div>
@@ -49,8 +67,8 @@
 
 <style>
   .founders-note-section {
-    background: #fef9f2;
-    padding: 3rem 0;
+    background: var(--section-bg, #fef9f2);
+    padding: 4rem 0;
     position: relative;
   }
 
@@ -61,7 +79,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: url('{{ 'paper-texture.jpg' | asset_url }}');
+    background-image: var(--texture-image-url);
     background-size: cover;
     background-position: center;
     opacity: 0.5;
@@ -76,15 +94,22 @@
   }
 
   .founders-note-section__header {
-    text-align: left;
-    margin-bottom: 2rem;
+    text-align: center;
+    margin-bottom: 4rem;
   }
 
   .founders-note-section__title {
     font-family: 'Instrument Serif', sans-serif;
-    font-size: 40px;
-    font-weight: 200;
-    color: #63001f;
+    color: var(--title-color, #63001f);
+    margin: 0;
+    line-height: 0;
+  }
+
+  .founders-note-section__title>* {
+    font-size: var(--title-font-size, 40px);
+    font-weight: var(--title-font-weight, 200);
+    text-transform: var(--title-text-transform, none);
+    color: inherit;
     margin: 0;
   }
 
@@ -94,21 +119,31 @@
 
   .founders-note-section__text {
     font-family: 'Playwrite IN', cursive;
-    font-size: 16px;
     line-height: 2;
     word-spacing: 0.2em;
-    font-weight: 500;
-    color: #000;
+    color: var(--text-color, #000);
     margin-bottom: 1rem;
     text-align: justify;
+  }
+
+  .founders-note-section__text>* {
+    font-size: var(--text-font-size, 16px);
+    font-weight: var(--text-font-weight, 500);
+    text-transform: var(--text-text-transform, none);
+    color: inherit;
+    margin: 0;
+    line-height: 2;
+  }
+
+  .founders-note-section__text p {
+    margin-bottom: 1rem;
   }
 
   .founders-note-section__text:last-of-type {
     margin-bottom: 0rem;
   }
 
-  .founders-note-section__highlight {
-  }
+  .founders-note-section__highlight {}
 
   .founders-note-section__signature {
     text-align: right;
@@ -135,7 +170,7 @@
     width: 120px;
     font-size: 14px;
     font-weight: bold;
-    color: #63001f;
+    color: var(--signature-color, #63001f);
     text-align: center;
   }
 
@@ -156,16 +191,22 @@
     }
 
     .founders-note-section__title {
-      font-size: 32px;
-      margin-bottom: 0.6rem;
       line-height: 1.05;
     }
 
+    .founders-note-section__title>* {
+      font-size: 32px;
+      margin-bottom: 0.6rem;
+    }
+
     .founders-note-section__text {
-      font-size: 12px;
-      line-height: 1.6;
       word-spacing: 0.1em;
       margin-bottom: 0.8rem;
+    }
+
+    .founders-note-section__text>* {
+      font-size: 12px;
+      line-height: 1.6;
     }
 
     .founders-note-section__signature {
@@ -188,3 +229,158 @@
     }
   }
 </style>
+
+{% schema %}
+{
+"name": "Founder's Note",
+"settings": [
+{
+"type": "header",
+"content": "Section Styling"
+},
+{
+"type": "color",
+"id": "section_bg",
+"label": "Background Color",
+"default": "#fef9f2"
+},
+{
+"type": "image_picker",
+"id": "texture_image",
+"label": "Texture Image",
+"info": "Uses 'paper-texture.jpg' from assets by default."
+},
+{
+"type": "header",
+"content": "Title Content"
+},
+{
+"type": "richtext",
+"id": "title_text",
+"label": "Title",
+"default": "<h2>A Note from the <em>Founder...</em></h2>"
+},
+{
+"type": "color",
+"id": "title_color",
+"label": "Font Color",
+"default": "#63001f"
+},
+{
+"type": "range",
+"id": "title_font_size",
+"label": "Font Size",
+"min": 24,
+"max": 64,
+"step": 1,
+"unit": "px",
+"default": 40
+},
+{
+"type": "select",
+"id": "title_font_weight",
+"label": "Font Weight",
+"options": [
+{ "value": "100", "label": "Thin" },
+{ "value": "200", "label": "Extra Light" },
+{ "value": "300", "label": "Light" },
+{ "value": "400", "label": "Regular" },
+{ "value": "500", "label": "Medium" },
+{ "value": "600", "label": "Semi Bold" },
+{ "value": "700", "label": "Bold" },
+{ "value": "800", "label": "Extra Bold" },
+{ "value": "900", "label": "Black" }
+],
+"default": "200"
+},
+{
+"type": "select",
+"id": "title_text_transform",
+"label": "Text Transform",
+"options": [
+{ "value": "none", "label": "None" },
+{ "value": "uppercase", "label": "Uppercase" },
+{ "value": "lowercase", "label": "Lowercase" },
+{ "value": "capitalize", "label": "Capitalize" }
+],
+"default": "none"
+},
+{
+"type": "header",
+"content": "Body Text"
+},
+{
+"type": "richtext",
+"id": "body_text",
+"label": "Text",
+"default": "<p>When we launched Sacred Secret, it quickly became more than a serum it became a part of people's routines, and for many, it worked like magic. But not everyone had the same experience. Some found the texture heavy, some felt it sticky, and the pump design itself caused frustration. As a founder, it was the hardest decision to stop, pause everything, and go back to the lab, even with marketing already running.</p><p>For nine months, we dedicated ourselves to reformulation. We sourced the purest ingredients from Korea, Africa, and India, and tested more than forty iterations until we found the one that felt truly complete. The result is Sacred Secret 2.0 - a serum that is super light, ultra-luxurious, and weightless on the skin. It absorbs effortlessly, leaving behind only comfort, radiance, and results.</p><p>Sacred Secret 2.0 is not just a reformulation; it is our promise that when something can be made better, we will never settle.</p>"
+},
+{
+"type": "color",
+"id": "text_color",
+"label": "Font Color",
+"default": "#000000"
+},
+{
+"type": "range",
+"id": "text_font_size",
+"label": "Font Size",
+"min": 10,
+"max": 24,
+"step": 1,
+"unit": "px",
+"default": 16
+},
+{
+"type": "select",
+"id": "text_font_weight",
+"label": "Font Weight",
+"options": [
+{ "value": "100", "label": "Thin" },
+{ "value": "200", "label": "Extra Light" },
+{ "value": "300", "label": "Light" },
+{ "value": "400", "label": "Regular" },
+{ "value": "500", "label": "Medium" },
+{ "value": "600", "label": "Semi Bold" },
+{ "value": "700", "label": "Bold" },
+{ "value": "800", "label": "Extra Bold" },
+{ "value": "900", "label": "Black" }
+],
+"default": "500"
+},
+{
+"type": "select",
+"id": "text_text_transform",
+"label": "Text Transform",
+"options": [
+{ "value": "none", "label": "None" },
+{ "value": "uppercase", "label": "Uppercase" },
+{ "value": "lowercase", "label": "Lowercase" },
+{ "value": "capitalize", "label": "Capitalize" }
+],
+"default": "none"
+},
+{
+"type": "header",
+"content": "Signature"
+},
+{
+"type": "image_picker",
+"id": "signature_image",
+"label": "Signature Image",
+"info": "Uses 'sign.png' from assets by default."
+},
+{
+"type": "color",
+"id": "signature_color",
+"label": "Signature Text Color",
+"default": "#63001f"
+}
+],
+"presets": [
+{
+"name": "Founder's Note"
+}
+]
+}
+{% endschema %}
