@@ -120,7 +120,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
       <div class="product-section__buttons">
         <button type="submit" class="product-section__submit product-section__submit--cart" {% unless
           current_variant.available %}disabled{% endunless %}>
-          <span class="product-section__button-text">Pre-Book</span>
+          <span class="product-section__button-text">Buy Now</span>
           <div class="product-section__cta">
             <svg class="product-section__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
               xmlns="http://www.w3.org/2000/svg">
@@ -144,7 +144,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
       {% endform %}
 
       <div class="product-section__accordion">
-        <div class="product-section__accordion-item">
+        <div class="product-section__accordion-item" id="get-to-know-me">
           <button type="button" class="product-section__accordion-header">
             <span class="product-section__accordion-title">GET TO KNOW ME</span>
             <span class="product-section__accordion-icon">+</span>
@@ -160,7 +160,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
           </div>
         </div>
 
-        <div class="product-section__accordion-item">
+        <div class="product-section__accordion-item" id="what-to-expect">
           <button type="button" class="product-section__accordion-header">
             <span class="product-section__accordion-title">WHAT TO EXPECT FROM ME</span>
             <span class="product-section__accordion-icon">+</span>
@@ -184,7 +184,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
           </div>
         </div>
 
-        <div class="product-section__accordion-item">
+        <div class="product-section__accordion-item" id="how-to-use">
           <button type="button" class="product-section__accordion-header">
             <span class="product-section__accordion-title">HOW TO USE ME</span>
             <span class="product-section__accordion-icon">+</span>
@@ -197,7 +197,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
           </div>
         </div>
 
-        <div class="product-section__accordion-item">
+        <div class="product-section__accordion-item" id="make-the-most">
           <button type="button" class="product-section__accordion-header">
             <span class="product-section__accordion-title">MAKE THE MOST OUT OF ME</span>
             <span class="product-section__accordion-icon">+</span>
@@ -218,7 +218,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
           </div>
         </div>
 
-        <div class="product-section__accordion-item">
+        <div class="product-section__accordion-item" id="full-ingredients-list">
           <button type="button" class="product-section__accordion-header">
             <span class="product-section__accordion-title">FULL INGREDIENTS LIST</span>
             <span class="product-section__accordion-icon">+</span>
@@ -231,6 +231,196 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     </div>
   </div>
 </section>
+
+<div class="product-sticky-bar" id="product-sticky-bar" aria-hidden="true">
+  <div class="product-sticky-bar__links">
+    {% if product.featured_media %}
+      {{ product.featured_media | image_url: width: 100 | image_tag: class: 'product-sticky-bar__image', loading: 'lazy', alt: product.title }}
+    {% endif %}
+    <span>{{ product.title }}</span>
+  </div>
+  <button type="button" class="product-sticky-bar__cta product-section__submit product-section__submit--cart">
+    <span class="product-section__button-text">Buy Now &nbsp;&nbsp; | &nbsp;&nbsp; {{ current_variant.price | money }}</span>
+    <div class="product-section__cta">
+      <svg class="product-section__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
+        </path>
+      </svg>
+      <svg class="product-section__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
+        </path>
+      </svg>
+    </div>
+  </button>
+  
+</div>
+
+<style>
+  .product-sticky-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: #fef9f2;
+    border-top: 1px solid rgba(99, 0, 31, 0.15);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+
+  .product-sticky-bar--visible {
+    transform: translateY(0);
+  }
+
+  .product-sticky-bar__links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .product-sticky-bar__links span {
+    color: #63001f;
+    font-family: "Instrument Serif", serif;
+    font-size: 20px;
+  }
+
+  .product-sticky-bar__cta { }
+
+  .product-sticky-bar__image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  @media (max-width: 480px) {
+    .product-sticky-bar__links {
+      display: none;
+    }
+
+    .product-sticky-bar__cta {
+      width: 100%;
+    }
+  }
+    
+</style>
+
+  <script>
+    (function() {
+      var sticky = document.getElementById('product-sticky-bar');
+      if (!sticky) return;
+
+      var sentinel = document.querySelector('.product-section__buttons');
+      var preBookBtn = document.querySelector('.product-section__buttons .product-section__submit--cart');
+      var form = preBookBtn ? preBookBtn.closest('form') : null;
+      var mq = window.matchMedia('(max-width: 480px)');
+
+      // Desktop/tablet: use IntersectionObserver on the buttons container
+      if (sentinel && 'IntersectionObserver' in window && !mq.matches) {
+        var io = new IntersectionObserver(function(entries) {
+          var entry = entries[0];
+          if (entry && entry.isIntersecting) {
+            sticky.classList.remove('product-sticky-bar--visible');
+            sticky.setAttribute('aria-hidden', 'true');
+          } else {
+            sticky.classList.add('product-sticky-bar--visible');
+            sticky.setAttribute('aria-hidden', 'false');
+          }
+        }, { threshold: 0 });
+        io.observe(sentinel);
+      }
+
+      // Mobile: show only after the Pre-Book button has been surpassed (scrolled above viewport top)
+      function setVisible(isVisible) {
+        if (isVisible) {
+          sticky.classList.add('product-sticky-bar--visible');
+          sticky.setAttribute('aria-hidden', 'false');
+        } else {
+          sticky.classList.remove('product-sticky-bar--visible');
+          sticky.setAttribute('aria-hidden', 'true');
+        }
+      }
+
+      var scheduled = false;
+      function mobileCheck() {
+        if (!mq.matches) return; // only apply on mobile
+        if (!preBookBtn) return;
+        var rect = preBookBtn.getBoundingClientRect();
+        // Show when the top of the button has gone above the viewport (user has scrolled past it)
+        var show = rect.top < 0;
+        setVisible(show);
+      }
+
+      function onScroll() {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(function() {
+          scheduled = false;
+          mobileCheck();
+        });
+      }
+
+      if (mq.matches) {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', mobileCheck);
+        mobileCheck();
+      }
+
+      if (typeof mq.addEventListener === 'function') {
+        mq.addEventListener('change', function(e) {
+          if (e.matches) {
+            // entering mobile
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', mobileCheck);
+            mobileCheck();
+          } else {
+            // leaving mobile
+            window.removeEventListener('scroll', onScroll);
+            window.removeEventListener('resize', mobileCheck);
+            // When not on mobile, hide initially; IO (if present above) will control visibility
+            setVisible(false);
+          }
+        });
+      }
+
+      var stickyCta = document.querySelector('.product-sticky-bar__cta');
+      if (stickyCta) {
+        stickyCta.addEventListener('click', function() {
+          if (preBookBtn) {
+            preBookBtn.click();
+          } else if (form) {
+            form.submit();
+          }
+        });
+      }
+
+      var links = document.querySelectorAll('.product-sticky-bar__links a');
+      links.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          var href = link.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            e.preventDefault();
+            var target = document.querySelector(href);
+            if (target && target.scrollIntoView) {
+              try { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+              catch (err) { window.location.hash = href.substring(1); }
+            }
+          }
+        });
+      });
+    })();
+  </script>
 
 {%- capture marquee_items -%}
 <li class="product-marquee__divider" aria-hidden="true">
@@ -296,26 +486,26 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
   </div>
 </section>
 
-<section class="texture-feel-section">
+<section class="texture-feel-section" id="texture-feel">
   <div class="texture-feel-row-1">
     <h1 class="texture-feel-title">Texture <em>& feel</em></h1>
     <div class="texture-feel-grid">
       <div class="texture-feel-column">
-        <div class="texture-feel-box"></div>
+        <img src="{{ 'light.jpg' | asset_url }}" class="texture-feel-box" alt="Super-light" loading="lazy">
         <div class="texture-feel-text-row">
           <p class="section_numbering">01</p>
           <p class="texture-feel-text">Super<em>-light</em></p>
         </div>
       </div>
       <div class="texture-feel-column">
-        <div class="texture-feel-box"></div>
+        <img src="{{ 'oil.jpg' | asset_url }}" class="texture-feel-box" alt="Oil-free" loading="lazy">
         <div class="texture-feel-text-row">
           <p class="section_numbering">02</p>
           <p class="texture-feel-text">Oil<em>-free</em></p>
         </div>
       </div>
       <div class="texture-feel-column">
-        <div class="texture-feel-box"></div>
+        <img src="{{ 'sticky.jpg' | asset_url }}" class="texture-feel-box" alt="Non-sticky" loading="lazy">
         <div class="texture-feel-text-row">
           <p class="section_numbering">03</p>
           <p class="texture-feel-text">Non<em>-sticky</em></p>
@@ -324,27 +514,21 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     </div>
   </div>
   <div class="texture-feel-row-2">
-    <div class="texture-feel-row-2-col-1">
-    </div>
     <div class="texture-feel-row-2-col-2">
       <h2 class="texture-feel-row-2-title"><em>Barely</em> there</h2>
       <p class="texture-feel-row-2-subtitle">- yet deeply nourishing.</p>
     </div>
-  </div>
-  <div class="texture-feel-row-3">
     <div class="texture-feel-row-3-col-1">
       <h2 class="texture-feel-row-3-title">Absorbs <em>instantly</em></h2>
       <p class="texture-feel-row-3-subtitle">- leaving a smooth, satin finish that <br> feels like a veil of calm
         brightness.
       </p>
     </div>
-    <div class="texture-feel-row-3-col-2">
-    </div>
   </div>
 
 </section>
 
-<section class="bv-slider-section">
+<section class="bv-slider-section" id="before-after">
   <div class="bv-slider-wrapper">
     <div class="bv-sliders-stack">
       <div class="bv-slider-container active" data-bv-slider data-slide-index="0">
@@ -442,7 +626,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
   </div>
 </section>
 
-<section class="innovation">
+<section class="innovation" id="innovation">
   <div class="innovation__container">
     <div class="innovation__header">
       <h2 class="innovation__title">
@@ -454,7 +638,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
       <div class="innovation-card innovation-card--saffrux">
         <div class="innovation-card__row">
           <div class="innovation-card__media">
-            <img src="{{ 'saffruxsj.jpg' | asset_url }}" alt="Saffron strands in a clear liquid"
+            <img src="{{ 'sbe.png' | asset_url }}" alt="Saffron strands in a clear liquid"
               class="innovation-card__image" width="400" height="400">
           </div>
           <div class="innovation-card__intro">
@@ -509,7 +693,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
             </p>
           </div>
           <div class="innovation-card__media">
-            <img src="{{ 'bbcomp.jpg' | asset_url }}" alt="Microscopic view of skin barrier cells"
+            <img src="{{ 'bbc.png' | asset_url }}" alt="Microscopic view of skin barrier cells"
               class="innovation-card__image" width="400" height="400">
           </div>
         </div>
@@ -555,7 +739,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
   </div>
 </section>
 
-<section class="ingredients-section">
+<section class="ingredients-section" id="ingredients">
   <div class="ingredients-section__container">
     <div class="ingredients-section__columns">
       <div class="ingredients-section__column ingredients-section__column--left">
@@ -1043,7 +1227,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 
   .ingredients-section__ingredient-description {
     font-size: 14px;
-    color: #666;
+    color: #444;
     margin: 0;
     text-align: left;
     line-height: 1.7;
@@ -2319,7 +2503,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     line-height: 1;
     color: #63001f;
     margin: 0;
-    margin-top: -.5rem;
+    margin-top: -1rem;
   }
 
   .product-section__tagline {
@@ -2445,7 +2629,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
   }
 
   .product-section__button-text {
-    margin-right: 1rem;
+    /* margin-right: 1rem; */
     padding-left: 1rem;
   }
 
@@ -2546,7 +2730,6 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
   }
 
   .product-section__accordion {
-    margin-top: 2rem;
     border-top: 1px solid rgba(99, 0, 31, 0.2);
   }
 
@@ -2691,7 +2874,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     background-size: 150px 150px;
     background-repeat: repeat;
     border-radius: 16px;
-    padding: 2rem 1rem 1rem;
+    padding: 2rem 0rem 1rem;
   }
 
   .texture-feel-title {
@@ -2722,6 +2905,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     height: 300px;
     background-color: #ccc;
     border-radius: 16px;
+    object-fit: cover;
   }
 
   .texture-feel-text-row {
@@ -2752,7 +2936,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 
   .texture-feel-row-2 {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 1rem;
     margin-top: 1rem;
     height: 300px;
@@ -3129,7 +3313,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     }
 
     .product-section__accordion {
-      margin-top: 1rem;
+      margin-top: .5rem;
     }
 
     .product-section__accordion-header {
@@ -3153,13 +3337,21 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
       width: 30px;
     }
 
+    .innovation__grid {
+      gap: .5rem;
+    }
+
+    .texture-feel-text-row {
+      gap: .5rem;
+    }
+
     /* --- Texture & Feel Section --- */
     .texture-feel-section {
       padding: 0 1rem 2rem;
     }
 
     .texture-feel-row-1 {
-      padding: 1.5rem 1rem;
+      padding: 1rem 1rem;
     }
 
     .texture-feel-title {
@@ -3184,6 +3376,8 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     .texture-feel-row-2 {
       grid-template-columns: 1fr;
       height: auto;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
     }
 
     .texture-feel-row-2-col-1,
@@ -3254,7 +3448,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     }
 
     .bv-slider-nav {
-      margin-top: 1rem;
+      margin-top: 0rem;
     }
 
     .bv-slider-nav-button {
@@ -3869,7 +4063,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
       "id": "enable_payment_button",
       "label": "Show dynamic checkout buttons",
       "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
-      "default": true
+      "default": false
     }
   ],
   "disabled_on": {

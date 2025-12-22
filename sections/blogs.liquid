@@ -14,17 +14,6 @@
         <div class="blogs-section__row">
           <div class="blogs-section__text">
             {%- if section.settings.subheading_content != blank -%}
-            <div
-              class="blogs-section__subheading"
-              style="
-                --subheading-color: {{ section.settings.subheading_color }};
-                --subheading-font-size: {{ section.settings.subheading_font_size }}px;
-                --subheading-font-weight: {{ section.settings.subheading_font_weight }};
-                --subheading-transform: {{ section.settings.subheading_transform }};
-              "
-            >
-              {{ section.settings.subheading_content }}
-            </div>
             {%- endif -%}
             {%- if section.settings.heading_content != blank -%}
             <div

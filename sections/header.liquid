@@ -33,7 +33,7 @@
       <a href="{{ routes.cart_url }}" class="header__icon">
         {{ 'icon-cart.svg' | inline_asset_content }}
         {% if cart.item_count > 0 %}
-          <sup class="header__cart-count">{{ cart.item_count }}</sup>
+          <span class="header__cart-badge">{{ cart.item_count }}</span>
         {% endif %}
       </a>
     </div>
@@ -71,7 +71,7 @@
       <a href="{{ routes.cart_url }}" class="header__icon">
         {{ 'icon-cart.svg' | inline_asset_content }}
         {% if cart.item_count > 0 %}
-          <sup>{{ cart.item_count }}</sup>
+          <span class="header__cart-badge">{{ cart.item_count }}</span>
         {% endif %}
       </a>
     </div>
@@ -379,15 +379,22 @@
     color: #ead1c1;
   }
 
-  .header__icon sup {
+  .header__cart-badge {
     position: absolute;
-    top: -0.5rem;
-    right: -0.5rem;
-    background: #ead1c1;
+    top: -0.3rem;
+    right: -0.3rem;
+    width: 0.9rem;
+    height: 0.9rem;
+    border-radius: 999px;
+    background: #FEF9F2;
     color: #63001f;
-    border-radius: 50%;
-    padding: 0 .5em;
-    font-size: 0.7em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 200;
+    line-height: 1;
+    pointer-events: none;
   }
 
   /* Mobile header styles */

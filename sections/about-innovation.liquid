@@ -11,8 +11,12 @@
       <div class="innovation-card innovation-card--saffrux">
         <div class="innovation-card__row">
           <div class="innovation-card__media">
-            <img src="{{ 'saffruxsj.jpg' | asset_url }}" alt="Saffron strands in a clear liquid"
-              class="innovation-card__image" width="400" height="400">
+            <img
+              src="{{ 'sbe.png' | asset_url }}"
+              alt="Saffron strands in a clear liquid"
+              class="innovation-card__image"
+              width="1500"
+              height="1500">
           </div>
           <div class="innovation-card__intro">
             <h3 class="innovation-card__heading">Saffrux Brightening Engine™</h3>
@@ -24,10 +28,10 @@
         </div>
         <div class="innovation-card__row">
           <div class="innovation-card__details">
-            <p>This next-generation brightening system harnesses the rare potency of GI-tagged Kashmiri Mongra Saffron,
+            <p>This next-generation brightening system harnesses the rare potency of GI-tagged Kashmiri Mongra Saffron,     
               revered in Ayurveda for its ability to even out skin tone, fade pigmentation, and enhance natural glow.
             </p>
-            <p>But saffron alone isn’t enough it needs a delivery system that ensures deeper penetration and sustained
+            <p>But saffron alone isn’t enough it needs a delivery system that ensures deeper penetration and sustained     
               action. That’s where modern science steps in.</p>
             <p>
               <strong>Saffrux Brightening Engine™</strong>
@@ -66,8 +70,12 @@
             </p>
           </div>
           <div class="innovation-card__media">
-            <img src="{{ 'bbcomp.jpg' | asset_url }}" alt="Microscopic view of skin barrier cells"
-              class="innovation-card__image" width="400" height="400">
+            <img
+              src="{{ 'bbc.png' | asset_url }}"
+              alt="Microscopic view of skin barrier cells"
+              class="innovation-card__image"
+              width="1500"
+              height="1500">
           </div>
         </div>
         <div class="innovation-card__row">
@@ -79,7 +87,7 @@
           </div>
           <div class="innovation-card__details">
             <p>Modern skin is exposed to constant stress - pollution, UV, actives, and lifestyle.</p>
-            <p>BarrierBiome Complex™ was created to repair what the world takes away. But saffron alone isn’t enough it
+            <p>BarrierBiome Complex™ was created to repair what the world takes away. But saffron alone isn’t enough it     
               needs a delivery system that ensures deeper penetration and sustained action. That’s where modern science
               steps in.</p>
             <p>It’s a bio-repair network designed to fortify your skin’s microbiome and restore its natural defense.</p>
@@ -117,7 +125,7 @@
     --color-primary-text: #63001f;
     --color-body-text: #444;
     --font-serif: "Instrument Serif"
-      , serif;
+    , serif;
     --background-noise: url('{{ "noise.png" | asset_url }}');
     --background-main: #FAF0E6;
     --background-saffrux: #FDD9BE;
@@ -336,6 +344,10 @@
       font-size: 30px;
     }
 
+    .innovation__grid {
+      gap: 0.5rem;
+    }
+
     .innovation-card__heading {
       font-size: 20px;
     }
@@ -471,12 +483,12 @@
 </style>
 
 {% schema %}
-{
-"name": "About Innovation",
-"presets": [
-{
-"name": "About Innovation"
-}
-]
-}
+  {
+    "name": "About Innovation",
+    "presets": [
+      {
+        "name": "About Innovation"
+      }
+    ]
+  }
 {% endschema %}

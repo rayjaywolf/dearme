@@ -1,0 +1,19 @@
+<script id="RazorpayMagicCheckoutConfig" type="application/json">
+  {
+    "buyNowEnabled": false,
+    "oneClickCheckoutEnabled": true,
+    "config": {
+      "merchant_key": "rzp_live_RiIOMHMX8tSzZO",
+      "autoRegisterProductEnabled": false,
+      "productConfig": {
+        "status": "live",
+        "customSelector": ""
+      },
+      "cartConfig": {
+        "status": "live",
+        "customSelector": ".cart-section__checkout-btn"
+      }
+    }
+  }
+</script>
+<script src="{{ 'magic-shopify.js' | asset_url }}" defer></script>

@@ -1,7 +1,7 @@
 {%- liquid
-assign headline_font = section.settings.headline_font
-assign subheadline_font = section.settings.subheadline_font
-assign button_font = section.settings.button_font
+  assign headline_font = section.settings.headline_font
+  assign subheadline_font = section.settings.subheadline_font
+  assign button_font = section.settings.button_font
 -%}
 
 <style>
@@ -96,28 +96,48 @@ assign button_font = section.settings.button_font
 
 <section class="hero-section">
   <div class="hero-section__background">
-    <img src="{{ 'DSC00097.jpg' | asset_url }}" alt="Hero background">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: section.settings.image.alt }}
+    {%- else -%}
+      <img src="{{ 'hero.jpg' | asset_url }}" alt="Hero background" width="1920" height="1080">
+    {%- endif -%}
   </div>
   <div class="hero-section__overlay"></div>
   <div class="hero-section__content">
-    <h1 class="hero-section__headline" data-split="heading">
-      <span> One <em>Serum</em>. Every <em>Benefit</em>.</span>
-      <br>
-    </h1>
-    <p class="hero-section__subheadline" data-split="subheading">
-      To illuminate, to repair, to renew.
-    </p>
-    <a href="/products/sacredsecret" class="hero-section__button">
-      <span class="hero-section__button-text">Reveal my glow</span>
+    <div class="hero-section__headline" data-split="heading">
+      {%- if section.settings.headline_text != blank -%}
+        {{ section.settings.headline_text }}
+      {%- else -%}
+        <span> One <em>Serum</em>. Every <em>Benefit</em>.</span>
+        <br>
+      {%- endif -%}
+    </div>
+    <div class="hero-section__subheadline" data-split="subheading">
+      {{ section.settings.subheadline_text | default: 'To illuminate, to repair, to renew.' }}
+    </div>
+    <a href="{{ section.settings.button_link | default: '/products/sacredsecret' }}" class="hero-section__button">
+      <span class="hero-section__button-text">{{ section.settings.button_text | default: 'Reveal my glow' }}</span>
       <div class="hero-section__cta">
-        <svg class="hero-section__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="hero-section__cta-icon"
+          width="13"
+          height="8"
+          viewBox="0 0 13 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
           </path>
         </svg>
-        <svg class="hero-section__cta-icon" width="13" height="8" viewBox="0 0 13 8" fill="none"
-          xmlns="http://www.w3.org/2000/svg">
+        <svg
+          class="hero-section__cta-icon"
+          width="13"
+          height="8"
+          viewBox="0 0 13 8"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             d="M12.3536 4.35355C12.5488 4.15829 12.5488 3.84171 12.3536 3.64645L9.17157 0.464466C8.97631 0.269204 8.65973 0.269204 8.46447 0.464466C8.2692 0.659728 8.2692 0.976311 8.46447 1.17157L11.2929 4L8.46447 6.82843C8.2692 7.02369 8.2692 7.34027 8.46447 7.53553C8.65973 7.7308 8.97631 7.7308 9.17157 7.53553L12.3536 4.35355ZM0 4.5H12V3.5H0V4.5Z">
           </path>
@@ -128,499 +148,494 @@ assign button_font = section.settings.button_font
 </section>
 
 {% stylesheet %}
-.hero-section {
-min-height: 100vh;
-min-height: 100dvh;
-display: flex;
-justify-content: center;
-align-items: center;
-text-align: center;
-overflow: hidden;
-padding: 4rem 2rem;
-position: relative;
-will-change: transform;
-}
+  .hero-section {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 4rem 2rem;
+    position: relative;
+    will-change: transform;
+  }
 
-.hero-section__background {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-z-index: 1;
-}
+  .hero-section__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
 
-.hero-section__background video,
-.hero-section__background img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-object-position: center;
-}
+  .hero-section__background video,
+  .hero-section__background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 
-.hero-section__background video {
-position: absolute;
-top: 0;
-left: 0;
-}
+  .hero-section__background video {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 
-.hero-section__overlay {
-position: absolute;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-z-index: 2;
-}
+  .hero-section__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
 
-.hero-section__content {
-z-index: 3;
-max-width: 100%;
-margin: 0 auto;
-}
+  .hero-section__content {
+    z-index: 3;
+    max-width: 100%;
+    margin: 0 auto;
+  }
 
-.hero-section__headline {
-margin-bottom: 1.2rem;
-position: absolute;
-bottom: 30%;
-transform: translateX(-50%);
-left: 50%;
-width: 100%;
-line-height: 1.1;
-}
+  .hero-section__headline {
+    margin-bottom: 1.2rem;
+    position: absolute;
+    bottom: 22%;
+    transform: translateX(-50%);
+    left: 50%;
+    width: 100%;
+    line-height: 1.1;
+  }
 
-.hero-section__headline em {
-text-transform: none !important;
-}
+  .hero-section__headline em {
+    text-transform: none !important;
+  }
 
-.hero-section__headline .line,
-.hero-section__subheadline .line {
-display: block;
-will-change: transform;
-overflow: hidden;
-}
+  .hero-section__headline .line,
+  .hero-section__subheadline .line {
+    display: block;
+    will-change: transform;
+    overflow: hidden;
+  }
 
-.hero-section__headline .word,
-.hero-section__subheadline .word {
-display: inline-block;
-}
+  .hero-section__headline .word,
+  .hero-section__subheadline .word {
+    display: inline-block;
+  }
 
-.hero-section__headline .letter,
-.hero-section__subheadline .letter {
-display: inline-block;
-}
+  .hero-section__headline .letter,
+  .hero-section__subheadline .letter {
+    display: inline-block;
+  }
 
-.hero-section__subheadline {
-margin: auto;
-margin-bottom: 2rem;
-position: absolute;
-bottom: 23%;
-transform: translateX(-50%);
-left: 50%;
-}
+  .hero-section__subheadline {
+    margin: auto;
+    margin-bottom: 2rem;
+    position: absolute;
+    bottom: 16%;
+    transform: translateX(-50%);
+    left: 50%;
+  }
 
-.hero-section__button {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 0.5rem 0.5rem;
-text-decoration: none;
-border-radius: 999px;
-transition: background-color 0.3s ease;
-border: none;
-position: absolute;
-bottom: 5rem;
-transform: translateX(-50%);
-left: 50%;
-gap: 4rem;
-overflow: hidden;
-border-color: #ffffff;
-}
+  .hero-section__headline p,
+  .hero-section__subheadline p {
+    margin: 0;
+    padding: 0;
+  }
 
-.hero-section__button-text {
-margin-right: 1rem;
-padding-left: 1rem;
-}
+  .hero-section__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: background-color 0.3s ease;
+    border: none;
+    position: absolute;
+    bottom: 9%;
+    transform: translateX(-50%);
+    left: 50%;
+    gap: 4rem;
+    overflow: hidden;
+    border-color: #ffffff;
+  }
 
-.hero-section__cta {
-display: flex;
-align-items: center;
-justify-content: center;
-transition: transform 0.3s ease;
-border-radius: 100%;
-height: 2.4rem;
-width: 2.4rem;
-position: relative;
-overflow: hidden;
-}
+  .hero-section__button-text {
+    margin-right: 1rem;
+    padding-left: 1rem;
+  }
 
-.hero-section__cta-icon {
-width: 15px;
-height: 10px;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%) scaleX(1);
-transform-origin: center;
-transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
-}
+  .hero-section__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    border-radius: 100%;
+    height: 2.4rem;
+    width: 2.4rem;
+    position: relative;
+    overflow: hidden;
+  }
 
-.hero-section__cta .hero-section__cta-icon:last-child {
-left: 50%;
-opacity: 0;
-transform: translate(-300%, -50%) scaleX(2);
-}
+  .hero-section__cta-icon {
+    width: 15px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scaleX(1);
+    transform-origin: center;
+    transition: transform 0.8s cubic-bezier(0.18, 0.71, 0.11, 1), opacity 0.8s cubic-bezier(0.18, 0.71, 0.11, 1);
+  }
 
-.hero-section__button:hover {
-border: none;
-}
+  .hero-section__cta .hero-section__cta-icon:last-child {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-300%, -50%) scaleX(2);
+  }
 
-.hero-section__button:hover .hero-section__cta .hero-section__cta-icon:first-child {
-opacity: 0;
-transform: translate(200%, -50%) scaleX(2);
-}
+  .hero-section__button:hover {
+    border: none;
+  }
 
-.hero-section__button:hover .hero-section__cta .hero-section__cta-icon:last-child {
-opacity: 1;
-transform: translate(-50%, -50%) scaleX(1);
-}
+  .hero-section__button:hover .hero-section__cta .hero-section__cta-icon:first-child {
+    opacity: 0;
+    transform: translate(200%, -50%) scaleX(2);
+  }
 
-@media (max-width: 768px) {
-.hero-section {
-padding: 2rem 1rem;
-min-height: 100vh;
-min-height: 100dvh;
-}
+  .hero-section__button:hover .hero-section__cta .hero-section__cta-icon:last-child {
+    opacity: 1;
+    transform: translate(-50%, -50%) scaleX(1);
+  }
 
-.hero-section__headline {
-top: 12rem;
-width: 90%;
-line-height: 1.1;
-left: 50%;
-transform: translateX(-50%);
-}
+  @media (max-width: 480px) {
+    .hero-section {
+      padding: 1.5rem 0.75rem;
+    }
 
-.hero-section__subheadline {
-top: 18rem;
-line-height: 1.4;
-left: 50%;
-transform: translateX(-50%);
-}
+    .hero-section__headline {
+      bottom: 21%;
+      width: 60%;
+    }
 
-.hero-section__button {
-padding: 0.6rem 1rem;
-gap: 2rem;
-bottom: 3rem;
-min-width: 200px;
-left: 50%;
-transform: translateX(-50%);
-}
+    .hero-section__subheadline {
+      bottom: 13%;
+    }
 
-.hero-section__button-text {
-margin-right: 0;
-padding-left: 0.5rem;
-}
+    .hero-section__button {
+      padding: 0.5rem 0.7rem;
+      gap: 1.5rem;
+      bottom: 2.5rem;
+      min-width: 250px;
+    }
 
-.hero-section__cta {
-width: 2.4rem;
-height: 2.4rem;
-}
+    .hero-section__cta {
+      width: 2.2rem;
+      height: 2.2rem;
+    }
 
-.hero-section__cta-icon {
-width: 12px;
-height: 8px;
-}
-}
+    .hero-section__cta-icon {
+      width: 10px;
+      height: 6px;
+    }
+  }
 
-@media (max-width: 480px) {
-.hero-section {
-padding: 1.5rem 0.75rem;
-}
+  @media (min-width: 481px) and (max-width: 768px) {
+    .hero-section__headline {
+      top: 14rem;
+    }
 
-.hero-section__headline {
-top: 10rem;
-width: 60%;
-}
+    .hero-section__subheadline {
+      top: 20rem;
+    }
 
-.hero-section__subheadline {
-top: 17rem;
-}
+    .hero-section__button {
+      bottom: 4rem;
+    }
+  }
 
-.hero-section__button {
-padding: 0.5rem 0.7rem;
-gap: 1.5rem;
-bottom: 2.5rem;
-min-width: 250px;
-}
+  @media (max-width: 768px) {
+    .hero-section__headline,
+    .hero-section__subheadline,
+    .hero-section__button {
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
 
-.hero-section__cta {
-width: 2.2rem;
-height: 2.2rem;
-}
-
-.hero-section__cta-icon {
-width: 10px;
-height: 6px;
-}
-}
-
-@media (min-width: 481px) and (max-width: 768px) {
-.hero-section__headline {
-top: 14rem;
-}
-
-.hero-section__subheadline {
-top: 20rem;
-}
-
-.hero-section__button {
-bottom: 4rem;
-}
-}
-
-@media (max-width: 768px) {
-.hero-section__headline,
-.hero-section__subheadline,
-.hero-section__button {
--webkit-text-size-adjust: 100%;
-text-size-adjust: 100%;
-}
-
-.hero-section__background video {
-object-fit: cover;
-object-position: center;
-}
-}
+    .hero-section__background video {
+      object-fit: cover;
+      object-position: center;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
-"name": "Hero Section",
-"settings": [
-{
-"type": "header",
-"content": "Typography"
-},
-{
-"type": "header",
-"content": "Headline"
-},
-{
-"type": "font_picker",
-"id": "headline_font",
-"label": "Font",
-"default": "instrument_serif_n4"
-},
-{
-"type": "range",
-"id": "headline_font_size",
-"min": 1,
-"max": 8,
-"step": 0.1,
-"unit": "rem",
-"label": "Font size (Desktop)",
-"default": 3.5
-},
-{
-"type": "range",
-"id": "headline_font_size_mobile",
-"min": 1,
-"max": 6,
-"step": 0.1,
-"unit": "rem",
-"label": "Font size (Mobile)",
-"default": 2.5
-},
-{
-"type": "select",
-"id": "headline_text_transform",
-"label": "Casing",
-"options": [
-{ "value": "none", "label": "None" },
-{ "value": "capitalize", "label": "Capitalize" },
-{ "value": "uppercase", "label": "Uppercase" },
-{ "value": "lowercase", "label": "Lowercase" }
-],
-"default": "capitalize"
-},
-{
-"type": "header",
-"content": "Subheadline"
-},
-{
-"type": "font_picker",
-"id": "subheadline_font",
-"label": "Font",
-"default": "inter_n4"
-},
-{
-"type": "range",
-"id": "subheadline_font_size",
-"min": 0.5,
-"max": 3,
-"step": 0.1,
-"unit": "rem",
-"label": "Font size (Desktop)",
-"default": 1
-},
-{
-"type": "range",
-"id": "subheadline_font_size_mobile",
-"min": 0.5,
-"max": 2,
-"step": 0.1,
-"unit": "rem",
-"label": "Font size (Mobile)",
-"default": 0.9
-},
-{
-"type": "select",
-"id": "subheadline_text_transform",
-"label": "Casing",
-"options": [
-{ "value": "none", "label": "None" },
-{ "value": "capitalize", "label": "Capitalize" },
-{ "value": "uppercase", "label": "Uppercase" },
-{ "value": "lowercase", "label": "Lowercase" }
-],
-"default": "none"
-},
-{
-"type": "header",
-"content": "Button"
-},
-{
-"type": "font_picker",
-"id": "button_font",
-"label": "Font",
-"default": "inter_n4"
-},
-{
-"type": "range",
-"id": "button_font_size",
-"min": 0.5,
-"max": 2,
-"step": 0.1,
-"unit": "rem",
-"label": "Font size (Desktop)",
-"default": 0.8
-},
-{
-"type": "range",
-"id": "button_font_size_mobile",
-"min": 0.5,
-"max": 1.5,
-"step": 0.1,
-"unit": "rem",
-"label": "Font size (Mobile)",
-"default": 0.8
-},
-{
-"type": "select",
-"id": "button_text_transform",
-"label": "Casing",
-"options": [
-{ "value": "none", "label": "None" },
-{ "value": "capitalize", "label": "Capitalize" },
-{ "value": "uppercase", "label": "Uppercase" },
-{ "value": "lowercase", "label": "Lowercase" }
-],
-"default": "uppercase"
-},
-{
-"type": "header",
-"content": "Colors"
-},
-{
-"type": "color",
-"id": "background_color",
-"label": "Background",
-"default": "#ead1c1"
-},
-{
-"type": "color",
-"id": "overlay_color",
-"label": "Video overlay",
-"default": "#000000"
-},
-{
-"type": "range",
-"id": "overlay_opacity",
-"min": 0,
-"max": 1,
-"step": 0.1,
-"label": "Video overlay opacity",
-"default": 0.5
-},
-{
-"type": "color",
-"id": "headline_color",
-"label": "Headline",
-"default": "#FFFFFF"
-},
-{
-"type": "color",
-"id": "subheadline_color",
-"label": "Subheadline",
-"default": "#FFFFFF"
-},
-{
-"type": "header",
-"content": "Button Colors"
-},
-{
-"type": "color",
-"id": "button_bg",
-"label": "Background",
-"default": "#63001f"
-},
-{
-"type": "color",
-"id": "button_text_color",
-"label": "Text",
-"default": "#FFFFFF"
-},
-{
-"type": "color",
-"id": "button_bg_hover",
-"label": "Background hover",
-"default": "#FFFFFF"
-},
-{
-"type": "color",
-"id": "button_text_hover_color",
-"label": "Text hover",
-"default": "#63001f"
-},
-{
-"type": "color",
-"id": "button_arrow_circle_bg",
-"label": "Arrow circle background",
-"default": "#FFFFFF"
-},
-{
-"type": "color",
-"id": "button_arrow_color",
-"label": "Arrow",
-"default": "#63001f"
-},
-{
-"type": "color",
-"id": "button_arrow_circle_bg_hover",
-"label": "Arrow circle background hover",
-"default": "#63001f"
-},
-{
-"type": "color",
-"id": "button_arrow_hover_color",
-"label": "Arrow hover",
-"default": "#FFFFFF"
-}
-],
-"presets": [
-{
-"name": "Hero Section"
-}
-]
+  "name": "Hero Section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "richtext",
+      "id": "headline_text",
+      "label": "Headline Text",
+      "default": "<p>One <em>Serum</em>. Every <em>Benefit</em>.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "subheadline_text",
+      "label": "Subheadline Text",
+      "default": "<p>To illuminate, to repair, to renew.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Reveal my glow"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "header",
+      "content": "Headline"
+    },
+    {
+      "type": "font_picker",
+      "id": "headline_font",
+      "label": "Font",
+      "default": "instrument_serif_n4"
+    },
+    {
+      "type": "range",
+      "id": "headline_font_size",
+      "min": 1,
+      "max": 8,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Font size (Desktop)",
+      "default": 3.5
+    },
+    {
+      "type": "range",
+      "id": "headline_font_size_mobile",
+      "min": 1,
+      "max": 6,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Font size (Mobile)",
+      "default": 2.5
+    },
+    {
+      "type": "select",
+      "id": "headline_text_transform",
+      "label": "Casing",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "capitalize"
+    },
+    {
+      "type": "header",
+      "content": "Subheadline"
+    },
+    {
+      "type": "font_picker",
+      "id": "subheadline_font",
+      "label": "Font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "range",
+      "id": "subheadline_font_size",
+      "min": 0.5,
+      "max": 3,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Font size (Desktop)",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "subheadline_font_size_mobile",
+      "min": 0.5,
+      "max": 2,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Font size (Mobile)",
+      "default": 0.9
+    },
+    {
+      "type": "select",
+      "id": "subheadline_text_transform",
+      "label": "Casing",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "font_picker",
+      "id": "button_font",
+      "label": "Font",
+      "default": "inter_n4"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "min": 0.5,
+      "max": 2,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Font size (Desktop)",
+      "default": 0.8
+    },
+    {
+      "type": "range",
+      "id": "button_font_size_mobile",
+      "min": 0.5,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Font size (Mobile)",
+      "default": 0.8
+    },
+    {
+      "type": "select",
+      "id": "button_text_transform",
+      "label": "Casing",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "capitalize", "label": "Capitalize" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "lowercase", "label": "Lowercase" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#ead1c1"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Video overlay",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 1,
+      "step": 0.1,
+      "label": "Video overlay opacity",
+      "default": 0.5
+    },
+    {
+      "type": "color",
+      "id": "headline_color",
+      "label": "Headline",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "subheadline_color",
+      "label": "Subheadline",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Button Colors"
+    },
+    {
+      "type": "color",
+      "id": "button_bg",
+      "label": "Background",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_hover",
+      "label": "Background hover",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_text_hover_color",
+      "label": "Text hover",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_circle_bg",
+      "label": "Arrow circle background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_color",
+      "label": "Arrow",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_circle_bg_hover",
+      "label": "Arrow circle background hover",
+      "default": "#63001f"
+    },
+    {
+      "type": "color",
+      "id": "button_arrow_hover_color",
+      "label": "Arrow hover",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Section"
+    }
+  ]
 }
 {% endschema %}

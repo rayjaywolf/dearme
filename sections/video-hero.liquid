@@ -4,9 +4,7 @@
   assign heading_font_size_mobile = section.settings.heading_font_size | times: 0.6 | round
 -%}
 
-<section
-  class="video-hero-section"
-  style="
+<section class="video-hero-section" style="
     --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
     --background-color: {{ section.settings.background_color }};
     --text-color: {{ section.settings.text_color }};
@@ -17,23 +15,21 @@
     --heading-text-transform: {{ section.settings.heading_text_transform }};
     --heading-font-size-desktop: {{ heading_font_size_desktop }}px;
     --heading-font-size-mobile: {{ heading_font_size_mobile }}px;
-  "
->
+  ">
   <div class="video-hero-section__container">
     <div class="video-hero-section__video-wrapper">
       <video
         class="video-hero-section__video"
         {% if section.settings.autoplay %}
-          autoplay
+        autoplay
         {% endif %}
         {% if section.settings.muted %}
-          muted
+        muted
         {% endif %}
         {% if section.settings.loop %}
-          loop
+        loop
         {% endif %}
-        playsinline
-      >
+        playsinline>
         <source src="{{ 'fieldstoface.mp4' | asset_url }}" type="video/mp4">
         Your browser does not support the video tag.
       </video>
@@ -61,7 +57,7 @@
     width: 100%;
     height: 100vh;
     display: flex;
-    padding: 0rem 1rem 0 1rem;
+    padding: 0 1rem;
     justify-content: center;
     align-items: center;
     background-color: var(--background-color);
@@ -114,22 +110,25 @@
     padding: 2rem;
   }
   .video-hero-section__subheading {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter'
+    , sans-serif;
     font-size: var(--subheading-font-size);
     font-weight: var(--subheading-font-weight);
     text-transform: var(--subheading-text-transform);
     color: var(--text-color);
-    margin: 0 0 1rem 0;
-    letter-spacing: 0.1em;
+    margin: 0 0 1rem;
+    line-height: 1.7;
   }
   .video-hero-section__heading {
-    font-family: 'Instrument Serif', serif;
+    font-family: 'Instrument Serif'
+    , serif;
     font-size: var(--heading-font-size-desktop);
     font-weight: var(--heading-font-weight);
     text-transform: var(--heading-text-transform);
     line-height: 1.2;
     color: var(--text-color);
-    margin: 0;
+    margin: 0 auto;
+    width: 38%;
   }
   .video-hero-section__heading p {
     margin: 0;
@@ -138,7 +137,7 @@
   @media screen and (max-width: 768px) {
     .video-hero-section {
       height: 70vh;
-      padding: 0rem 0.5rem 0 0.5rem;
+      padding: 0 0.5rem;
     }
 
     .video-hero-section__video-wrapper {
@@ -147,7 +146,8 @@
 
     .video-hero-section__heading {
       font-size: var(--heading-font-size-mobile);
-      line-height: 1.1;
+      line-height: 1.7;
+      width: 100%;
     }
 
     .video-hero-section__subheading {
@@ -165,7 +165,7 @@
   @media screen and (max-width: 480px) {
     .video-hero-section {
       height: 80vh;
-      padding: 0rem 0.5rem 0 0.5rem;
+      padding: 0 0.5rem;
     }
 
     .video-hero-section__video-wrapper {
@@ -203,146 +203,145 @@
 </style>
 
 {% schema %}
-{
-  "name": "Video Hero",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Content"
-    },
-    {
-      "type": "richtext",
-      "id": "subheading",
-      "label": "Subheading",
-      "default": "<p>Authentic Kashmiri Mogra Saffron: <br> GI Tagged, Government Approved, Glow Guaranteed.</p>"
-    },
-    {
-      "type": "richtext",
-      "id": "heading",
-      "label": "Heading",
-      "default": "<p>From the Valleys of Kashmir <br> to Your Skin</p>"
-    },
-    {
-      "type": "header",
-      "content": "Color Settings"
-    },
-    {
-      "type": "color",
-      "id": "background_color",
-      "label": "Background Color",
-      "default": "#FEF9F2"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text Color",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "header",
-      "content": "Subheading Typography"
-    },
-    {
-      "type": "range",
-      "id": "subheading_font_size",
-      "min": 8,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "label": "Font Size",
-      "default": 9
-    },
-    {
-      "type": "range",
-      "id": "subheading_font_weight",
-      "min": 100,
-      "max": 900,
-      "step": 100,
-      "label": "Font Weight",
-      "default": 400
-    },
-    {
-      "type": "select",
-      "id": "subheading_text_transform",
-      "label": "Text Transform",
-      "options": [
-        { "value": "none", "label": "None" },
-        { "value": "uppercase", "label": "Uppercase" },
-        { "value": "capitalize", "label": "Capitalize" }
-      ],
-      "default": "uppercase"
-    },
-    {
-      "type": "header",
-      "content": "Heading Typography"
-    },
-    {
-      "type": "range",
-      "id": "heading_font_size",
-      "min": 24,
-      "max": 80,
-      "step": 2,
-      "unit": "px",
-      "label": "Font Size",
-      "default": 48
-    },
-    {
-      "type": "range",
-      "id": "heading_font_weight",
-      "min": 100,
-      "max": 900,
-      "step": 100,
-      "label": "Font Weight",
-      "default": 200
-    },
-    {
-      "type": "select",
-      "id": "heading_text_transform",
-      "label": "Text Transform",
-      "options": [
-        { "value": "none", "label": "None" },
-        { "value": "uppercase", "label": "Uppercase" },
-        { "value": "capitalize", "label": "Capitalize" }
-      ],
-      "default": "none"
-    },
-    {
-      "type": "header",
-      "content": "Video Settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "autoplay",
-      "label": "Autoplay Video",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "muted",
-      "label": "Mute Video",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "loop",
-      "label": "Loop Video",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "overlay_opacity",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "label": "Video Overlay Opacity",
-      "default": 50
-    }
-  ],
-  "presets": [
-    {
-      "name": "Video Hero"
-    }
-  ]
-}
+  {
+    "name": "Video Hero",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "richtext",
+        "id": "subheading",
+        "label": "Subheading",
+        "default": "<p>Authentic Kashmiri Mogra Saffron: <br> GI Tagged, Government Approved, Glow Guaranteed.</p>"
+      },
+      {
+        "type": "richtext",
+        "id": "heading",
+        "label": "Heading",
+        "default": "<p>From the Valleys of <em>Kashmir</em> to Your Skin</p>"
+      },
+      {
+        "type": "header",
+        "content": "Color Settings"
+      }, {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background Color",
+        "default": "#FEF9F2"
+      }, {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text Color",
+        "default": "#FFFFFF"
+      }, {
+        "type": "header",
+        "content": "Subheading Typography"
+      }, {
+        "type": "range",
+        "id": "subheading_font_size",
+        "min": 8,
+        "max": 20,
+        "step": 1,
+        "unit": "px",
+        "label": "Font Size",
+        "default": 9
+      }, {
+        "type": "range",
+        "id": "subheading_font_weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Font Weight",
+        "default": 400
+      }, {
+        "type": "select",
+        "id": "subheading_text_transform",
+        "label": "Text Transform",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          }, {
+            "value": "uppercase",
+            "label": "Uppercase"
+          }, {
+            "value": "capitalize",
+            "label": "Capitalize"
+          }
+        ],
+        "default": "capitalize"
+      }, {
+        "type": "header",
+        "content": "Heading Typography"
+      }, {
+        "type": "range",
+        "id": "heading_font_size",
+        "min": 24,
+        "max": 80,
+        "step": 2,
+        "unit": "px",
+        "label": "Font Size",
+        "default": 48
+      }, {
+        "type": "range",
+        "id": "heading_font_weight",
+        "min": 100,
+        "max": 900,
+        "step": 100,
+        "label": "Font Weight",
+        "default": 200
+      }, {
+        "type": "select",
+        "id": "heading_text_transform",
+        "label": "Text Transform",
+        "options": [
+          {
+            "value": "none",
+            "label": "None"
+          }, {
+            "value": "uppercase",
+            "label": "Uppercase"
+          }, {
+            "value": "capitalize",
+            "label": "Capitalize"
+          }
+        ],
+        "default": "none"
+      }, {
+        "type": "header",
+        "content": "Video Settings"
+      }, {
+        "type": "checkbox",
+        "id": "autoplay",
+        "label": "Autoplay Video",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "muted",
+        "label": "Mute Video",
+        "default": true
+      }, {
+        "type": "checkbox",
+        "id": "loop",
+        "label": "Loop Video",
+        "default": true
+      }, {
+        "type": "range",
+        "id": "overlay_opacity",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "label": "Video Overlay Opacity",
+        "default": 50
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video Hero"
+      }
+    ]
+  }
 {% endschema %}
