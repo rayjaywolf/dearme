@@ -62,6 +62,9 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     </div>
 
     <div class="product-section__details">
+      {% for block in section.blocks %}
+        {% render block %}
+      {% endfor %}
       <p class="product-section__subtitle">Illuminating Saffron Serum</p>
       <h1 class="product-section__title">{{ product.title }}</h1>
       <p class="product-section__tagline">Infused with Dear Me's Innovation: <strong>Saffrux Brightening Engine™
@@ -78,15 +81,20 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
       <div class="product-section__form-field">
         <label for="Option-{{ section.id }}-{{ forloop.index0 }}" class="product-section__form-label">{{ option.name
           }}</label>
-        <div class="product-section__select-wrapper">
-          <select id="Option-{{ section.id }}-{{ forloop.index0 }}" name="options[{{ option.name | escape }}]"
-            class="product-section__select" data-option-index="{{ forloop.index0 }}">
-            {% for value in option.values %}
-            <option value="{{ value | escape }}" {% if option.selected_value==value %}selected="selected" {% endif %}>
-              {{ value }}
-            </option>
-            {% endfor %}
-          </select>
+        <div class="product-section__pill-group" role="radiogroup" aria-label="{{ option.name | escape }}">
+          {% for value in option.values %}
+            {% assign pill_id = 'Option-' | append: section.id | append: '-' | append: forloop.parentloop.index0 | append: '-' | append: forloop.index0 %}
+            <input
+              type="radio"
+              id="{{ pill_id }}"
+              name="options[{{ option.name | escape }}]"
+              value="{{ value | escape }}"
+              class="product-section__pill-input"
+              data-option-index="{{ forloop.parentloop.index0 }}"
+              {% if option.selected_value == value %}checked{% endif %}
+            >
+            <label for="{{ pill_id }}" class="product-section__pill">{{ value }}</label>
+          {% endfor %}
         </div>
       </div>
       {% endfor %}
@@ -94,7 +102,16 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
       <select name="id" id="VariantSelector-{{ section.id }}" class="product-section__variant-id"
         style="display: none;">
         {% for variant in product.variants %}
-        <option value="{{ variant.id }}" {% if variant.id==current_variant.id %}selected="selected" {% endif %}>
+        <option
+          value="{{ variant.id }}"
+          data-option0="{{ variant.option1 | escape }}"
+          data-option1="{{ variant.option2 | escape }}"
+          data-option2="{{ variant.option3 | escape }}"
+          data-price="{{ variant.price | money }}"
+          data-compare-price="{% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money }}{% endif %}"
+          data-available="{{ variant.available }}"
+          {% if variant.id==current_variant.id %}selected="selected" {% endif %}
+        >
           {{ variant.title }}
         </option>
         {% endfor %}
@@ -105,9 +122,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 
       <div class="product-section__price-block">
         <span class="product-section__price">{{ current_variant.price | money }}</span>
-        {% if current_variant.compare_at_price > current_variant.price %}
-        <span class="product-section__price-compare">{{ current_variant.compare_at_price | money }}</span>
-        {% endif %}
+        <span class="product-section__price-compare" {% unless current_variant.compare_at_price > current_variant.price %}style="display: none;"{% endunless %}>{{ current_variant.compare_at_price | money }}</span>
         {% if current_variant.available %}
         <span class="product-section__stock product-section__stock--available">In stock</span>
         {% else %}
@@ -591,7 +606,7 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
     </div>
     <div class="bv-slider-content">
       <h2 class="bv-slider-title">Before <em>& After</em></h2>
-      <p class="bv-slider-description">After 8 weeks of use. <br>(raw unedited images)</p>
+      <p class="bv-slider-description">*Clinical testing on 147 women after <br> using product for 12 weeks.</p>
       <div class="bv-slider-nav">
         <button class="bv-slider-nav-button bv-slider-nav-button--prev" aria-label="Previous">
           <svg class="bv-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20.001" height="12.766" fill="none"
@@ -1466,7 +1481,13 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
         <div class="reviews-section__shape-container">
           <div class="reviews-section__inverted">
             <div class="reviews-section__quotes"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8.09 11.6314H3.4C3.48 6.96144 4.4 6.19144 7.27 4.49144C7.6 4.29144 7.71 3.87144 7.51 3.53144C7.32 3.20144 6.89 3.09144 6.56 3.29144C3.18 5.29144 2 6.51144 2 12.3214V17.7114C2 19.4214 3.39 20.8014 5.09 20.8014H8.09C9.85 20.8014 11.18 19.4714 11.18 17.7114V14.7114C11.18 12.9614 9.85 11.6314 8.09 11.6314Z" fill="#63001f"></path> <path d="M18.9086 11.6314H14.2186C14.2986 6.96144 15.2186 6.19144 18.0886 4.49144C18.4186 4.29144 18.5286 3.87144 18.3286 3.53144C18.1286 3.20144 17.7086 3.09144 17.3686 3.29144C13.9886 5.29144 12.8086 6.51144 12.8086 12.3314V17.7214C12.8086 19.4314 14.1986 20.8114 15.8986 20.8114H18.8986C20.6586 20.8114 21.9886 19.4814 21.9886 17.7214V14.7214C21.9986 12.9614 20.6686 11.6314 18.9086 11.6314Z" fill="#63001f"></path> </g></svg></div>
-            <div class="reviews-section__stars">★★★★★</div>
+            <div class="reviews-section__stars">
+              <img src="{{ 'star.svg' | asset_url }}" alt="Star" />
+              <img src="{{ 'star.svg' | asset_url }}" alt="Star" />
+              <img src="{{ 'star.svg' | asset_url }}" alt="Star" />
+              <img src="{{ 'star.svg' | asset_url }}" alt="Star" />
+              <img src="{{ 'star.svg' | asset_url }}" alt="Star" />
+            </div>
             <span class="reviews-section__shape-text">${review.text}</span>
           </div>
           <span class="reviews-section__signature-text">- ${review.author}</span>
@@ -2037,11 +2058,18 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
   }
 
   .reviews-section__stars {
-    color: #ff6b35;
-    font-size: 1.2rem;
-    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
     margin-bottom: 0rem;
     margin-top: 0rem;
+  }
+
+  .reviews-section__stars img {
+    width: 15px;
+    height: 15px;
+    display: block;
   }
 
   .reviews-section__shape-text {
@@ -2602,6 +2630,37 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
   .product-section__select:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+  }
+
+  .product-section__pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .product-section__pill-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .product-section__pill {
+    border: 2px solid #63001f;
+    padding: 4px 16px;
+    text-transform: uppercase;
+    border-radius: 999px;
+    width: fit-content;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    background: #fff;
+    color: #63001f;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .product-section__pill-input:checked + .product-section__pill {
+    background: #63001f;
+    color: #fef9f2;
   }
 
   .product-section__buttons {
@@ -3949,23 +4008,79 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 
     const optionSelects = document.querySelectorAll('[data-option-index]');
     const variantIdSelect = document.getElementById('VariantSelector-{{ section.id }}');
+    const priceElement = document.querySelector('.product-section__price');
+    const comparePriceElement = document.querySelector('.product-section__price-compare');
+    const stockElement = document.querySelector('.product-section__stock');
+    const submitButton = document.querySelector('.product-section__submit--cart');
+    const stickyButtonText = document.querySelector('.product-sticky-bar__cta .product-section__button-text');
 
     if (optionSelects.length > 0 && variantIdSelect) {
       const updateVariant = () => {
-        const selectedOptions = Array.from(optionSelects).map(select => select.value);
-        const matchingVariant = Array.from(variantIdSelect.options).find(option => {
-          const variantTitle = option.text;
-          return selectedOptions.every(selectedOption => variantTitle.includes(selectedOption));
+        const indices = Array.from(new Set(Array.from(optionSelects).map(el => el.getAttribute('data-option-index')))).sort();
+
+        const selectedOptions = indices.map((index) => {
+          const radio = document.querySelector(`input[type="radio"][data-option-index="${index}"]:checked`);
+          if (radio) return radio.value;
+          const select = document.querySelector(`select[data-option-index="${index}"]`);
+          return select ? select.value : null;
+        });
+
+        if (selectedOptions.some(v => v == null)) return;
+
+        const matchingVariant = Array.from(variantIdSelect.options).find((opt) => {
+          return selectedOptions.every((val, idx) => {
+            const key = `option${idx}`;
+            return (opt.dataset && opt.dataset[key] === val);
+          });
         });
 
         if (matchingVariant) {
           variantIdSelect.value = matchingVariant.value;
+
+          if (priceElement && matchingVariant.dataset.price) {
+            priceElement.innerHTML = matchingVariant.dataset.price;
+          }
+
+          if (comparePriceElement) {
+            if (matchingVariant.dataset.comparePrice) {
+              comparePriceElement.innerHTML = matchingVariant.dataset.comparePrice;
+              comparePriceElement.style.display = 'inline';
+            } else {
+              comparePriceElement.style.display = 'none';
+            }
+          }
+
+          const isAvailable = matchingVariant.dataset.available === 'true';
+
+          if (stockElement) {
+            stockElement.textContent = isAvailable ? 'In stock' : 'Sold out';
+            stockElement.className = isAvailable
+              ? 'product-section__stock product-section__stock--available'
+              : 'product-section__stock product-section__stock--soldout';
+          }
+
+          if (submitButton) {
+            const buttonText = submitButton.querySelector('.product-section__button-text');
+            if (isAvailable) {
+              submitButton.removeAttribute('disabled');
+              if (buttonText) buttonText.textContent = 'Buy Now';
+            } else {
+              submitButton.setAttribute('disabled', 'disabled');
+              if (buttonText) buttonText.textContent = 'Sold Out';
+            }
+          }
+
+          if (stickyButtonText && matchingVariant.dataset.price) {
+            stickyButtonText.innerHTML = `Buy Now &nbsp;&nbsp; | &nbsp;&nbsp; ${matchingVariant.dataset.price}`;
+          }
         }
       };
 
       optionSelects.forEach(select => {
         select.addEventListener('change', updateVariant);
       });
+
+      updateVariant();
     }
 
     const accordionHeaders = document.querySelectorAll('.product-section__accordion-header');
@@ -4066,6 +4181,12 @@ https://shopify.dev/docs/storefronts/themes/architecture/templates/product
       "default": false
     }
   ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "max_blocks": 4,
   "disabled_on": {
     "groups": ["header", "footer"]
   }

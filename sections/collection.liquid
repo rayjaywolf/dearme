@@ -59,11 +59,11 @@
           <h2 class="collection-product-showcase__title">{{ product.title }}</h2>
 
           <div class="collection-product-showcase__price">
-            {% if product.compare_at_price > product.price %}
-              <span class="collection-product-showcase__price--sale">{{ product.price | money }}</span>
-              <span class="collection-product-showcase__price--compare">{{ product.compare_at_price | money }}</span>
+            {% if product.compare_at_price_max > product.price_max %}
+              <span class="collection-product-showcase__price--sale">{{ product.price_max | money }}</span>
+              <span class="collection-product-showcase__price--compare">{{ product.compare_at_price_max | money }}</span>
             {% else %}
-              <span class="collection-product-showcase__price--regular">{{ product.price | money }}</span>
+              <span class="collection-product-showcase__price--regular">{{ product.price_max | money }}</span>
             {% endif %}
           </div>
 
