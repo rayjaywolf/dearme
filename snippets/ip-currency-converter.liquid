@@ -1,0 +1,275 @@
+<script>
+window.currencyConverter = {
+  baseCurrency: 'INR',
+  targetCurrency: 'INR',
+  targetSymbol: '₹',
+  exchangeRate: 1,
+  rates: {},
+  initialized: false,
+  
+  // A comprehensive mapping of ISO 3166-1 alpha-2 country codes to their local currency codes and symbols.
+  // Countries not listed here will default to USD.
+  countryMap: {
+    // North America
+    'US': { code: 'USD', symbol: '$' },
+    'CA': { code: 'CAD', symbol: 'CA$' },
+    'MX': { code: 'MXN', symbol: 'MX$' },
+    // Europe (Eurozone + Others)
+    'EU': { code: 'EUR', symbol: '€' },
+    'AT': { code: 'EUR', symbol: '€' },
+    'BE': { code: 'EUR', symbol: '€' },
+    'CY': { code: 'EUR', symbol: '€' },
+    'EE': { code: 'EUR', symbol: '€' },
+    'FI': { code: 'EUR', symbol: '€' },
+    'FR': { code: 'EUR', symbol: '€' },
+    'DE': { code: 'EUR', symbol: '€' },
+    'GR': { code: 'EUR', symbol: '€' },
+    'IE': { code: 'EUR', symbol: '€' },
+    'IT': { code: 'EUR', symbol: '€' },
+    'LV': { code: 'EUR', symbol: '€' },
+    'LT': { code: 'EUR', symbol: '€' },
+    'LU': { code: 'EUR', symbol: '€' },
+    'MT': { code: 'EUR', symbol: '€' },
+    'NL': { code: 'EUR', symbol: '€' },
+    'PT': { code: 'EUR', symbol: '€' },
+    'SK': { code: 'EUR', symbol: '€' },
+    'SI': { code: 'EUR', symbol: '€' },
+    'ES': { code: 'EUR', symbol: '€' },
+    'GB': { code: 'GBP', symbol: '£' },
+    'CH': { code: 'CHF', symbol: 'CHF' },
+    'SE': { code: 'SEK', symbol: 'kr' },
+    'NO': { code: 'NOK', symbol: 'kr' },
+    'DK': { code: 'DKK', symbol: 'kr' },
+    'IS': { code: 'ISK', symbol: 'kr' },
+    'CZ': { code: 'CZK', symbol: 'Kč' },
+    'HU': { code: 'HUF', symbol: 'Ft' },
+    'PL': { code: 'PLN', symbol: 'zł' },
+    'RO': { code: 'RON', symbol: 'lei' },
+    'BG': { code: 'BGN', symbol: 'лв' },
+    'HR': { code: 'HRK', symbol: 'kn' },
+    'RS': { code: 'RSD', symbol: 'дин' },
+    // Asia & Pacific
+    'IN': { code: 'INR', symbol: '₹' },
+    'JP': { code: 'JPY', symbol: '¥' },
+    'CN': { code: 'CNY', symbol: '¥' },
+    'KR': { code: 'KRW', symbol: '₩' },
+    'HK': { code: 'HKD', symbol: 'HK$' },
+    'TW': { code: 'TWD', symbol: 'NT$' },
+    'SG': { code: 'SGD', symbol: 'S$' },
+    'MY': { code: 'MYR', symbol: 'RM' },
+    'TH': { code: 'THB', symbol: '฿' },
+    'ID': { code: 'IDR', symbol: 'Rp' },
+    'PH': { code: 'PHP', symbol: '₱' },
+    'VN': { code: 'VND', symbol: '₫' },
+    'LK': { code: 'LKR', symbol: 'Rs' },
+    'BD': { code: 'BDT', symbol: '৳' },
+    'NP': { code: 'NPR', symbol: 'रू' },
+    'PK': { code: 'PKR', symbol: '₨' },
+    'AU': { code: 'AUD', symbol: 'A$' },
+    'NZ': { code: 'NZD', symbol: 'NZ$' },
+    'FJ': { code: 'FJD', symbol: 'FJ$' },
+    // Middle East
+    'AE': { code: 'AED', symbol: 'د.إ' },
+    'SA': { code: 'SAR', symbol: '﷼' },
+    'QA': { code: 'QAR', symbol: '﷼' },
+    'KW': { code: 'KWD', symbol: 'د.ك' },
+    'BH': { code: 'BHD', symbol: '.د.ب' },
+    'OM': { code: 'OMR', symbol: 'ر.ع.' },
+    'IL': { code: 'ILS', symbol: '₪' },
+    'JO': { code: 'JOD', symbol: 'د.ا' },
+    // Africa
+    'ZA': { code: 'ZAR', symbol: 'R' },
+    'NG': { code: 'NGN', symbol: '₦' },
+    'EG': { code: 'EGP', symbol: 'E£' },
+    'KE': { code: 'KES', symbol: 'KSh' },
+    'GH': { code: 'GHS', symbol: 'GH₵' },
+    'MA': { code: 'MAD', symbol: 'MAD' },
+    'TZ': { code: 'TZS', symbol: 'TSh' },
+    'UG': { code: 'UGX', symbol: 'USh' },
+    // South America
+    'BR': { code: 'BRL', symbol: 'R$' },
+    'AR': { code: 'ARS', symbol: '$' },
+    'CL': { code: 'CLP', symbol: '$' },
+    'CO': { code: 'COP', symbol: '$' },
+    'PE': { code: 'PEN', symbol: 'S/' },
+    'UY': { code: 'UYU', symbol: '$U' }
+  },
+
+  async init() {
+    if (this.initialized) return;
+    
+    try {
+      // 1. Get the User's Country from an IP service
+      const geoRes = await fetch('https://get.geojs.io/v1/ip/country.json');
+      const geoData = await geoRes.json();
+      const countryCode = geoData.country;
+
+      // 2. Map Country to Currency (fallback to USD)
+      const currencyInfo = this.countryMap[countryCode] || { code: 'USD', symbol: '$' };
+      this.targetCurrency = currencyInfo.code;
+      this.targetSymbol = currencyInfo.symbol;
+
+      if (this.targetCurrency === this.baseCurrency) {
+        console.log(`[Currency] User in ${countryCode}, using base currency INR. No conversion needed.`);
+        return; // Nothing to do
+      }
+
+      console.log(`[Currency] Detected ${countryCode}. Converting ${this.baseCurrency} to ${this.targetCurrency}...`);
+
+      // 3. Fetch live exchange rates (free API, relative to INR)
+      const ratesRes = await fetch(`https://open.er-api.com/v6/latest/${this.baseCurrency}`);
+      const ratesData = await ratesRes.json();
+      
+      if (ratesData.result === 'success' && ratesData.rates[this.targetCurrency]) {
+        this.exchangeRate = ratesData.rates[this.targetCurrency];
+        this.initialized = true;
+        
+        // 4. Convert all prices currently in the DOM
+        this.convertDOM();
+        
+        // 5. Watch for dynamically added prices (e.g. cart drawer, AJAX loads)
+        this.observeMutations();
+      }
+    } catch (e) {
+      console.error('[Currency Converter] Error initializing:', e);
+    }
+  },
+
+  convertDOM() {
+    if (!this.initialized || this.exchangeRate === 1) return;
+
+    // We look for common price elements in your theme
+    // Update these selectors based on where prices are shown in DearMe
+    const selectors = [
+      '.product-section__price', 
+      '.product-section__price-compare',
+      '.cart-section__item-price-original',
+      '.cart-section__item-price-sale',
+      '.cart-section__item-price-regular',
+      '.cart-section__summary-value',
+      '.collection-product__price--sale',
+      '.collection-product__price--compare',
+      '.collection-product__price--regular',
+      '.collection-product-showcase__price--sale',
+      '.collection-product-showcase__price--compare',
+      '.collection-product-showcase__price--regular',
+      '.search-content__result-price',
+      // Add a general selector for explicitly tagged elements
+      '[data-price-convert]'
+    ];
+
+    const elements = document.querySelectorAll(selectors.join(', '));
+    
+    elements.forEach(el => this.convertElement(el));
+    
+    // Also try to find Buy Now button texts that have formatting like "Buy Now | ₹123"
+    const btnTexts = document.querySelectorAll('.product-section__button-text');
+    btnTexts.forEach(el => this.convertTextNode(el));
+  },
+
+  convertElement(el) {
+    // Sometimes prices are wrapped in an inner span, i.e., <span class=money>Rs. 2,687.50</span>
+    const targetElement = el.querySelector('.money') || el;
+    const rawText = targetElement.textContent || targetElement.innerText;
+    
+    // If the text already contains the target currency string or symbol (and we aren't targeting INR), 
+    // it's already converted.
+    if (this.targetCurrency !== 'INR' && (rawText.includes(this.targetCurrency) || rawText.includes(this.targetSymbol))) {
+      return; 
+    }
+    
+    // Match the number portion explicitly. E.g., from "Rs. 2,687.50" we want "2,687.50"
+    // This regex looks for digits, commas, and a decimal.
+    const numberMatch = rawText.match(/[0-9,]+(?:\.[0-9]+)?/);
+    if (!numberMatch) return;
+
+    // Remove commas to safely parse the float
+    const cleanNumberString = numberMatch[0].replace(/,/g, '');
+    const inrValue = parseFloat(cleanNumberString);
+    
+    if (!isNaN(inrValue) && inrValue > 0) {
+      targetElement.dataset.originalPrice = inrValue;
+      targetElement.dataset.originalText = rawText;
+      
+      const convertedValue = (inrValue * this.exchangeRate).toFixed(2);
+      
+      // If we are dealing with USD, CAD, AUD, GBP, EUR, use standard comma formatting
+      // E.g. $1,234.50
+      const formattedValue = parseFloat(convertedValue).toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+      
+      targetElement.textContent = `${this.targetSymbol}${formattedValue} ${this.targetCurrency}`;
+    }
+  },
+
+  convertTextNode(el) {
+    const rawText = el.textContent || el.innerText;
+    
+    if (this.targetCurrency !== 'INR' && (rawText.includes(this.targetCurrency) || rawText.includes(this.targetSymbol))) {
+      return; 
+    }
+    
+    // Look for Rs. XXX or ₹ XXX pattern
+    const priceMatch = rawText.match(/(?:Rs\.|₹|INR)\s*([0-9,]+(?:\.[0-9]+)?)/i);
+    
+    if (priceMatch && priceMatch[1]) {
+      const cleanNumberString = priceMatch[1].replace(/,/g, '');
+      const inrValue = parseFloat(cleanNumberString);
+      
+      if (!isNaN(inrValue) && inrValue > 0) {
+        const convertedValue = (inrValue * this.exchangeRate).toFixed(2);
+        const formattedValue = parseFloat(convertedValue).toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+        
+        const newText = rawText.replace(/(?:Rs\.|₹|INR)\s*[0-9,]+(?:\.[0-9]+)?/i, `${this.targetSymbol}${formattedValue} ${this.targetCurrency}`);
+        
+        el.textContent = newText;
+      }
+    }
+  },
+
+  observeMutations() {
+    const observer = new MutationObserver((mutations) => {
+      let shouldConvert = false;
+      mutations.forEach(mutation => {
+        // Trigger if nodes were added
+        if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+          shouldConvert = true;
+        }
+        // Trigger if text was manipulated natively by variant scripts
+        if (mutation.type === 'characterData') {
+          shouldConvert = true;
+        }
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-price') {
+          shouldConvert = true;
+        }
+      });
+      
+      if (shouldConvert) {
+        // Debounce
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.convertDOM();
+        }, 100); // reduced debounce so it happens faster after variant switch
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ['data-price']
+    });
+  }
+};
+
+// Start the sequence when the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  window.currencyConverter.init();
+});
+</script>
